@@ -15,7 +15,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     const status = res.statusCode;
     const message = res.statusMessage;
 
-    console.log(`[${req.method}]${req.originalUrl} [${status}] ${message}`);
+    console.log(`Metodo:${req.method} URL: ${req.originalUrl} COD: ${status} ${message}`);
   });
 
   next();
