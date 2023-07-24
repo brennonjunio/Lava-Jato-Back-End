@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model acessos_usuarios {
+  cd_usuario   Int?
+  gerencia     String? @default("N") @db.VarChar(1)
+  clientes     String? @default("N") @db.VarChar(1)
+  financeiro   String? @default("N") @db.VarChar(1)
+  tela_exemplo String? @default("N") @db.VarChar(1)
+
+  @@index([cd_usuario], map: "acessos_usuarios_FK")
+  @@ignore
+}
+
+model clientes {
+  cd_cliente        Int                 @id @default(autoincrement())
+  nm_cliente        String              @db.VarChar(200)
+  cpf_cnpj          String?             @unique(map: "clientes_UN") @db.VarChar(14)
+  dt_cadastro       DateTime            @default(now()) @db.DateTime(0)
+  dt_update         DateTime            @default(now()) @db.DateTime(0)
+  cep               String?             @default("0") @db.VarChar(8)
+  bairro            String?             @db.VarChar(60)
+  nr_casa           String?             @db.VarChar(20)
+  cd_usuario        Int?
+  usuarios          usuarios?           @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "clientes_FK")
+  veiculos_clientes veiculos_clientes[]
+
+  @@index([cd_usuario], map: "clientes_FK")
+}
+
+model tipo_veiculos {
+  cd_tipo_veiculo   Int                 @id @default(autoincrement())
+  descricao         String              @db.VarChar(100)
+  veiculos_clientes veiculos_clientes[]
+}
+
+model usuarios {
+  cd_usuario  Int        @id @default(autoincrement())
+  nm_usuario  Int
+  dt_cadastro DateTime   @default(now()) @db.DateTime(0)
+  dt_update   DateTime   @default(now()) @db.DateTime(0)
+  clientes    clientes[]
+}
+
+model veiculos_clientes {
+  cd_veiculo      Int            @id @default(autoincrement())
+  cd_cliente      Int
+  placa           String         @db.VarChar(10)
+  cd_tipo_veiculo Int?
+  clientes        clientes       @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: Cascade, map: "veiculos_clientes_FK")
+  tipo_veiculos   tipo_veiculos? @relation(fields: [cd_tipo_veiculo], references: [cd_tipo_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "veiculos_clientes_FK_1")
+
+  @@index([cd_cliente], map: "veiculos_clientes_FK")
+  @@index([cd_tipo_veiculo], map: "veiculos_clientes_FK_1")
+}
