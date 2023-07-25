@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { criarClienteDTO } from "../dto/clientesDTO";
+import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import { ClienteService } from "../service/clienteService";
 import db from "../../../database/database";
 
@@ -18,7 +18,9 @@ export class ClienteController {
 
       const cliente = await clientesrv.salvar(body);
 
-      return res.status(201).json(cliente);
+      return res
+        .status(200)
+        .json({ message: "Cliente Cadastrado Com sucesso", cliente });
     } catch (error) {
       return res.status(400).json(String(`${error}`));
     }
@@ -30,6 +32,21 @@ export class ClienteController {
       return res.status(200).json(listarClientes);
     } catch (error) {
       error;
+    }
+  }
+  async atualizar(req: Request, res: Response) {
+    try {
+      const body = req.body
+
+      const atualizar = await clientesrv.atualizar(body);
+
+      return res
+      .status(201)
+      .json({ atualizar });
+
+    } catch (error) {
+      res.status(500).json({ status: true, data: { message: `Erro ao atualizar cadastro: ${error}` } });
+
     }
   }
 }
