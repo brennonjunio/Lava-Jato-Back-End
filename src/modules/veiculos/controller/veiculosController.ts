@@ -14,15 +14,32 @@ export class veiculosController {
       return { message: error };
     }
   }
-  async listarTipoveiculo(req: Request, res: Response) {
+  async listarTipoVeiculo(req: Request, res: Response) {
     try {
       const listar = await service.listarTipoVeiculo();
       return res.status(200).json(listar);
     } catch (error) {
       res.status(500).json({
         status: true,
-        data: { message: `Erro ao Inativar cadastro: ${error}` },
+        data: { message: `Erro Ao Listar Tipos de Veiculos: ${error}` },
       });
+    }
+  }
+  async editarTipoVeiculo(req: Request, res: Response) {
+    try {
+      const { cd_tipo_veiculo, descricao } = req.body;
+      const result = await service.editarTipoVeiculo(
+        cd_tipo_veiculo,
+        descricao
+      );
+      return res.status(201).json(result);
+    } catch (error) {
+      res
+        .status(500)
+        .json({
+          status: true,
+          data: { message: "Erro Ao Atualizar Tipo Veiculo:", error },
+        });
     }
   }
 }

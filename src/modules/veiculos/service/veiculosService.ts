@@ -20,11 +20,31 @@ export class veiculoService {
     try {
       return await this.repositorioVeiculos.tipoVeiculoListar();
     } catch (e) {
-        return {
-            statusCode: (500),
-            message: `Error: ${e}`,
-            data: [],
-        };
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: [],
+      };
+    }
+  }
+  async editarTipoVeiculo(cd_tipo_veiculo: number, descricao: any) {
+    try {
+      const result = await this.repositorioVeiculos.tipoVeiculoEditar(
+        cd_tipo_veiculo,
+        descricao
+      );
+      return {
+        statusCode: 200,
+        message: "Sucesso ao Atualizar cadastro do Cliente!",
+        data: [result],
+      };
+    } catch (e) {
+      console.log("🚀 ~ file: veiculosService.ts:42 ~ veiculoService ~ editarTipoVeiculo ~ e:", e)
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: [],
+      };
     }
   }
 }
