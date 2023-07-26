@@ -6,5 +6,7 @@ import { veiculosController } from "../modules/veiculos/controller/veiculosContr
 veiculosRouter.post("/veiculo/tipo", new veiculosController().criarTipoVeiculo);
 veiculosRouter.get("/veiculo/tipo", new veiculosController().listarTipoVeiculo);
 veiculosRouter.put("/veiculo/tipo", new veiculosController().editarTipoVeiculo);
+veiculosRouter.delete("/veiculo/tipo", new veiculosController().deletarTipoVeiculo);
+
 
 export default veiculosRouter ;

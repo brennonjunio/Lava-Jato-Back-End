@@ -42,4 +42,18 @@ export class veiculosController {
         });
     }
   }
+  async deletarTipoVeiculo(req: Request, res: Response){
+    try {
+      const {cd_tipo_veiculo} = req.body;
+      const result = await service.deletarTipoVeiculo(cd_tipo_veiculo)
+      return res.status(201).json(result);
+    }catch (error) {
+      res
+        .status(500)
+        .json({
+          status: true,
+          data: { message: "Erro ao Deletar Tipo Veiculo:", error },
+        });
+    }
+  }
 }

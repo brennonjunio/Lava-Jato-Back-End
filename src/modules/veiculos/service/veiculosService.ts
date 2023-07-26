@@ -39,12 +39,27 @@ export class veiculoService {
         data: [result],
       };
     } catch (e) {
-      console.log("🚀 ~ file: veiculosService.ts:42 ~ veiculoService ~ editarTipoVeiculo ~ e:", e)
       return {
         statusCode: 500,
         message: `Error: ${e}`,
         data: [],
       };
     }
+  }
+  async deletarTipoVeiculo(cd_tipo_veiculo:number){
+ try {
+    const result = await this.repositorioVeiculos.tipoVeiculoDeletar(cd_tipo_veiculo);
+    return{
+        statusCode: 200,
+        message: "Sucesso ao Excluir Tipo Veiculo!",
+        data: [result],
+    }
+ } catch (e) {
+    return {
+      statusCode: 500,
+      message: `Error: ${e}`,
+      data: [],
+    };
+  }
   }
 }

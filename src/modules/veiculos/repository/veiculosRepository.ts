@@ -17,4 +17,11 @@ export class veiculosRepository {
     });
     return result;
   }
+  async tipoVeiculoDeletar(cd_tipo_veiculo:number){
+    await db.tipo_veiculos.delete({
+      where:{cd_tipo_veiculo:cd_tipo_veiculo}
+    })
+
+    return {message:'Excluido Com sucesso'}
+  }
 }
