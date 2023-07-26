@@ -15,11 +15,13 @@ export class ClienteService {
 
   async atualizar(param: updateClienteDTO) {
     try {
-     const data =   await this.clienteRepository.atualizarCliente(param);
+      const data = await this.clienteRepository.atualizarCliente(param);
 
-       return { statusCode: 204, message: 'Sucesso ao Atualizar cadastro do Cliente!', data: [data] };
-
-      
+      return {
+        statusCode: 204,
+        message: "Sucesso ao Atualizar cadastro do Cliente!",
+        data: [data],
+      };
     } catch (error) {
       return { error };
     }
@@ -27,6 +29,21 @@ export class ClienteService {
   async listar() {
     try {
       return await this.clienteRepository.listarClientes();
-    } catch (error) {}
+    } catch (error) {
+      return { error };
+    }
+  }
+  async deletar(cd_cliente: number) {
+    try {
+      const result = await this.clienteRepository.deletarCliente(cd_cliente);
+      return {
+        statusCode: 200,
+        status: true,
+        data: result,
+        message: 'Sucesso ao deletar Cliente!',
+    };
+    } catch (error) {
+      return { message:error };
+    }
   }
 }

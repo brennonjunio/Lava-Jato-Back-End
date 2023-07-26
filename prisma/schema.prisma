@@ -29,6 +29,7 @@ model clientes {
   bairro            String?             @db.VarChar(60)
   nr_casa           String?             @db.VarChar(20)
   cd_usuario        Int?
+  status            String              @default("s")
   usuarios          usuarios?           @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "clientes_FK")
   veiculos_clientes veiculos_clientes[]
 

@@ -1,7 +1,5 @@
 import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import db from "../../../database/database";
-import { json } from "stream/consumers";
-import { timeStamp } from "console";
 
 export class ClienteRepository {
   async criarCliente(param: criarClienteDTO) {
@@ -13,9 +11,9 @@ export class ClienteRepository {
   }
   async atualizarCliente(param: updateClienteDTO) {
     try {
-     const result = await db.clientes.update({
+      const result = await db.clientes.update({
         where: { cd_cliente: param.cd_cliente },
-        data: param ,
+        data: param,
       });
       return { status: true, data: result };
     } catch (error) {
@@ -24,5 +22,16 @@ export class ClienteRepository {
   }
   async listarClientes() {
     return await db.clientes.findMany({});
+  }
+
+  async deletarCliente(cd_cliente: number) {
+   try {
+    return await db.clientes.delete({
+      where: { cd_cliente: cd_cliente },
+    });
+   } catch (error) {
+    console.log("🚀 ~ file: clientesRepository.ts:33 ~ ClienteRepository ~ deletarCliente ~ error:", error)
+    return {message:error}
+   }
   }
 }
