@@ -57,4 +57,19 @@ export class ClienteController {
       return res.status(200).json({ message:'Cliente Deletado com sucesso!' });
     } catch (error) {return error}
   }
+  async inativar(req: Request, res: Response){
+    try {
+      const {cd_cliente} = req.body;
+      await clientesrv.inativar(cd_cliente);
+      return res.status(200).json({ message:'Cliente Inativado com sucesso!',cd_cliente });
+
+    } catch (error) {
+      res
+        .status(500)
+        .json({
+          status: true,
+          data: { message: `Erro ao Inativar cadastro: ${error}` },
+        });
+    }
+  }
 }

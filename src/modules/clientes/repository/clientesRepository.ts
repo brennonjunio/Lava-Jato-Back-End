@@ -1,4 +1,4 @@
-import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
+import { criarClienteDTO, inativarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import db from "../../../database/database";
 
 export class ClienteRepository {
@@ -30,8 +30,18 @@ export class ClienteRepository {
       where: { cd_cliente: cd_cliente },
     });
    } catch (error) {
-    console.log("🚀 ~ file: clientesRepository.ts:33 ~ ClienteRepository ~ deletarCliente ~ error:", error)
     return {message:error}
    }
+  }
+  async inativarCliente(cd_cliente:number ){
+    try {
+      const result = await db.clientes.update({
+        where: { cd_cliente: cd_cliente },
+        data: {status: 'I'}
+      });
+      return { status: true, data: result };
+    } catch (error) {
+      return {message: `Erro ao Inativar Cliente: ${error}`}
+    }
   }
 }

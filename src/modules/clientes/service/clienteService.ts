@@ -1,4 +1,4 @@
-import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
+import { criarClienteDTO, inativarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import { ClienteRepository } from "../repository/clientesRepository";
 export class ClienteService {
   private clienteRepository: ClienteRepository = new ClienteRepository();
@@ -44,6 +44,20 @@ export class ClienteService {
     };
     } catch (error) {
       return { message:error };
+    }
+  }
+  async inativar(cd_cliente:number){
+    try {
+       const result = await this.clienteRepository.inativarCliente(cd_cliente)
+       console.log("🚀 ~ file: clienteService.ts:52 ~ ClienteService ~ inativar ~ result:", result)
+       return {
+        statusCode: 200,
+        status: true,
+        data: result,
+        message: 'Sucesso ao Inativar Cliente!',
+    };
+    } catch (error) {
+      
     }
   }
 }

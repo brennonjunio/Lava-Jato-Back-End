@@ -12,4 +12,9 @@ export class updateClienteDTO {
   bairro: string;
   nr_casa: string;
   cd_cliente: number;
+  status?: string;
+}
+export class inativarClienteDTO{
+  cd_cliente: number;
+  status: string;
 }
