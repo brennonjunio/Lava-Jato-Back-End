@@ -70,14 +70,31 @@ export class veiculoService {
       const result = await this.repositorioVeiculos.veiculoClienteCriar(param);
       return {
         statusCode: 200,
-        message: "Sucesso ao Excluir Tipo Veiculo!",
+        message: "Sucesso ao vincular o Veiculo ao cliente",
         data: [result],
       };
     } catch (e) {
       return {
         statusCode: 500,
         message: `Error: ${e}`,
-        data: [],
+        data: ['Erro no Service'],
+      };
+    }
+  }
+  async listarVeiculosCliente(){
+    try {
+    const result = await this.repositorioVeiculos.listarVeiculosCliente();
+    return {
+      statusCode: 200,
+      message: "Sucesso ao listar veiculos",
+      data: [result],
+    };
+      
+    } catch (e) {
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: ['Erro no Service'],
       };
     }
   }

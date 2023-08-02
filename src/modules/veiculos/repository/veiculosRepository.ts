@@ -31,4 +31,9 @@ export class veiculosRepository {
     });
     return result;
   }
+
+  async listarVeiculosCliente(){
+    const result = await db.veiculos_clientes.findMany({})
+    return result;
+  }
 }

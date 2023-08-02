@@ -1,3 +1,4 @@
+import db from "../../../database/database";
 import { veiculoService } from "../service/veiculosService";
 import { Request, Response } from "express";
 export const service = new veiculoService();
@@ -34,37 +35,54 @@ export class veiculosController {
       );
       return res.status(201).json(result);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          status: true,
-          data: { message: "Erro Ao Atualizar Tipo Veiculo:", error },
-        });
+      res.status(500).json({
+        status: true,
+        data: { message: "Erro Ao Atualizar Tipo Veiculo:", error },
+      });
     }
   }
-  async deletarTipoVeiculo(req: Request, res: Response){
+  async deletarTipoVeiculo(req: Request, res: Response) {
     try {
-      const {cd_tipo_veiculo} = req.body;
-      const result = await service.deletarTipoVeiculo(cd_tipo_veiculo)
+      const { cd_tipo_veiculo } = req.body;
+      const result = await service.deletarTipoVeiculo(cd_tipo_veiculo);
       return res.status(201).json(result);
-    }catch (error) {
-      res
-        .status(500)
-        .json({
-          status: true,
-          data: { message: "Erro ao Deletar Tipo Veiculo:", error },
-        });
+    } catch (error) {
+      res.status(500).json({
+        status: true,
+        data: { message: "Erro ao Deletar Tipo Veiculo:", error },
+      });
     }
   }
-  async veiculoClienteCriar(req: Request, res: Response){
+  async veiculoClienteCriar(req: Request, res: Response) {
     try {
       const body = req.body;
-      const result = await service.criarTipoVeiculo(body);
+      const uniquePlaca = await db.veiculos_clientes.findFirst({
+        where: { placa: body.placa }
+      });
+      if(uniquePlaca){
+        throw new Error(`Veiculo Já Cadastrado`);
+      }
+
+      const result = await service.criarVeiculoCLiente(body);
       return res
         .status(200)
-        .json({ message: "Veiculo do Cliente Cadastrado Com sucesso",result });
+        .json({ message: "Veiculo do Cliente Cadastrado Com sucesso", result });
     } catch (error) {
-      
+      return res.status(500).json(String(`${error}`));
     }
   }
+  async listarVeiculosCliente(req: Request, res: Response) {
+    try {
+      const result = await service.listarVeiculosCliente();
+      return res
+        .status(200)
+        .json({ message: "Veiculos Listados Com sucesso!!", result });
+    } catch (error) {
+      res.status(500).json({
+        status: true,
+        data: { message: "Erro Ao listar Veiculos", error },
+      });
+    }
+  }
+  
 }
