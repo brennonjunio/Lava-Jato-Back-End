@@ -12,6 +12,10 @@ veiculosRouter.delete("/veiculo/tipo", new veiculosController().deletarTipoVeicu
 //rotas para vinculo de veiculos
 veiculosRouter.post("/veiculo/cliente",new veiculosController().veiculoClienteCriar);
 veiculosRouter.get("/veiculo/cliente",new veiculosController().listarVeiculosCliente);
+veiculosRouter.put("/veiculo/cliente",new veiculosController().editarVeiculosCliente);
+veiculosRouter.delete("/veiculo/cliente",new veiculosController().deletarVeiculosCliente);
+
+
 
 
 

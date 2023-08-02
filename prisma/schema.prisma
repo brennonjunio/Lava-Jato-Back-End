@@ -56,9 +56,10 @@ model veiculos_clientes {
   placa           String         @db.VarChar(10) @unique
   cd_tipo_veiculo Int?
   modelo          String         @db.VarChar(50)
+
+  @@index([cd_veiculo, cd_cliente], name: "veiculos_clientes_pk")
+
   clientes        clientes       @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: Cascade, map: "veiculos_clientes_FK")
   tipo_veiculos   tipo_veiculos? @relation(fields: [cd_tipo_veiculo], references: [cd_tipo_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "veiculos_clientes_FK_1")
-
-  @@index([cd_cliente], map: "veiculos_clientes_FK")
-  @@index([cd_tipo_veiculo], map: "veiculos_clientes_FK_1")
 }
+

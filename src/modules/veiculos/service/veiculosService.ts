@@ -1,4 +1,4 @@
-import { veiculoClienteDTO } from "../dto/veiculosDTO";
+import { updateVeiculoClienteDTO, veiculoClienteDTO } from "../dto/veiculosDTO";
 import { veiculosRepository } from "../repository/veiculosRepository";
 export class veiculoService {
   private repositorioVeiculos: veiculosRepository = new veiculosRepository();
@@ -77,24 +77,60 @@ export class veiculoService {
       return {
         statusCode: 500,
         message: `Error: ${e}`,
-        data: ['Erro no Service'],
+        data: ["Erro no Service"],
       };
     }
   }
-  async listarVeiculosCliente(){
+  async listarVeiculosCliente() {
     try {
-    const result = await this.repositorioVeiculos.listarVeiculosCliente();
-    return {
-      statusCode: 200,
-      message: "Sucesso ao listar veiculos",
-      data: [result],
-    };
-      
+      const result = await this.repositorioVeiculos.listarVeiculosCliente();
+      return {
+        statusCode: 200,
+        message: "Sucesso ao listar veiculos",
+        data: [result],
+      };
     } catch (e) {
       return {
         statusCode: 500,
         message: `Error: ${e}`,
-        data: ['Erro no Service'],
+        data: ["Erro no Service"],
+      };
+    }
+  }
+  async atualizarVeiculosCliente(param: updateVeiculoClienteDTO) {
+    try {
+      const result = await this.repositorioVeiculos.atualizarVeiculosCliente(
+        param
+      );
+      return {
+        statusCode: 200,
+        message: "Sucesso Ao Atualizar Veiculo",
+        data: [result],
+      };
+    } catch (e) {
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: ["Erro no Service"],
+      };
+    }
+  }
+  async deletarVeiculosCliente(cd_veiculo: number) {
+    try {
+      const result = await this.repositorioVeiculos.deletarVeiculosCliente(
+        cd_veiculo
+      );
+      return {
+        statusCode: 200,
+        message: "Sucesso Ao Deletar Veiculo",
+        data: [result],
+      };
+    } catch (e) {
+      console.log("🚀 ~ file: veiculosService.ts:129 ~ veiculoService ~ deletarVeiculosCliente ~ e:", e)
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: ["Erro no Service"],
       };
     }
   }

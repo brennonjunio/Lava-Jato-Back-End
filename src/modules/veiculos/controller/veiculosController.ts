@@ -84,5 +84,32 @@ export class veiculosController {
       });
     }
   }
+  async editarVeiculosCliente(req: Request, res: Response){
+    try {
+      const body = req.body
+      const result = await service.atualizarVeiculosCliente(body)
+      return res.status(200).json({message: "Veiculo Editado Com sucesso!!",result})
+
+    } catch (error) {
+      res.status(500).json({
+        status: true,
+        data: { message: "Erro Ao Atualizar Veiculo do Cliente", error },
+      });
+    }
+  }
+  async deletarVeiculosCliente(req: Request, res: Response){
+try {
+  const {cd_veiculo} = req.body;
+  const result = await service.deletarVeiculosCliente(cd_veiculo);
+  return res.status(200).json({message: "Veiculo Deletado Com sucesso!!",result})
+
+} catch (error) {
+  res.status(500).json({
+    status: true,
+    data: { message: "Erro Ao Deletar Veiculo do Cliente", error },
+  });
+}
+
+  }
   
 }
