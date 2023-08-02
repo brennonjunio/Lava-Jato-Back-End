@@ -56,4 +56,15 @@ export class veiculosController {
         });
     }
   }
+  async veiculoClienteCriar(req: Request, res: Response){
+    try {
+      const body = req.body;
+      const result = await service.criarTipoVeiculo(body);
+      return res
+        .status(200)
+        .json({ message: "Veiculo do Cliente Cadastrado Com sucesso",result });
+    } catch (error) {
+      
+    }
+  }
 }

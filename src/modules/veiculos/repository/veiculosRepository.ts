@@ -1,4 +1,5 @@
 import db from "../../../database/database";
+import { veiculoClienteDTO } from "../dto/veiculosDTO";
 
 export class veiculosRepository {
   async tipoVeiculoCriar(descricao: any) {
@@ -10,18 +11,24 @@ export class veiculosRepository {
   async tipoVeiculoListar() {
     return await db.tipo_veiculos.findMany({});
   }
-  async tipoVeiculoEditar(cd_tipo_veiculo: number,descricao: any) {
+  async tipoVeiculoEditar(cd_tipo_veiculo: number, descricao: any) {
     const result = await db.tipo_veiculos.update({
       where: { cd_tipo_veiculo: cd_tipo_veiculo },
-      data: {descricao: descricao},
+      data: { descricao: descricao },
     });
     return result;
   }
-  async tipoVeiculoDeletar(cd_tipo_veiculo:number){
+  async tipoVeiculoDeletar(cd_tipo_veiculo: number) {
     await db.tipo_veiculos.delete({
-      where:{cd_tipo_veiculo:cd_tipo_veiculo}
-    })
+      where: { cd_tipo_veiculo: cd_tipo_veiculo },
+    });
 
-    return {message:'Excluido Com sucesso'}
+    return { message: "Excluido Com sucesso" };
+  }
+  async veiculoClienteCriar(param: veiculoClienteDTO) {
+    const result = await db.veiculos_clientes.create({
+      data: param,
+    });
+    return result;
   }
 }

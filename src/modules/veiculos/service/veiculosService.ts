@@ -1,3 +1,4 @@
+import { veiculoClienteDTO } from "../dto/veiculosDTO";
 import { veiculosRepository } from "../repository/veiculosRepository";
 export class veiculoService {
   private repositorioVeiculos: veiculosRepository = new veiculosRepository();
@@ -46,20 +47,38 @@ export class veiculoService {
       };
     }
   }
-  async deletarTipoVeiculo(cd_tipo_veiculo:number){
- try {
-    const result = await this.repositorioVeiculos.tipoVeiculoDeletar(cd_tipo_veiculo);
-    return{
+  async deletarTipoVeiculo(cd_tipo_veiculo: number) {
+    try {
+      const result = await this.repositorioVeiculos.tipoVeiculoDeletar(
+        cd_tipo_veiculo
+      );
+      return {
         statusCode: 200,
         message: "Sucesso ao Excluir Tipo Veiculo!",
         data: [result],
+      };
+    } catch (e) {
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: [],
+      };
     }
- } catch (e) {
-    return {
-      statusCode: 500,
-      message: `Error: ${e}`,
-      data: [],
-    };
   }
+  async criarVeiculoCLiente(param: veiculoClienteDTO) {
+    try {
+      const result = await this.repositorioVeiculos.veiculoClienteCriar(param);
+      return {
+        statusCode: 200,
+        message: "Sucesso ao Excluir Tipo Veiculo!",
+        data: [result],
+      };
+    } catch (e) {
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: [],
+      };
+    }
   }
 }
