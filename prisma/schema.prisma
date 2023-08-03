@@ -10,28 +10,33 @@ datasource db {
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model acessos_usuarios {
   cd_usuario   Int?
-  gerencia     String? @default("N") @db.VarChar(1)
-  clientes     String? @default("N") @db.VarChar(1)
-  financeiro   String? @default("N") @db.VarChar(1)
-  tela_exemplo String? @default("N") @db.VarChar(1)
+  gerencia     String?   @default("N") @db.VarChar(1)
+  clientes     String?   @default("N") @db.VarChar(1)
+  financeiro   String?   @default("N") @db.VarChar(1)
+  tela_exemplo String?   @default("N") @db.VarChar(1)
+  usuarios     usuarios? @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "acessos_usuarios_usuarios_cd_usuario_fk")
 
-  @@index([cd_usuario], map: "acessos_usuarios_FK")
+  @@index([cd_usuario], map: "acessos_usuarios_usuarios_cd_usuario_fk")
   @@ignore
 }
 
 model clientes {
-  cd_cliente        Int                 @id @default(autoincrement())
-  nm_cliente        String              @db.VarChar(200)
-  cpf_cnpj          String?             @unique(map: "clientes_UN") @db.VarChar(14)
-  dt_cadastro       DateTime            @default(now()) @db.DateTime(0)
-  dt_update         DateTime            @default(now()) @db.DateTime(0)
-  cep               String?             @default("0") @db.VarChar(8)
-  bairro            String?             @db.VarChar(60)
-  nr_casa           String?             @db.VarChar(20)
-  cd_usuario        Int?
-  status            String              @default("A")
-  usuarios          usuarios?           @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "clientes_FK")
-  veiculos_clientes veiculos_clientes[]
+  cd_cliente         Int                  @id @default(autoincrement())
+  nm_cliente         String               @db.VarChar(200)
+  cpf_cnpj           String?              @unique(map: "clientes_UN") @db.VarChar(14)
+  dt_cadastro        DateTime             @default(now()) @db.DateTime(0)
+  dt_update          DateTime             @default(now()) @db.DateTime(0)
+  cep                String?              @default("0") @db.VarChar(8)
+  bairro             String?              @db.VarChar(60)
+  nr_casa            String?              @db.VarChar(20)
+  cd_usuario         Int?
+  status             String               @default("A")
+  agenda             agenda[]
+  usuarios           usuarios?            @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "clientes_FK")
+  financeiro         financeiro[]
+  movimentacoes      movimentacoes[]
+  servicos_agendados servicos_agendados[]
+  veiculos_clientes  veiculos_clientes[]
 
   @@index([cd_usuario], map: "clientes_FK")
 }
@@ -43,23 +48,188 @@ model tipo_veiculos {
 }
 
 model usuarios {
-  cd_usuario  Int        @id @default(autoincrement())
-  nm_usuario  Int
-  dt_cadastro DateTime   @default(now()) @db.DateTime(0)
-  dt_update   DateTime   @default(now()) @db.DateTime(0)
-  clientes    clientes[]
+  cd_usuario       Int                @id @default(autoincrement())
+  nm_usuario       Int
+  dt_cadastro      DateTime           @default(now()) @db.DateTime(0)
+  dt_update        DateTime           @default(now()) @db.DateTime(0)
+  acessos_usuarios acessos_usuarios[] @ignore
+  clientes         clientes[]
+  financeiro       financeiro[]
+  movimentacoes    movimentacoes[]
 }
 
 model veiculos_clientes {
-  cd_veiculo      Int            @id @default(autoincrement())
-  cd_cliente      Int
-  placa           String         @db.VarChar(10) @unique
-  cd_tipo_veiculo Int?
-  modelo          String         @db.VarChar(50)
+  cd_veiculo                                                          Int                  @id @default(autoincrement())
+  cd_cliente                                                          Int
+  placa                                                               String               @unique @db.VarChar(10)
+  cd_tipo_veiculo                                                     Int?
+  modelo                                                              String               @db.VarChar(50)
+  servicos_agendados_servicos_agendados_cd_veiculoToveiculos_clientes servicos_agendados[] @relation("servicos_agendados_cd_veiculoToveiculos_clientes")
+  servicos_agendados_servicos_agendados_placaToveiculos_clientes      servicos_agendados[] @relation("servicos_agendados_placaToveiculos_clientes")
+  clientes                                                            clientes             @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: Cascade, map: "veiculos_clientes_FK")
+  tipo_veiculos                                                       tipo_veiculos?       @relation(fields: [cd_tipo_veiculo], references: [cd_tipo_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "veiculos_clientes_FK_1")
 
-  @@index([cd_veiculo, cd_cliente], name: "veiculos_clientes_pk")
-
-  clientes        clientes       @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: Cascade, map: "veiculos_clientes_FK")
-  tipo_veiculos   tipo_veiculos? @relation(fields: [cd_tipo_veiculo], references: [cd_tipo_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "veiculos_clientes_FK_1")
+  @@index([cd_veiculo, cd_cliente], map: "veiculos_clientes_pk")
+  @@index([cd_cliente], map: "veiculos_clientes_FK")
+  @@index([cd_tipo_veiculo], map: "veiculos_clientes_FK_1")
 }
 
+model agenda {
+  cd_agenda                                               Int                  @id @default(autoincrement())
+  horario                                                 DateTime             @db.DateTime(0) @unique
+  cd_cliente                                              Int?
+  cd_servico                                              Int?
+  status_agenda                                           Int?
+  cd_pagamento                                            Int?
+  clientes                                                clientes?            @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "agenda_clientes_cd_cliente_fk")
+  servicos                                                servicos?            @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "agenda_servicos_cd_servico_fk")
+  tipos_pagamentos                                        tipos_pagamentos?    @relation(fields: [cd_pagamento], references: [cd_pagamento], onDelete: NoAction, onUpdate: NoAction, map: "agenda_tipos_pagamentos_cd_pagamento_fk")
+  servicos_agendados_servicos_agendados_cd_agendaToagenda servicos_agendados[] @relation("servicos_agendados_cd_agendaToagenda")
+  servicos_agendados_servicos_agendados_horarioToagenda   servicos_agendados[] @relation("servicos_agendados_horarioToagenda")
+
+  @@index([cd_cliente], map: "agenda_clientes_cd_cliente_fk")
+  @@index([cd_servico], map: "agenda_servicos_cd_servico_fk")
+  @@index([cd_pagamento], map: "agenda_tipos_pagamentos_cd_pagamento_fk")
+  @@index([horario], map: "idx_horario")
+}
+
+model descricao_all {
+  nr_sequencia Int     @id @default(autoincrement())
+  descricao    String  @db.VarChar(50)
+  nome_tabela  String  @db.VarChar(50)
+  cd_origem    String? @db.VarChar(1)
+}
+
+model financeiro {
+  nr_sequencia                                                              Int                 @id
+  cd_cliente                                                                Int
+  cd_nf                                                                     Int?
+  cd_servico                                                                Int
+  dh_hr_mov                                                                 DateTime            @default(now()) @db.DateTime(0)
+  dh_hr_baixa                                                               DateTime            @db.DateTime(0)
+  vlr_movimento                                                             Float               @db.Float
+  vlr_desconto                                                              Float               @default(0) @db.Float
+  perc_desconto                                                             Float               @default(0) @db.Float
+  vlr_total                                                                 Float               @db.Float
+  dh_vencimento                                                             DateTime            @default(now()) @db.DateTime(0)
+  vlr_baixa                                                                 Int?
+  vlr_juros                                                                 Int?                @default(0)
+  cd_tipo_pagamento                                                         Int
+  cd_usuario                                                                Int
+  cd_agenda                                                                 Int?
+  nr_seq_servico_agendado                                                   Int
+  cd_tipo_movimento                                                         Int?
+  clientes                                                                  clientes            @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_clientes_cd_cliente_fk")
+  servicos_agendados_financeiro_cd_agendaToservicos_agendados               servicos_agendados? @relation("financeiro_cd_agendaToservicos_agendados", fields: [cd_agenda], references: [cd_agenda], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_servicos_agendados_cd_agenda_fk")
+  servicos_agendados_financeiro_nr_seq_servico_agendadoToservicos_agendados servicos_agendados  @relation("financeiro_nr_seq_servico_agendadoToservicos_agendados", fields: [nr_seq_servico_agendado], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_servicos_agendados_nr_sequencia_fk")
+  servicos                                                                  servicos            @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_servicos_cd_servico_fk")
+  tipo_movimento                                                            tipo_movimento?     @relation(fields: [cd_tipo_movimento], references: [cd_movimento], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_tipo_movimento_cd_movimento_fk")
+  tipos_pagamentos                                                          tipos_pagamentos    @relation(fields: [cd_tipo_pagamento], references: [cd_pagamento], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_tipos_pagamentos_cd_pagamento_fk")
+  usuarios                                                                  usuarios            @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_usuarios_cd_usuario_fk")
+
+  @@index([cd_cliente], map: "financeiro_clientes_cd_cliente_fk")
+  @@index([cd_agenda], map: "financeiro_servicos_agendados_cd_agenda_fk")
+  @@index([nr_seq_servico_agendado], map: "financeiro_servicos_agendados_nr_sequencia_fk")
+  @@index([cd_servico], map: "financeiro_servicos_cd_servico_fk")
+  @@index([cd_tipo_movimento], map: "financeiro_tipo_movimento_cd_movimento_fk")
+  @@index([cd_tipo_pagamento], map: "financeiro_tipos_pagamentos_cd_pagamento_fk")
+  @@index([cd_usuario], map: "financeiro_usuarios_cd_usuario_fk")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model movimentacoes {
+  nr_seq_interno                                                               Int                 @id @default(autoincrement())
+  cd_cliente                                                                   Int
+  cd_servico                                                                   Int
+  cd_status                                                                    String              @default("A") @db.VarChar(1)
+  dh_mov                                                                       DateTime            @default(now()) @db.DateTime(0)
+  dh_update                                                                    DateTime            @default(now()) @db.DateTime(0)
+  quantidade                                                                   Int                 @default(1)
+  vlr_unit                                                                     Float               @db.Float
+  perc_desconto                                                                Float?              @default(0) @db.Float
+  vlr_desconto                                                                 Int                 @default(0)
+  vlr_total                                                                    Int
+  observacao                                                                   String?             @db.VarChar(500)
+  cd_tipo_pagamento                                                            Int
+  cd_usuario                                                                   Int
+  cd_agenda                                                                    Int?
+  nr_seq_servico_agendado                                                      Int
+  cd_tipo_movimento                                                            Int
+  clientes                                                                     clientes            @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "movimentacoes_clientes_cd_cliente_fk")
+  servicos_agendados_movimentacoes_cd_agendaToservicos_agendados               servicos_agendados? @relation("movimentacoes_cd_agendaToservicos_agendados", fields: [cd_agenda], references: [cd_agenda], onDelete: NoAction, onUpdate: NoAction, map: "movimentacoes_servicos_agendados_cd_agenda_fk")
+  servicos_agendados_movimentacoes_nr_seq_servico_agendadoToservicos_agendados servicos_agendados  @relation("movimentacoes_nr_seq_servico_agendadoToservicos_agendados", fields: [nr_seq_servico_agendado], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "movimentacoes_servicos_agendados_nr_sequencia_fk")
+  servicos                                                                     servicos            @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "movimentacoes_servicos_cd_servico_fk")
+  tipo_movimento                                                               tipo_movimento      @relation(fields: [cd_tipo_movimento], references: [cd_movimento], onDelete: NoAction, onUpdate: NoAction, map: "movimentacoes_tipo_movimento_cd_movimento_fk")
+  tipos_pagamentos                                                             tipos_pagamentos    @relation(fields: [cd_tipo_pagamento], references: [cd_pagamento], onDelete: NoAction, onUpdate: NoAction, map: "movimentacoes_tipos_pagamentos_cd_pagamento_fk")
+  usuarios                                                                     usuarios            @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "movimentacoes_usuarios_cd_usuario_fk")
+
+  @@index([cd_cliente], map: "movimentacoes_clientes_cd_cliente_fk")
+  @@index([cd_agenda], map: "movimentacoes_servicos_agendados_cd_agenda_fk")
+  @@index([nr_seq_servico_agendado], map: "movimentacoes_servicos_agendados_nr_sequencia_fk")
+  @@index([cd_servico], map: "movimentacoes_servicos_cd_servico_fk")
+  @@index([cd_tipo_movimento], map: "movimentacoes_tipo_movimento_cd_movimento_fk")
+  @@index([cd_tipo_pagamento], map: "movimentacoes_tipos_pagamentos_cd_pagamento_fk")
+  @@index([cd_usuario], map: "movimentacoes_usuarios_cd_usuario_fk")
+}
+
+model servicos {
+  cd_servico         Int                  @id @default(autoincrement())
+  desc_servico       String               @db.VarChar(40)
+  vlr_servico        Float                @db.Float
+  agenda             agenda[]
+  financeiro         financeiro[]
+  movimentacoes      movimentacoes[]
+  servicos_agendados servicos_agendados[]
+}
+
+model servicos_agendados {
+  nr_sequencia                                                            Int               @id @default(autoincrement())
+  cd_servico                                                              Int
+  horario                                                                 DateTime          @db.DateTime(0)
+  status_servico                                                          String            @default("A") @db.VarChar(1)
+  cd_agenda                                                               Int               @unique
+  cd_cliente                                                              Int
+  tempo_servico                                                           String?           @db.VarChar(30)
+  cd_veiculo                                                              Int
+  placa                                                                   String            @db.VarChar(30)
+  dh_inicio                                                               DateTime          @default(now()) @db.DateTime(0)
+  dh_fim                                                                  DateTime?         @db.DateTime(0)
+  financeiro_financeiro_cd_agendaToservicos_agendados                     financeiro[]      @relation("financeiro_cd_agendaToservicos_agendados")
+  financeiro_financeiro_nr_seq_servico_agendadoToservicos_agendados       financeiro[]      @relation("financeiro_nr_seq_servico_agendadoToservicos_agendados")
+  movimentacoes_movimentacoes_cd_agendaToservicos_agendados               movimentacoes[]   @relation("movimentacoes_cd_agendaToservicos_agendados")
+  movimentacoes_movimentacoes_nr_seq_servico_agendadoToservicos_agendados movimentacoes[]   @relation("movimentacoes_nr_seq_servico_agendadoToservicos_agendados")
+  agenda_servicos_agendados_cd_agendaToagenda                             agenda            @relation("servicos_agendados_cd_agendaToagenda", fields: [cd_agenda], references: [cd_agenda], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_agenda_cd_agenda_fk")
+  agenda_servicos_agendados_horarioToagenda                               agenda            @relation("servicos_agendados_horarioToagenda", fields: [horario], references: [horario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_agenda_horario_fk")
+  clientes                                                                clientes          @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_clientes_cd_cliente_fk")
+  servicos                                                                servicos          @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_servicos_cd_servico_fk")
+  veiculos_clientes_servicos_agendados_cd_veiculoToveiculos_clientes      veiculos_clientes @relation("servicos_agendados_cd_veiculoToveiculos_clientes", fields: [cd_veiculo], references: [cd_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_cd_veiculo_fk")
+  veiculos_clientes_servicos_agendados_placaToveiculos_clientes           veiculos_clientes @relation("servicos_agendados_placaToveiculos_clientes", fields: [placa], references: [placa], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_placa_fk")
+
+  @@index([cd_agenda], map: "servicos_agendados_agenda_cd_agenda_fk")
+  @@index([horario], map: "servicos_agendados_agenda_horario_fk")
+  @@index([cd_cliente], map: "servicos_agendados_clientes_cd_cliente_fk")
+  @@index([cd_servico], map: "servicos_agendados_servicos_cd_servico_fk")
+  @@index([cd_veiculo], map: "servicos_agendados_veiculos_clientes_cd_veiculo_fk")
+  @@index([placa], map: "servicos_agendados_veiculos_clientes_placa_fk")
+}
+
+model tipo_movimento {
+  cd_movimento     Int                @id @default(autoincrement())
+  descricao        String             @db.VarChar(30)
+  financeiro       financeiro[]
+  movimentacoes    movimentacoes[]
+  tipos_pagamentos tipos_pagamentos[]
+}
+
+model tipos_pagamentos {
+  cd_pagamento      Int             @id @default(autoincrement())
+  descricao         String          @db.VarChar(50)
+  qtd_parcelas      Int             @default(1)
+  cd_tipo_movimento Int
+  agenda            agenda[]
+  financeiro        financeiro[]
+  movimentacoes     movimentacoes[]
+  tipo_movimento    tipo_movimento  @relation(fields: [cd_tipo_movimento], references: [cd_movimento], onDelete: NoAction, onUpdate: NoAction, map: "tipos_pagamentos_tipo_movimento_cd_movimento_fk")
+
+  @@index([cd_tipo_movimento], map: "tipos_pagamentos_tipo_movimento_cd_movimento_fk")
+}
