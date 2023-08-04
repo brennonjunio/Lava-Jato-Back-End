@@ -33,7 +33,15 @@ export class veiculosRepository {
   }
 
   async listarVeiculosCliente() {
-    const result = await db.veiculos_clientes.findMany({});
+    const result = await db.veiculos_clientes.findMany({
+      include: {
+        tipo_veiculos: {
+          select: {
+            descricao: true,
+          },
+        },
+      },
+    });
     return result;
   }
 

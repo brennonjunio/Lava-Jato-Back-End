@@ -21,27 +21,36 @@ export class ClienteRepository {
     }
   }
   async listarClientes() {
-    return await db.clientes.findMany({});
+    return await db.clientes.findMany({
+      include: {
+        veiculos_clientes: {
+          select: {
+            placa: true,
+            modelo: true,
+          },
+        },
+      },
+    });
   }
 
   async deletarCliente(cd_cliente: number) {
-   try {
-    return await db.clientes.delete({
-      where: { cd_cliente: cd_cliente },
-    });
-   } catch (error) {
-    return {message:error}
-   }
+    try {
+      return await db.clientes.delete({
+        where: { cd_cliente: cd_cliente },
+      });
+    } catch (error) {
+      return { message: error };
+    }
   }
-  async inativarCliente(cd_cliente:number ){
+  async inativarCliente(cd_cliente: number) {
     try {
       const result = await db.clientes.update({
         where: { cd_cliente: cd_cliente },
-        data: {status: 'I'}
+        data: { status: "I" },
       });
       return { status: true, data: result };
     } catch (error) {
-      return {message: `Erro ao Inativar Cliente: ${error}`}
+      return { message: `Erro ao Inativar Cliente: ${error}` };
     }
   }
 }
