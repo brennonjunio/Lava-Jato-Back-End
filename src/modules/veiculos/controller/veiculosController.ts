@@ -64,9 +64,10 @@ export class veiculosController {
       }
 
       const result = await service.criarVeiculoCLiente(body);
-      return res
-        .status(200)
-        .json({ message: "Veiculo do Cliente Cadastrado Com sucesso", result });
+
+
+      return res.status(200).json({ data: result });
+
     } catch (error) {
       return res.status(500).json(String(`${error}`));
     }
@@ -74,9 +75,8 @@ export class veiculosController {
   async listarVeiculosCliente(req: Request, res: Response) {
     try {
       const result = await service.listarVeiculosCliente();
-      return res
-        .status(200)
-        .json({ message: "Veiculos Listados Com sucesso!!", result });
+      return res.status(200).json({ data: result });
+
     } catch (error) {
       res.status(500).json({
         status: true,
@@ -88,7 +88,7 @@ export class veiculosController {
     try {
       const body = req.body
       const result = await service.atualizarVeiculosCliente(body)
-      return res.status(200).json({message: "Veiculo Editado Com sucesso!!",result})
+      return res.status(201).json({ data: result });
 
     } catch (error) {
       res.status(500).json({
@@ -101,7 +101,7 @@ export class veiculosController {
 try {
   const {cd_veiculo} = req.body;
   const result = await service.deletarVeiculosCliente(cd_veiculo);
-  return res.status(200).json({message: "Veiculo Deletado Com sucesso!!",result})
+  return res.status(200).json({ data: result });
 
 } catch (error) {
   res.status(500).json({

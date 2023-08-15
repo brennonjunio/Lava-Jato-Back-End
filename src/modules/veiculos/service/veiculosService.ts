@@ -126,7 +126,6 @@ export class veiculoService {
         data: [result],
       };
     } catch (e) {
-      console.log("🚀 ~ file: veiculosService.ts:129 ~ veiculoService ~ deletarVeiculosCliente ~ e:", e)
       return {
         statusCode: 500,
         message: `Error: ${e}`,

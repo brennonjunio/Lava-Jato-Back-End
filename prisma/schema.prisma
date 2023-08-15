@@ -14,8 +14,6 @@ model acessos_usuarios {
   clientes     String?   @default("N") @db.VarChar(1)
   financeiro   String?   @default("N") @db.VarChar(1)
   tela_exemplo String?   @default("N") @db.VarChar(1)
-  usuarios     usuarios? @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "acessos_usuarios_usuarios_cd_usuario_fk")
-
   @@index([cd_usuario], map: "acessos_usuarios_usuarios_cd_usuario_fk")
   @@ignore
 }
@@ -52,7 +50,6 @@ model usuarios {
   nm_usuario       Int
   dt_cadastro      DateTime           @default(now()) @db.DateTime(0)
   dt_update        DateTime           @default(now()) @db.DateTime(0)
-  acessos_usuarios acessos_usuarios[] @ignore
   clientes         clientes[]
   financeiro       financeiro[]
   movimentacoes    movimentacoes[]
@@ -76,15 +73,15 @@ model veiculos_clientes {
 
 model agenda {
   cd_agenda                                               Int                  @id @default(autoincrement())
-  horario                                                 DateTime             @db.DateTime(0) @unique
+  horario                                                 DateTime             @unique @db.DateTime(0)
   cd_cliente                                              Int?
   cd_servico                                              Int?
-  status_agenda                                           Int?
+  status_agenda                                           String               @default("A") @db.VarChar(1)
   cd_pagamento                                            Int?
   clientes                                                clientes?            @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "agenda_clientes_cd_cliente_fk")
   servicos                                                servicos?            @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "agenda_servicos_cd_servico_fk")
   tipos_pagamentos                                        tipos_pagamentos?    @relation(fields: [cd_pagamento], references: [cd_pagamento], onDelete: NoAction, onUpdate: NoAction, map: "agenda_tipos_pagamentos_cd_pagamento_fk")
-  servicos_agendados_servicos_agendados_cd_agendaToagenda servicos_agendados[] @relation("servicos_agendados_cd_agendaToagenda")
+  servicos_agendados_servicos_agendados_cd_agendaToagenda servicos_agendados?  @relation("servicos_agendados_cd_agendaToagenda")
   servicos_agendados_servicos_agendados_horarioToagenda   servicos_agendados[] @relation("servicos_agendados_horarioToagenda")
 
   @@index([cd_cliente], map: "agenda_clientes_cd_cliente_fk")
@@ -205,7 +202,6 @@ model servicos_agendados {
   veiculos_clientes_servicos_agendados_cd_veiculoToveiculos_clientes      veiculos_clientes @relation("servicos_agendados_cd_veiculoToveiculos_clientes", fields: [cd_veiculo], references: [cd_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_cd_veiculo_fk")
   veiculos_clientes_servicos_agendados_placaToveiculos_clientes           veiculos_clientes @relation("servicos_agendados_placaToveiculos_clientes", fields: [placa], references: [placa], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_placa_fk")
 
-  @@index([cd_agenda], map: "servicos_agendados_agenda_cd_agenda_fk")
   @@index([horario], map: "servicos_agendados_agenda_horario_fk")
   @@index([cd_cliente], map: "servicos_agendados_clientes_cd_cliente_fk")
   @@index([cd_servico], map: "servicos_agendados_servicos_cd_servico_fk")

@@ -18,9 +18,7 @@ export class ClienteController {
 
       const cliente = await clientesrv.salvar(body);
 
-      return res
-        .status(200)
-        .json({ message: "Cliente Cadastrado Com sucesso", cliente });
+      return res.status(200).json({ data: cliente });
     } catch (error) {
       return res.status(400).json(String(`${error}`));
     }
@@ -40,36 +38,33 @@ export class ClienteController {
 
       const atualizar = await clientesrv.atualizar(body);
 
-      return res.status(201).json({ atualizar });
+      return res.status(201).json({ data: atualizar });
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          status: true,
-          data: { message: `Erro ao atualizar cadastro: ${error}` },
-        });
+      res.status(500).json({
+        status: true,
+        data: { message: `Erro ao atualizar cadastro: ${error}` },
+      });
     }
   }
   async deletar(req: Request, res: Response) {
     try {
-      const {cd_cliente} = req.body;
-       await clientesrv.deletar(cd_cliente);
-      return res.status(200).json({ message:'Cliente Deletado com sucesso!' });
-    } catch (error) {return error}
-  }
-  async inativar(req: Request, res: Response){
-    try {
-      const {cd_cliente} = req.body;
-      await clientesrv.inativar(cd_cliente);
-      return res.status(200).json({ message:'Cliente Inativado com sucesso!',cd_cliente });
-
+      const { cd_cliente } = req.body;
+      await clientesrv.deletar(cd_cliente);
+      return res.status(201).json({ data: cd_cliente });
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          status: true,
-          data: { message: `Erro ao Inativar cadastro: ${error}` },
-        });
+      return error;
+    }
+  }
+  async inativar(req: Request, res: Response) {
+    try {
+      const { cd_cliente } = req.body;
+      await clientesrv.inativar(cd_cliente);
+      return res.status(201).json({ data: cd_cliente });
+    } catch (error) {
+      res.status(500).json({
+        status: true,
+        data: { message: `Erro ao Inativar cadastro: ${error}` },
+      });
     }
   }
 }

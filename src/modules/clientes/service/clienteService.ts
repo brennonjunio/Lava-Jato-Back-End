@@ -49,7 +49,6 @@ export class ClienteService {
   async inativar(cd_cliente:number){
     try {
        const result = await this.clienteRepository.inativarCliente(cd_cliente)
-       console.log("🚀 ~ file: clienteService.ts:52 ~ ClienteService ~ inativar ~ result:", result)
        return {
         statusCode: 200,
         status: true,
@@ -57,7 +56,7 @@ export class ClienteService {
         message: 'Sucesso ao Inativar Cliente!',
     };
     } catch (error) {
-      
+      return {message:error};
     }
   }
 }

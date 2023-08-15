@@ -18,12 +18,13 @@ export class agendaController {
   }
   async listarAgendasDisponiveis(req: Request, res: Response) {
     try {
+      console.log(Date())
       const result = await service.listarAgendasDisponiveis();
-      console.log('aquio>', new Date())
       return res.status(200).json({ data: result });
     } catch (error) {
       res.status(500).json({
         status: true,
+
         data: { message: `Erro ao Cadastrar Agenda: `, error },
       });
     }
