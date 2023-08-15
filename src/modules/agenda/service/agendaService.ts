@@ -12,7 +12,23 @@ export class agendaService {
         data: result,
       };
     } catch (e) {
-      console.log("🚀 ~ file: agendaService.ts:15 ~ agendaService ~ agendarLavagem ~ e:", e)
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: [],
+      };
+    }
+  }
+  async listarAgendasDisponiveis() {
+    try {
+      const result = await this.repository.listarHorariosDisponiveis();
+
+      return {
+        statusCode: 200,
+        message: "Sucesso ao Listar Agendas!",
+        data: result,
+      };
+    } catch (e) {
       return {
         statusCode: 500,
         message: `Error: ${e}`,

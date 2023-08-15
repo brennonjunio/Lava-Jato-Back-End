@@ -8,11 +8,22 @@ export class agendaController {
     try {
       const body = req.body as criarAgendaDTO;
       const result = await service.agendarLavagem(body);
-      return res.status(200).json({data: result });
+      return res.status(200).json({ data: result });
     } catch (error) {
       res.status(500).json({
         status: true,
-        data: { message: `Erro ao Cadastrar Agenda: `,error },
+        data: { message: `Erro ao Cadastrar Agenda: `, error },
+      });
+    }
+  }
+  async listarAgendasDisponiveis(req: Request, res: Response) {
+    try {
+      const result = await service.listarAgendasDisponiveis();
+      return res.status(200).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        status: true,
+        data: { message: `Erro ao Cadastrar Agenda: `, error },
       });
     }
   }
