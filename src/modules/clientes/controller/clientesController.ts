@@ -20,16 +20,20 @@ export class ClienteController {
 
       return res.status(200).json({ data: cliente });
     } catch (error) {
-      return res.status(400).json(String(`${error}`));
+      res.status(500).json({
+        data: { error },
+      });
     }
   }
   async listar(req: Request, res: Response) {
     try {
-      const listarClientes = await clientesrv.listar();
+      const result = await clientesrv.listar();
 
-      return res.status(200).json(listarClientes);
+      return res.status(200).json(result);
     } catch (error) {
-      error;
+      res.status(500).json({
+        data: { error },
+      });
     }
   }
   async atualizar(req: Request, res: Response) {
@@ -41,8 +45,7 @@ export class ClienteController {
       return res.status(201).json({ data: atualizar });
     } catch (error) {
       res.status(500).json({
-        status: true,
-        data: { message: `Erro ao atualizar cadastro: ${error}` },
+        data: { error },
       });
     }
   }
@@ -50,10 +53,14 @@ export class ClienteController {
     try {
       const { cd_cliente } = req.body;
       await clientesrv.deletar(cd_cliente);
-      return res.status(201).json({ data: cd_cliente });
-    } catch (error) {
-      return error;
-    }
+      return res
+        .status(201)
+        .json({ data: cd_cliente, message: "Cliente Excluido Com sucesso!" });
+      } catch (error) {
+        res.status(500).json({
+          data: { error },
+        });
+      }
   }
   async inativar(req: Request, res: Response) {
     try {
@@ -62,8 +69,7 @@ export class ClienteController {
       return res.status(201).json({ data: cd_cliente });
     } catch (error) {
       res.status(500).json({
-        status: true,
-        data: { message: `Erro ao Inativar cadastro: ${error}` },
+        data: { error },
       });
     }
   }

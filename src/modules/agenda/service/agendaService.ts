@@ -12,12 +12,8 @@ export class agendaService {
         data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: [],
-      };
-    }
+      throw(`erro na Criação da Agenda: ${e}`);
+  }
   }
   async listarAgendasDisponiveis() {
     try {
@@ -29,12 +25,8 @@ export class agendaService {
         data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: [],
-      };
-    }
+      throw(`erro ao Listar Agendas: ${e}`);
+  }
   }
   async deletarHorarioAgenda(cd_agenda:number){
     try {
@@ -45,11 +37,7 @@ export class agendaService {
         data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: [],
-      };
-    }
+      throw(`erro ao Excluir Agendas: ${e}`);
+  }
   }
 }

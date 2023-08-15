@@ -11,21 +11,17 @@ export class agendaController {
       return res.status(200).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        status: true,
-        data: { message: `Erro ao Cadastrar Agenda: `, error },
+        data: { error },
       });
     }
   }
   async listarAgendasDisponiveis(req: Request, res: Response) {
     try {
-      console.log(Date());
       const result = await service.listarAgendasDisponiveis();
       return res.status(200).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        status: true,
-
-        data: { message: `Erro ao Cadastrar Agenda: `, error },
+        data: { error },
       });
     }
   }
@@ -36,8 +32,7 @@ export class agendaController {
       return res.status(201).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        status: true,
-        data: { message: `Erro Ao Excluir Horario `, error },
+        data: { error },
       });
     }
   }
