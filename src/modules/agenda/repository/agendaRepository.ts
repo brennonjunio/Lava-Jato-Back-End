@@ -6,9 +6,10 @@ import { criarAgendaDTO } from "../dto/criarAgendaDTO";
 export class agendaRepository {
   async criarAgenda(params: criarAgendaDTO) {
     const result = await db.$queryRawUnsafe(
-      "select gerar_horarios_agenda(?,?,?,?)",
-      criarAgendaDTO
+      "select gerar_horarios_agenda(?,?,?,?) as total_horarios",
+      params.data_ini, params.data_fim, params.hora_ini, params.hora_fim
     );
+
     return result;
   }
 }
