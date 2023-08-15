@@ -14,7 +14,3 @@ export class updateClienteDTO {
   cd_cliente: number;
   status?: string;
 }
-export class inativarClienteDTO{
-  cd_cliente: number;
-  status: string;
-}

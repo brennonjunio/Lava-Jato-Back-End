@@ -6,6 +6,8 @@ const agendasRouter = Router();
 
 agendasRouter.post("/agenda", new agendaController().criarAgenda);
 agendasRouter.get("/agenda", new agendaController().listarAgendasDisponiveis);
+agendasRouter.delete("/agenda", new agendaController().deletarHorarioAgenda);
+
 
 
 

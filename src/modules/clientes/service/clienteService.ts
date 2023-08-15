@@ -1,4 +1,4 @@
-import { criarClienteDTO, inativarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
+import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import { ClienteRepository } from "../repository/clientesRepository";
 export class ClienteService {
   private clienteRepository: ClienteRepository = new ClienteRepository();

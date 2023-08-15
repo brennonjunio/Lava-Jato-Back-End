@@ -36,4 +36,20 @@ export class agendaService {
       };
     }
   }
+  async deletarHorarioAgenda(cd_agenda:number){
+    try {
+      const result = await this.repository.deletarHorarioAgenda(cd_agenda);
+      return {
+        statusCode: 201,
+        message: "Sucesso Ao Excluir Horario da Agenda",
+        data: result,
+      };
+    } catch (e) {
+      return {
+        statusCode: 500,
+        message: `Error: ${e}`,
+        data: [],
+      };
+    }
+  }
 }

@@ -1,4 +1,7 @@
-import { criarClienteDTO, inativarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
+import {
+  criarClienteDTO,
+  updateClienteDTO,
+} from "../dto/clientesDTO";
 import db from "../../../database/database";
 
 export class ClienteRepository {
@@ -10,15 +13,11 @@ export class ClienteRepository {
     return novoCliente;
   }
   async atualizarCliente(param: updateClienteDTO) {
-    try {
-      const result = await db.clientes.update({
-        where: { cd_cliente: param.cd_cliente },
-        data: param,
-      });
-      return { status: true, data: result };
-    } catch (error) {
-      return { error };
-    }
+    const result = await db.clientes.update({
+      where: { cd_cliente: param.cd_cliente },
+      data: param,
+    });
+    return result;
   }
   async listarClientes() {
     return await db.clientes.findMany({
@@ -34,23 +33,15 @@ export class ClienteRepository {
   }
 
   async deletarCliente(cd_cliente: number) {
-    try {
-      return await db.clientes.delete({
-        where: { cd_cliente: cd_cliente },
-      });
-    } catch (error) {
-      return { message: error };
-    }
+    return await db.clientes.delete({
+      where: { cd_cliente: cd_cliente },
+    });
   }
   async inativarCliente(cd_cliente: number) {
-    try {
-      const result = await db.clientes.update({
-        where: { cd_cliente: cd_cliente },
-        data: { status: "I" },
-      });
-      return { status: true, data: result };
-    } catch (error) {
-      return { message: `Erro ao Inativar Cliente: ${error}` };
-    }
+    const result = await db.clientes.update({
+      where: { cd_cliente: cd_cliente },
+      data: { status: "I" },
+    });
+    return result;
   }
 }

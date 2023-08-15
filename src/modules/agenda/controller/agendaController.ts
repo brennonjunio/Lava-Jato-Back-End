@@ -18,7 +18,7 @@ export class agendaController {
   }
   async listarAgendasDisponiveis(req: Request, res: Response) {
     try {
-      console.log(Date())
+      console.log(Date());
       const result = await service.listarAgendasDisponiveis();
       return res.status(200).json({ data: result });
     } catch (error) {
@@ -26,6 +26,18 @@ export class agendaController {
         status: true,
 
         data: { message: `Erro ao Cadastrar Agenda: `, error },
+      });
+    }
+  }
+  async deletarHorarioAgenda(req: Request, res: Response) {
+    try {
+      const { cd_agenda } = req.body;
+      const result = await service.deletarHorarioAgenda(cd_agenda);
+      return res.status(201).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        status: true,
+        data: { message: `Erro Ao Excluir Horario `, error },
       });
     }
   }
