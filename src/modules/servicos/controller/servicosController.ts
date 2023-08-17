@@ -15,4 +15,14 @@ export class servicosController {
       });
     }
   }
+  async listarServicos(req: Request, res: Response) {
+    try {
+      const result = await servicos.listarServicos();
+      return res.status(200).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
 }
