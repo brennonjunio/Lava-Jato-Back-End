@@ -1,4 +1,4 @@
-import { criarServicoDTO } from "../dto/servicosDTO";
+import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
 import { servicosRepository } from "../repository/servicosRepository";
 
 export class servicosService {
@@ -24,7 +24,19 @@ export class servicosService {
         data: result,
       };
     } catch (e) {
-      throw `erro na Criação Do serviço: ${e}`;
+      throw `erro Ao Listar Serviços: ${e}`;
+    }
+  }
+  async editarServicos(params: updateServiceDTO) {
+    try {
+      const result = await this.repository.editarServicos(params);
+      return {
+        statusCode: 200,
+        message: "Serviço Editado Com Sucesso!",
+        data: result,
+      };
+    } catch (e) {
+      throw `erro na Edição do serviço: ${e}`;
     }
   }
 }
