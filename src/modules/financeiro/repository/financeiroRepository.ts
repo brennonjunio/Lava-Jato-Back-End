@@ -8,4 +8,10 @@ export class financeiroRepository {
     });
     return result;
   }
+  async listarTiposPagamentos() {
+    const result = await db.tipos_pagamentos.findMany({
+      include: { tipo_movimento: { select: { descricao: true } } },
+    });
+    return result;
+  }
 }

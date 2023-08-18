@@ -15,4 +15,16 @@ export class financeiroService {
       throw `Erro ao Criar Tipo de Pagamento: ${e}`;
     }
   }
+  async listarTiposPagamentos() {
+    try {
+      const result = await this.repository.listarTiposPagamentos();
+      return {
+        statusCode: 200,
+        message: "Sucesso ao criar Tipo de Pagamento!",
+        data: result,
+      };
+    } catch (e) {
+      throw `Erro ao Criar Tipo de Pagamento: ${e}`;
+    }
+  }
 }
