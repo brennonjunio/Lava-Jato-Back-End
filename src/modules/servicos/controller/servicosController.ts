@@ -37,4 +37,16 @@ export class servicosController {
       });
     }
   }
+  async deletarServicos(req: Request, res: Response) {
+    try {
+      const {cd_servico} = req.body;
+      console.log("🚀 ~ file: servicosController.ts:43 ~ servicosController ~ deletarServicos ~ cd_servico:", cd_servico)
+      const result = await servicos.deletarServicos(cd_servico);
+      return res.status(201).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
 }
