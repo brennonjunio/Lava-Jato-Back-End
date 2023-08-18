@@ -21,7 +21,19 @@ export class financeiroController {
     try {
       const result = await financeiro.listarTiposPagamentos();
       return res.status(200).json({ data: result });
-      
+
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
+  async editarTiposPagamentos(req: Request, res: Response){
+    try {
+        const body = req.body;
+        const result = await financeiro.editarTiposPagamentos(body);
+        return res.status(200).json({ data: result });
+
     } catch (error) {
       res.status(500).json({
         data: { error },

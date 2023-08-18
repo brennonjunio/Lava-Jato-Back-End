@@ -1,4 +1,4 @@
-import { criarTipoPagamentosDTO } from "../dto/financeiroDTO";
+import { criarTipoPagamentosDTO, editarTipoPagamentosDTO } from "../dto/financeiroDTO";
 import { financeiroRepository } from "../repository/financeiroRepository";
 
 export class financeiroService {
@@ -11,6 +11,7 @@ export class financeiroService {
         message: "Sucesso ao criar Tipo de Pagamento!",
         data: result,
       };
+
     } catch (e) {
       throw `Erro ao Criar Tipo de Pagamento: ${e}`;
     }
@@ -20,11 +21,26 @@ export class financeiroService {
       const result = await this.repository.listarTiposPagamentos();
       return {
         statusCode: 200,
-        message: "Sucesso ao criar Tipo de Pagamento!",
+        message: "Sucesso ao listar Tipos de Pagamentos!",
         data: result,
       };
+
     } catch (e) {
-      throw `Erro ao Criar Tipo de Pagamento: ${e}`;
+      throw `Erro ao Listar Tipos de Pagamentos: ${e}`;
+    }
+  }
+  async editarTiposPagamentos(params: editarTipoPagamentosDTO) {
+    try {
+      const result = await this.repository.editarTiposPagamentos(params);
+
+      return {
+        statusCode: 200,
+        message: "Sucesso ao Editar Tipo de Pagamento!",
+        data: result,
+      };
+
+    } catch (e) {
+      throw `Erro ao Editar Tipo de Pagamento: ${e}`;
     }
   }
 }
