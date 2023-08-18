@@ -6,6 +6,8 @@ import { financeiroController } from "../modules/financeiro/controller/financeir
 financeiroRoutes.post("/financeiro/tipospagamentos", new financeiroController().criarTiposPagamentos);
 financeiroRoutes.get("/financeiro/tipospagamentos", new financeiroController().listarTiposPagamentos);
 financeiroRoutes.put("/financeiro/tipospagamentos", new financeiroController().editarTiposPagamentos);
+financeiroRoutes.delete("/financeiro/tipospagamentos", new financeiroController().deletarTipoPagamento);
+
 
 
 export default financeiroRoutes ;

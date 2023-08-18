@@ -21,4 +21,10 @@ export class financeiroRepository {
     });
     return result;
   }
+  async deletarTipoPagamento(cd_pagamento: number) {
+    const result = await db.tipos_pagamentos.delete({
+      where: { cd_pagamento: cd_pagamento },
+    });
+    return result;
+  }
 }

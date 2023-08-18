@@ -40,4 +40,16 @@ export class financeiroController {
       });
     }
   }
+  async deletarTipoPagamento(req: Request, res: Response){
+    try {
+        const cd_pagamento = req.body;
+        const result = await financeiro.editarTiposPagamentos(cd_pagamento);
+        return res.status(200).json({ data: result });
+
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
 }

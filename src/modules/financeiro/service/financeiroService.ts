@@ -43,4 +43,18 @@ export class financeiroService {
       throw `Erro ao Editar Tipo de Pagamento: ${e}`;
     }
   }
+  async deletarTipoPagamento(cd_pagamento: number){
+    try {
+        const result = await this.repository.deletarTipoPagamento(cd_pagamento);
+        
+        return {
+            statusCode: 200,
+            message: "Sucesso ao Editar Tipo de Pagamento!",
+            data: result,
+          };
+    
+        } catch (e) {
+          throw `Erro ao Editar Tipo de Pagamento: ${e}`;
+        }
+  }
 }
