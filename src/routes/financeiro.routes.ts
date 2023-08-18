@@ -8,6 +8,4 @@ financeiroRoutes.get("/financeiro/tipospagamentos", new financeiroController().l
 financeiroRoutes.put("/financeiro/tipospagamentos", new financeiroController().editarTiposPagamentos);
 financeiroRoutes.delete("/financeiro/tipospagamentos", new financeiroController().deletarTipoPagamento);
 
-
-
 export default financeiroRoutes ;
