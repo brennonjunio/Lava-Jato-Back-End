@@ -18,4 +18,10 @@ export class servicosRepository {
     });
     return result;
   }
+  async deletarServicos(cd_servico:number){
+    const result = await db.servicos.delete({
+        where:{cd_servico:cd_servico}
+    })
+    return result;
+  }
 }

@@ -39,4 +39,16 @@ export class servicosService {
       throw `erro na Edição do serviço: ${e}`;
     }
   }
+  async deletarServicos(cd_servico: number) {
+    try {
+      const result = await this.repository.deletarServicos(cd_servico);
+      return {
+        statusCode: 200,
+        message: "Serviço Deletado com Sucesso!",
+        data: result,
+      };
+    } catch (e) {
+      throw `erro ao deletar serviço: ${e}`;
+    }
+  }
 }
