@@ -68,4 +68,17 @@ export class servicosService {
       throw `erro ao Agendar serviço: ${e}`;
     }
   }
+  async listarServicosAgendados(){
+    try {
+      const result = await this.repositoryAgendamento.listarServicosAgendados();
+
+       return {
+        statusCode: 200,
+        message: "Serviços Listados Com Sucesso!",
+        data: result,
+      };
+    } catch (e) {
+      throw `erro ao Agendar serviço: ${e}`;
+    }
+  }
 }

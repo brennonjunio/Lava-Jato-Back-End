@@ -1,3 +1,4 @@
+import { includes } from "lodash";
 import db from "../../../database/database";
 import { criarAgendamentoServicoDTO } from "../dto/agendamentoServicosDTO";
 export class agendamentoServicosRepository {
@@ -10,6 +11,25 @@ export class agendamentoServicosRepository {
       p.cd_servico_p,
       p.placa_p
     );
+    return result;
+  }
+  async listarServicosAgendados() {
+    const result = await db.servicos_agendados.findMany({
+      include: {
+        clientes: { select: { nm_cliente: true } },
+        veiculos_clientes_servicos_agendados_cd_veiculoToveiculos_clientes: {
+          select: { modelo: true, placa: true },
+        },
+      },
+      where: {
+        NOT: {
+          cd_agenda: {
+            equals: Number(null),
+          },
+        },
+      },
+    });
+
     return result;
   }
 }

@@ -10,6 +10,7 @@ export class servicosController {
     try {
       const body = req.body as criarServicoDTO;
       const result = await servicos.criarServico(body);
+
       return res.status(200).json({ data: result });
     } catch (error) {
       res.status(500).json({
@@ -20,6 +21,7 @@ export class servicosController {
   async listarServicos(req: Request, res: Response) {
     try {
       const result = await servicos.listarServicos();
+
       return res.status(200).json({ data: result });
     } catch (error) {
       res.status(500).json({
@@ -31,6 +33,7 @@ export class servicosController {
     try {
       const body = req.body as updateServiceDTO;
       const result = await servicos.editarServicos(body);
+
       return res.status(201).json({ data: result });
     } catch (error) {
       res.status(500).json({
@@ -40,8 +43,9 @@ export class servicosController {
   }
   async deletarServicos(req: Request, res: Response) {
     try {
-      const {cd_servico} = req.body;
+      const { cd_servico } = req.body;
       const result = await servicos.deletarServicos(cd_servico);
+
       return res.status(201).json({ data: result });
     } catch (error) {
       res.status(500).json({
@@ -49,17 +53,28 @@ export class servicosController {
       });
     }
   }
-  async agendarServico(req: Request, res: Response){
-  try {
-    const body = req.body 
-    const result = await servicos.agendarServico(body);
+  async agendarServico(req: Request, res: Response) {
+    try {
+      const body = req.body as criarAgendamentoServicoDTO;
+      const result = await servicos.agendarServico(body);
 
-    return res.status(200).json({ data: result.message});
-  } catch (error) {
-    res.status(500).json({
-      data: { error },
-    });
+      return res.status(200).json({ data: result.message });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
   }
+  async listarServicosAgendados(req: Request, res: Response){
+try {
+  const result = await servicos.listarServicosAgendados();
+
+  return res.status(200).json({ data: result });
+} catch (error) {
+  res.status(500).json({
+    data: { error },
+  });
+}
 
   }
 }
