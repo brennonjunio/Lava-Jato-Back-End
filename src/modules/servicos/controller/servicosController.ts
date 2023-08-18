@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
 import { servicosService } from "../service/servicosService";
 import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
+import { criarAgendamentoServicoDTO } from "../dto/agendamentoServicosDTO";
 
 export const servicos = new servicosService();
 
 export class servicosController {
   async criarServico(req: Request, res: Response) {
     try {
-      const body = req.body;
+      const body = req.body as criarServicoDTO;
       const result = await servicos.criarServico(body);
       return res.status(200).json({ data: result });
     } catch (error) {
@@ -40,7 +41,6 @@ export class servicosController {
   async deletarServicos(req: Request, res: Response) {
     try {
       const {cd_servico} = req.body;
-      console.log("🚀 ~ file: servicosController.ts:43 ~ servicosController ~ deletarServicos ~ cd_servico:", cd_servico)
       const result = await servicos.deletarServicos(cd_servico);
       return res.status(201).json({ data: result });
     } catch (error) {
@@ -48,5 +48,18 @@ export class servicosController {
         data: { error },
       });
     }
+  }
+  async agendarServico(req: Request, res: Response){
+  try {
+    const body = req.body 
+    const result = await servicos.agendarServico(body);
+
+    return res.status(200).json({ data: result.message});
+  } catch (error) {
+    res.status(500).json({
+      data: { error },
+    });
+  }
+
   }
 }
