@@ -4,29 +4,30 @@ export class veiculoService {
   private repositorioVeiculos: veiculosRepository = new veiculosRepository();
   async criarTipoVeiculo(descricao: string) {
     try {
-      const criarTipoVeiculo = await this.repositorioVeiculos.tipoVeiculoCriar(
+      const result = await this.repositorioVeiculos.tipoVeiculoCriar(
         descricao
       );
 
       return {
         statusCode: 200,
-        message: "Sucesso ao Atualizar cadastro do Cliente!",
-        data: [criarTipoVeiculo],
+        message: "Sucesso ao Criar Tipos de veiculos!",
+        data: result,
       };
-    } catch (error) {
-      return { message: error };
-    }
+    } catch (e) {
+      throw(`erro na Criação dos tipos de veiculos: ${e}`);
+  }
   }
   async listarTipoVeiculo() {
     try {
-      return await this.repositorioVeiculos.tipoVeiculoListar();
-    } catch (e) {
+      const result =  await this.repositorioVeiculos.tipoVeiculoListar();
       return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: [],
+        statusCode: 200,
+        message: "Sucesso ao Listar Tipos de veiculos!",
+        data: result,
       };
-    }
+    } catch (e) {
+      throw(`erro ao listar tipos de veiculos: ${e}`);
+  }
   }
   async editarTipoVeiculo(cd_tipo_veiculo: number, descricao: any) {
     try {
@@ -35,17 +36,13 @@ export class veiculoService {
         descricao
       );
       return {
-        statusCode: 200,
-        message: "Sucesso ao Atualizar cadastro do Cliente!",
-        data: [result],
+        statusCode: 201,
+        message: "Sucesso Editar Tipos Veiculos!",
+        data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: [],
-      };
-    }
+      throw(`erro ao editor Tipos veiculos: ${e}`);
+  }
   }
   async deletarTipoVeiculo(cd_tipo_veiculo: number) {
     try {
@@ -54,48 +51,36 @@ export class veiculoService {
       );
       return {
         statusCode: 200,
-        message: "Sucesso ao Excluir Tipo Veiculo!",
-        data: [result],
+        message: "Sucesso Editar Tipos Veiculos!",
+        data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: [],
-      };
-    }
+      throw(`erro ao editor Tipos veiculos: ${e}`);
+  }
   }
   async criarVeiculoCLiente(param: veiculoClienteDTO) {
     try {
       const result = await this.repositorioVeiculos.veiculoClienteCriar(param);
       return {
         statusCode: 200,
-        message: "Sucesso ao vincular o Veiculo ao cliente",
-        data: [result],
+        message: "Sucesso ao vincular Veiculo!",
+        data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: ["Erro no Service"],
-      };
-    }
+      throw(`erro ao vincular Veiculo: ${e}`);
+  }
   }
   async listarVeiculosCliente() {
     try {
       const result = await this.repositorioVeiculos.listarVeiculosCliente();
       return {
         statusCode: 200,
-        message: "Sucesso ao listar veiculos",
-        data: [result],
+        message: "Sucesso ao listar veiculos do Cliente!",
+        data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: ["Erro no Service"],
-      };
-    }
+      throw(`erro ao listar veiculos do cliente ${e}`);
+  }
   }
   async atualizarVeiculosCliente(param: updateVeiculoClienteDTO) {
     try {
@@ -103,17 +88,13 @@ export class veiculoService {
         param
       );
       return {
-        statusCode: 200,
-        message: "Sucesso Ao Atualizar Veiculo",
-        data: [result],
+        statusCode: 202,
+        message: "Sucesso ao editar veiculo do Cliente!",
+        data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: ["Erro no Service"],
-      };
-    }
+      throw(`erro ao editar veiculo do Cliente ${e}`);
+  }
   }
   async deletarVeiculosCliente(cd_veiculo: number) {
     try {
@@ -122,15 +103,11 @@ export class veiculoService {
       );
       return {
         statusCode: 200,
-        message: "Sucesso Ao Deletar Veiculo",
-        data: [result],
+        message: "Sucesso Erro ao Deletar Veiculo do Cliente!",
+        data: result,
       };
     } catch (e) {
-      return {
-        statusCode: 500,
-        message: `Error: ${e}`,
-        data: ["Erro no Service"],
-      };
-    }
+      throw(`erro Erro ao Deletar Veiculo do Cliente: ${e}`);
+  }
   }
 }

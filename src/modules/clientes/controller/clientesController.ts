@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { criarClienteDTO } from "../dto/clientesDTO";
 import { ClienteService } from "../service/clienteService";
-import db from "../../../database/database";
+import { result } from "lodash";
 
 export const clientesrv = new ClienteService();
 
@@ -9,16 +9,9 @@ export class ClienteController {
   async criarCliente(req: Request, res: Response) {
     try {
       const body = req.body as criarClienteDTO;
-      const validaCliente = await db.clientes.findFirst({
-        where: { cpf_cnpj: body.cpf_cnpj },
-      });
-      if (validaCliente) {
-        throw new Error(`Cpf/Cnpj Já Cadastrado `);
-      }
+      const result = await clientesrv.salvar(body);
 
-      const cliente = await clientesrv.salvar(body);
-
-      return res.status(200).json({ data: cliente });
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -29,7 +22,7 @@ export class ClienteController {
     try {
       const result = await clientesrv.listar();
 
-      return res.status(200).json(result);
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -40,9 +33,9 @@ export class ClienteController {
     try {
       const body = req.body;
 
-      const atualizar = await clientesrv.atualizar(body);
+      const result = await clientesrv.atualizar(body);
 
-      return res.status(201).json({ data: atualizar });
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -53,20 +46,18 @@ export class ClienteController {
     try {
       const { cd_cliente } = req.body;
       await clientesrv.deletar(cd_cliente);
-      return res
-        .status(201)
-        .json({ data: cd_cliente, message: "Cliente Excluido Com sucesso!" });
-      } catch (error) {
-        res.status(500).json({
-          data: { error },
-        });
-      }
+      return res.status(200).json({ message: "Sucesso ao deletar Cadastro!" });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
   }
   async inativar(req: Request, res: Response) {
     try {
       const { cd_cliente } = req.body;
       await clientesrv.inativar(cd_cliente);
-      return res.status(201).json({ data: cd_cliente });
+      return res.status(200).json({ data: cd_cliente });
     } catch (error) {
       res.status(500).json({
         data: { error },

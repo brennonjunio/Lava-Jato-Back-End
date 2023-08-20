@@ -1,16 +1,29 @@
 import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import { ClienteRepository } from "../repository/clientesRepository";
+import { useCase } from "../repository/useCase/useCaseClientes";
 export class ClienteService {
   private clienteRepository: ClienteRepository = new ClienteRepository();
-
+  private useCaseCliente: useCase = new useCase();
   async salvar(param: criarClienteDTO) {
     try {
-      const salvarCliente = await this.clienteRepository.criarCliente(param);
+      if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
+        return {
+          statusCode: 500,
+          message: `Cliente Já Cadastrado : ${param.cpf_cnpj}`,
+        };
+      }
 
-      return salvarCliente;
+      const result = await this.clienteRepository.criarCliente(param);
+
+      return {
+        statusCode: 200,
+        status: true,
+        data: result,
+        message: "Sucesso ao Salvar Cliente!",
+      };
     } catch (e) {
-      throw(`erro no cadastro de Clientes: ${e}`);
-  }
+      throw `erro ao Deletar Clientes: ${e}`;
+    }
   }
 
   async atualizar(param: updateClienteDTO) {
@@ -23,15 +36,21 @@ export class ClienteService {
         data: [data],
       };
     } catch (e) {
-      throw(`erro ao Atualizar Cadastro: ${e}`);
-  }
+      throw `erro ao Atualizar Cadastro: ${e}`;
+    }
   }
   async listar() {
     try {
-      return await this.clienteRepository.listarClientes();
+      const result = await this.clienteRepository.listarClientes();
+      return {
+        statusCode: 200,
+        status: true,
+        data: result,
+        message: "Sucesso ao Listar Clientes!",
+      };
     } catch (e) {
-      throw(`erro ao listar Clientes: ${e}`);
-  }
+      throw `erro ao Listar Clientes: ${e}`;
+    }
   }
   async deletar(cd_cliente: number) {
     try {
@@ -40,23 +59,23 @@ export class ClienteService {
         statusCode: 200,
         status: true,
         data: result,
-        message: 'Sucesso ao deletar Cliente!',
-    };
-  } catch (e) {
-    throw(`erro ao Deletar Clientes: ${e}`);
-}
+        message: "Sucesso ao deletar Cliente!",
+      };
+    } catch (e) {
+      throw `erro ao Deletar Clientes: ${e}`;
+    }
   }
-  async inativar(cd_cliente:number){
+  async inativar(cd_cliente: number) {
     try {
-       const result = await this.clienteRepository.inativarCliente(cd_cliente)
-       return {
+      const result = await this.clienteRepository.inativarCliente(cd_cliente);
+      return {
         statusCode: 200,
         status: true,
         data: result,
-        message: 'Sucesso ao Inativar Cliente!',
-    };
-  } catch (e) {
-    throw(`erro ao inativar Clientes: ${e}`);
-}
+        message: "Sucesso ao Inativar Cliente!",
+      };
+    } catch (e) {
+      throw `erro ao inativar Clientes: ${e}`;
+    }
   }
 }

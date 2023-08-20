@@ -9,8 +9,7 @@ export class financeiroController {
 
       const result = await financeiro.criarTiposPagamentos(body);
 
-      return res.status(200).json({ data: result });
-
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -20,32 +19,29 @@ export class financeiroController {
   async listarTiposPagamentos(req: Request, res: Response) {
     try {
       const result = await financeiro.listarTiposPagamentos();
-      return res.status(200).json({ data: result });
-
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
       });
     }
   }
-  async editarTiposPagamentos(req: Request, res: Response){
+  async editarTiposPagamentos(req: Request, res: Response) {
     try {
-        const body = req.body;
-        const result = await financeiro.editarTiposPagamentos(body);
-        return res.status(200).json({ data: result });
-
+      const body = req.body;
+      const result = await financeiro.editarTiposPagamentos(body);
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
       });
     }
   }
-  async deletarTipoPagamento(req: Request, res: Response){
+  async deletarTipoPagamento(req: Request, res: Response) {
     try {
-        const cd_pagamento = req.body;
-        const result = await financeiro.editarTiposPagamentos(cd_pagamento);
-        return res.status(200).json({ data: result });
-
+      const cd_pagamento = req.body;
+      const result = await financeiro.editarTiposPagamentos(cd_pagamento);
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },

@@ -11,7 +11,7 @@ export class servicosController {
       const body = req.body as criarServicoDTO;
       const result = await servicos.criarServico(body);
 
-      return res.status(200).json({ data: result });
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -22,7 +22,7 @@ export class servicosController {
     try {
       const result = await servicos.listarServicos();
 
-      return res.status(200).json({ data: result });
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -34,7 +34,7 @@ export class servicosController {
       const body = req.body as updateServiceDTO;
       const result = await servicos.editarServicos(body);
 
-      return res.status(201).json({ data: result });
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -46,7 +46,7 @@ export class servicosController {
       const { cd_servico } = req.body;
       const result = await servicos.deletarServicos(cd_servico);
 
-      return res.status(201).json({ data: result });
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
@@ -58,23 +58,22 @@ export class servicosController {
       const body = req.body as criarAgendamentoServicoDTO;
       const result = await servicos.agendarServico(body);
 
-      return res.status(200).json({ data: result.message });
+      return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
         data: { error },
       });
     }
   }
-  async listarServicosAgendados(req: Request, res: Response){
-try {
-  const result = await servicos.listarServicosAgendados();
+  async listarServicosAgendados(req: Request, res: Response) {
+    try {
+      const result = await servicos.listarServicosAgendados();
 
-  return res.status(200).json({ data: result });
-} catch (error) {
-  res.status(500).json({
-    data: { error },
-  });
-}
-
+      return res.status(result.statusCode).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
   }
 }
