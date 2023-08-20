@@ -13,6 +13,8 @@ servicosRouters.delete("/servicos", new servicosController().deletarServicos);
 //agendamento de serviço
 servicosRouters.post("/servicos/agendamento", new servicosController().agendarServico);
 servicosRouters.get("/servicos/agendamento", new servicosController().listarServicosAgendados);
+servicosRouters.post("/servicos/agendamentoFinalizar", new servicosController().finalizarServico);
+
 
 
 

@@ -76,4 +76,15 @@ export class servicosController {
       });
     }
   }
+  async finalizarServico(req: Request, res: Response){
+    try {
+     const {nr_sequencia} = req.body
+      const result = await servicos.finalizarServico(nr_sequencia)
+      return res.status(result.statusCode).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
 }

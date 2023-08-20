@@ -7,7 +7,6 @@ export class agendaService {
 
   async criarAgenda(param: criarAgendaDTO) {
     try {
-      console.log("caiu no if")
 
       if(await this.useCase.agendaRepetida(String (param.data_ini))){
         return{
@@ -24,7 +23,6 @@ export class agendaService {
       };
     } catch (e) {
 
-      console.log("caiu no else")
       throw(`erro na Criação da Agenda: ${e}`);
   }
   }

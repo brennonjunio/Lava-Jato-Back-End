@@ -61,9 +61,12 @@ export class servicosService {
   async agendarServico(params: criarAgendamentoServicoDTO) {
     try {
       if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
-        return { statusCode: 204, message: `Agenda Já em uso, por favor, usar outra agenda, nr_agenda: ${params.cd_agenda_p}` };
+        return {
+          statusCode: 204,
+          message: `Agenda Já em uso, por favor, usar outra agenda, nr_agenda: ${params.cd_agenda_p}`,
+        };
       }
-  
+
       const result = await this.repositoryAgendamento.agendarServico(params);
       return {
         statusCode: 200,
@@ -74,11 +77,11 @@ export class servicosService {
       throw `erro ao Agendar serviço: ${e}`;
     }
   }
-  async listarServicosAgendados(){
+  async listarServicosAgendados() {
     try {
       const result = await this.repositoryAgendamento.listarServicosAgendados();
 
-       return {
+      return {
         statusCode: 200,
         message: "Serviços Listados Com Sucesso!",
         data: result,
@@ -87,4 +90,19 @@ export class servicosService {
       throw `erro ao Agendar serviço: ${e}`;
     }
   }
+  async finalizarServico(nr_sequencia: number) {
+    try {
+      const result = await this.repositoryAgendamento.finalizarServico(
+        nr_sequencia
+      );
+      return {
+        statusCode: 200,
+        message: "Serviço Finalizado Com Sucesso!",
+        data: result,
+      };
+    } catch (e) {
+      throw `erro ao Finalizar serviço: ${e}`;
+    }
+  }
 }
+

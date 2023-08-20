@@ -9,7 +9,7 @@ export class ClienteService {
       if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
         return {
           statusCode: 500,
-          message: `Cliente Já Cadastrado : ${param.cpf_cnpj}`,
+          message: `Cpf do Cliente Já Cadastrado : ${param.cpf_cnpj}`,
         };
       }
 
