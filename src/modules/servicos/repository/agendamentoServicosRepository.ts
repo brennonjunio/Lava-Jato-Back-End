@@ -26,6 +26,7 @@ export class agendamentoServicosRepository {
         },
       },
       where: {
+        status_servico: "A",
         NOT: {
           cd_agenda: {
             equals: Number(null),
