@@ -2,11 +2,13 @@ import { criarAgendamentoServicoDTO } from "../dto/agendamentoServicosDTO";
 import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
 import { agendamentoServicosRepository } from "../repository/agendamentoServicosRepository";
 import { servicosRepository } from "../repository/servicosRepository";
+import { useCaseAgendamento } from "../repository/useCase/useCaseAgendamento";
 
 export class servicosService {
   private repository: servicosRepository = new servicosRepository();
   private repositoryAgendamento: agendamentoServicosRepository =
     new agendamentoServicosRepository();
+  private useCase: useCaseAgendamento = new useCaseAgendamento();
 
   async criarServico(param: criarServicoDTO) {
     try {
@@ -58,6 +60,10 @@ export class servicosService {
   }
   async agendarServico(params: criarAgendamentoServicoDTO) {
     try {
+      if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
+        return { statusCode: 204, message: `Agenda Já em uso, por favor, usar outra agenda, nr_agenda: ${params.cd_agenda_p}` };
+      }
+  
       const result = await this.repositoryAgendamento.agendarServico(params);
       return {
         statusCode: 200,
