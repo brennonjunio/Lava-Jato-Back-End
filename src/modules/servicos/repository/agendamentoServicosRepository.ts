@@ -17,8 +17,8 @@ export class agendamentoServicosRepository {
     const result = await db.servicos_agendados.findMany({
       include: {
         clientes: { select: { nm_cliente: true } },
-        veiculos_clientes_servicos_agendados_cd_veiculoToveiculos_clientes: {
-          select: { modelo: true, placa: true },
+        veiculos_agenda:  {
+          select: { modelo: true, placa: true } ,
         },
       },
       where: {

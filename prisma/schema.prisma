@@ -14,7 +14,6 @@ model acessos_usuarios {
   clientes     String?   @default("N") @db.VarChar(1)
   financeiro   String?   @default("N") @db.VarChar(1)
   tela_exemplo String?   @default("N") @db.VarChar(1)
-  usuarios     usuarios? @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "acessos_usuarios_usuarios_cd_usuario_fk")
 
   @@index([cd_usuario], map: "acessos_usuarios_usuarios_cd_usuario_fk")
   @@ignore
@@ -161,12 +160,12 @@ model servicos_agendados {
   financeiro_financeiro_nr_seq_servico_agendadoToservicos_agendados       financeiro[]      @relation("financeiro_nr_seq_servico_agendadoToservicos_agendados")
   movimentacoes_movimentacoes_cd_agendaToservicos_agendados               movimentacoes[]   @relation("movimentacoes_cd_agendaToservicos_agendados")
   movimentacoes_movimentacoes_nr_seq_servico_agendadoToservicos_agendados movimentacoes[]   @relation("movimentacoes_nr_seq_servico_agendadoToservicos_agendados")
+  veiculos_clientes_servicos_agendados_placaToveiculos_clientes           veiculos_clientes @relation("servicos_agendados_placaToveiculos_clientes", fields: [placa], references: [placa], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_placa_fk")
   agenda_servicos_agendados_cd_agendaToagenda                             agenda            @relation("servicos_agendados_cd_agendaToagenda", fields: [cd_agenda], references: [cd_agenda], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_agenda_cd_agenda_fk")
   agenda_servicos_agendados_horarioToagenda                               agenda            @relation("servicos_agendados_horarioToagenda", fields: [horario], references: [horario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_agenda_horario_fk")
   clientes                                                                clientes          @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_clientes_cd_cliente_fk")
   servicos                                                                servicos          @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_servicos_cd_servico_fk")
-  veiculos_clientes_servicos_agendados_cd_veiculoToveiculos_clientes      veiculos_clientes @relation("servicos_agendados_cd_veiculoToveiculos_clientes", fields: [cd_veiculo], references: [cd_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_cd_veiculo_fk")
-  veiculos_clientes_servicos_agendados_placaToveiculos_clientes           veiculos_clientes @relation("servicos_agendados_placaToveiculos_clientes", fields: [placa], references: [placa], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_placa_fk")
+  veiculos_agenda                                                         veiculos_clientes @relation("servicos_agendados_cd_veiculoToveiculos_clientes", fields: [cd_veiculo], references: [cd_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_veiculos_clientes_cd_veiculo_fk")
 
   @@index([cd_agenda], map: "servicos_agendados_agenda_cd_agenda_fk")
   @@index([horario], map: "servicos_agendados_agenda_horario_fk")
@@ -207,7 +206,6 @@ model usuarios {
   nm_usuario       Int
   dt_cadastro      DateTime           @default(now()) @db.DateTime(0)
   dt_update        DateTime           @default(now()) @db.DateTime(0)
-  acessos_usuarios acessos_usuarios[] @ignore
   clientes         clientes[]
   financeiro       financeiro[]
   movimentacoes    movimentacoes[]
@@ -219,8 +217,8 @@ model veiculos_clientes {
   placa                                                               String               @unique @db.VarChar(10)
   cd_tipo_veiculo                                                     Int?
   modelo                                                              String               @db.VarChar(50)
-  servicos_agendados_servicos_agendados_cd_veiculoToveiculos_clientes servicos_agendados[] @relation("servicos_agendados_cd_veiculoToveiculos_clientes")
   servicos_agendados_servicos_agendados_placaToveiculos_clientes      servicos_agendados[] @relation("servicos_agendados_placaToveiculos_clientes")
+  servicos_agendados_servicos_agendados_cd_veiculoToveiculos_clientes servicos_agendados[] @relation("servicos_agendados_cd_veiculoToveiculos_clientes")
   clientes                                                            clientes             @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: Cascade, map: "veiculos_clientes_FK")
   tipo_veiculos                                                       tipo_veiculos?       @relation(fields: [cd_tipo_veiculo], references: [cd_tipo_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "veiculos_clientes_FK_1")
 
