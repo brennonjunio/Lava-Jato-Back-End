@@ -18,7 +18,7 @@ export class agendaRepository {
   }
 
   async listarHorariosDisponiveis() {
-    const result = db.agenda.findMany();
+    const result = db.agenda.findMany({});
     return result;
   }
   async deletarHorarioAgenda(cd_agenda: number) {

@@ -1,17 +1,30 @@
 import { criarAgendaDTO } from "../dto/criarAgendaDTO";
 import { agendaRepository } from "../repository/agendaRepository";
+import { useCaseAgenda } from "../repository/useCase/useCaseAgenda";
 export class agendaService {
   private repository: agendaRepository = new agendaRepository();
-  async agendarLavagem(param: criarAgendaDTO) {
-    try {
-      const result = await this.repository.criarAgenda(param);
+  private useCase: useCaseAgenda = new useCaseAgenda();
 
+  async criarAgenda(param: criarAgendaDTO) {
+    try {
+      console.log("caiu no if")
+
+      if(await this.useCase.agendaRepetida(String (param.data_ini))){
+        return{
+          statusCode: 500,
+          message: `Já existe Horario Gerado para data Escolhida: ${param.data_ini}`
+        }
+      }
+
+      const result = await this.repository.criarAgenda(param);
       return {
         statusCode: 200,
         message: "Sucesso ao Criar Agenda!",
         data: result,
       };
     } catch (e) {
+
+      console.log("caiu no else")
       throw(`erro na Criação da Agenda: ${e}`);
   }
   }

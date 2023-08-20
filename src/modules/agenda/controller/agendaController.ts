@@ -7,7 +7,7 @@ export class agendaController {
   async criarAgenda(req: Request, res: Response) {
     try {
       const body = req.body as criarAgendaDTO;
-      const result = await service.agendarLavagem(body);
+      const result = await service.criarAgenda(body);
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
