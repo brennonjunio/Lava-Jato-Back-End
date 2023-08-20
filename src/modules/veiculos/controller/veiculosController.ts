@@ -53,12 +53,6 @@ export class veiculosController {
   async veiculoClienteCriar(req: Request, res: Response) {
     try {
       const body = req.body;
-      const uniquePlaca = await db.veiculos_clientes.findFirst({
-        where: { placa: body.placa },
-      });
-      if (uniquePlaca) {
-        throw new Error(`Veiculo Já Cadastrado`);
-      }
 
       const result = await service.criarVeiculoCLiente(body);
 
