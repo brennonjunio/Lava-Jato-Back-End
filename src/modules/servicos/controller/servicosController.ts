@@ -58,7 +58,7 @@ export class servicosController {
       const body = req.body as criarAgendamentoServicoDTO;
       const result = await servicos.agendarServico(body);
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json({ data: result.message });
     } catch (error) {
       res.status(500).json({
         data: { error },
