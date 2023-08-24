@@ -59,10 +59,11 @@ export class servicosService {
     }
   }
   async agendarServico(params: criarAgendamentoServicoDTO) {
+    
     try {
       if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
         return {
-          statusCode: 204,
+          statusCode: 500,
           message: `Agenda Já em uso, por favor, usar outra agenda, nr_agenda: ${params.cd_agenda_p}`,
         };
       }

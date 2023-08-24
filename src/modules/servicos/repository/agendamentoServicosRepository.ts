@@ -7,13 +7,14 @@ export class agendamentoServicosRepository {
   private useCase: useCaseAgendamento = new useCaseAgendamento();
 
   async agendarServico(p: criarAgendamentoServicoDTO) {
-    const result = db.$queryRawUnsafe(
-      "select agendar_servico(:cd_servico_p, :cd_agenda_p, :cd_cliente_p, :cd_veiculo_p, :placa_p)",
+    const result = await db.$queryRawUnsafe(
+      "select agendar_servico(:cd_servico_p, :cd_agenda_p, :cd_cliente_p, :cd_veiculo_p, :placa_p, :cd_usuario_p)",
       p.cd_servico_p,
       p.cd_agenda_p,
       p.cd_cliente_p,
       p.cd_servico_p,
-      p.placa_p
+      p.placa_p,
+      p.cd_usuario_p
     );
     return result;
   }
@@ -26,12 +27,7 @@ export class agendamentoServicosRepository {
         },
       },
       where: {
-        status_servico: "A",
-        NOT: {
-          cd_agenda: {
-            equals: Number(null),
-          },
-        },
+        status_servico: "A"
       },
     });
 
