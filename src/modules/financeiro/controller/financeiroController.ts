@@ -48,4 +48,15 @@ export class financeiroController {
       });
     }
   }
+  async efetuarPagamentoServico(req: Request, res: Response) {
+    try {
+      const body = req.body;
+      const result = await financeiro.efetuarPagamentoServico(body);
+      return res.status(result.statusCode).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
 }

@@ -1,8 +1,12 @@
 import { criarTipoPagamentosDTO, editarTipoPagamentosDTO } from "../dto/financeiroDTO";
+import { efetuarPagamentoServico } from "../dto/movimentacaoFinanceiraDTO";
 import { financeiroRepository } from "../repository/financeiroRepository";
+import { movimentacaoFinanceiraRepository } from "../repository/movimentacaoFinanceiraRepository";
 
 export class financeiroService {
   private repository: financeiroRepository = new financeiroRepository();
+  private repositoryMovimentacao: movimentacaoFinanceiraRepository = new movimentacaoFinanceiraRepository();
+
   async criarTiposPagamentos(params: criarTipoPagamentosDTO) {
     try {
       const result = await this.repository.criarTiposPagamentos(params);
@@ -57,4 +61,18 @@ export class financeiroService {
           throw `Erro ao Editar Tipo de Pagamento: ${e}`;
         }
   }
+  async efetuarPagamentoServico(param:efetuarPagamentoServico){
+    try {
+      const result = await this.repositoryMovimentacao.efetuarPagamentoServico(
+        param
+      );
+      return {
+        statusCode: 200,
+        message: "Sucesso ao Efetuar Pagamento!",
+        data: result,
+      };
+    } catch (e) {
+      throw `Erro ao efetuar Pagamento: ${e}`;
+    }
+}
 }
