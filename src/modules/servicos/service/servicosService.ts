@@ -59,7 +59,6 @@ export class servicosService {
     }
   }
   async agendarServico(params: criarAgendamentoServicoDTO) {
-    
     try {
       if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
         return {
@@ -103,6 +102,19 @@ export class servicosService {
       };
     } catch (e) {
       throw `erro ao Finalizar serviço: ${e}`;
+    }
+  }
+  async listarServicosFinalizados() {
+    try {
+      const result =
+        await this.repositoryAgendamento.listarServicosFinalizados();
+      return {
+        statusCode: 200,
+        message: "Serviços Listados Com sucesso!",
+        data: result,
+      };
+    } catch (e) {
+      throw `erro ao Listar serviço: ${e}`;
     }
   }
 }

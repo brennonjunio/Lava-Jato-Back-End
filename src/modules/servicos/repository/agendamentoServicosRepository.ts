@@ -45,4 +45,12 @@ export class agendamentoServicosRepository {
     );
     return result;
   }
+
+  async listarServicosFinalizados() {
+    const result = await db.servicos_agendados.findMany({
+      where:{status_servico:"F"},
+      include: { clientes: { select: { nm_cliente: true } } },
+    });
+    return result;
+  }
 }

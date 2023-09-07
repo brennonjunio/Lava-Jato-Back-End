@@ -87,4 +87,15 @@ export class servicosController {
       });
     }
   }
+
+  async listarServicosFinalizados(req: Request, res: Response) {
+    try {
+      const result = await servicos.listarServicosFinalizados();
+      return res.status(result.statusCode).json({ data: result });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
 }
