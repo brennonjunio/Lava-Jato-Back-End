@@ -8,7 +8,7 @@ export class UseCaseUsuarios {
     });
     return result;
   }
-  async criptSenha(param: string) {
+  async criptSenha(param?: any) {
     const salt = await bcrypt.genSalt(12);
     const senha = await bcrypt.hash(param, salt);
     return senha;

@@ -1,4 +1,4 @@
-import { CriarUsuarioDTO } from "../dto/usuariosDTO";
+import { CriarUsuarioDTO, EditarUsuarioDTO } from "../dto/usuariosDTO";
 import { UsuariosRepository } from "../repository/usuariosRepository";
 import { UseCaseUsuarios } from "../repository/useCase";
 export class UsuariosService {
@@ -21,6 +21,20 @@ export class UsuariosService {
       };
     } catch (error) {
       throw `erro ao Criar Usuario: ${error}`;
+    }
+  }
+  async editarUsuario(cd_usuario:any,params: EditarUsuarioDTO){
+    try {
+      
+      const result = await this.repoUsuarios.editarUsuario(cd_usuario,params);
+      return {
+        statusCode: 200,
+        status: true,
+        data: [],
+        message: "Sucesso ao Editar Usuario!",
+      };
+    } catch (error) {
+      throw `erro ao Editar Usuario: ${error}`;
     }
   }
 }
