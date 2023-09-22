@@ -14,7 +14,7 @@ export class UsuariosRepository {
   }
   async editarUsuario(cd_usuario: number, params: EditarUsuarioDTO) {
 
-    const senha = await this.case.criptSenha(params.senha);
+    const senha = params.senha ? await this.case.criptSenha(params.senha) : undefined;
     const result = await db.usuarios.update({
       where: { cd_usuario: cd_usuario },
       data: { ...params, senha: senha },
