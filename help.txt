@@ -1,5 +1,8 @@
 PASSOS
 
+1ª .env crie seu arquivo .env e faça sua configuração conforme o example
+
+2ª fazendo DUMP Restore do Banco de Dados
 BANCO DE DADOS, COMO FAZER DUMP?
 Abrir o mysql terminal 
 
@@ -13,4 +16,15 @@ target_database_name    >>>>>> é o nome do banco de dados vazio no qual você d
 [dumpfilename.sql] >>>>>>>>>>>        é o caminho para o arquivo de despejo.
 
 
-mysql -u root -p lava_jato < dump-lava_jato-202308240347.sql <<<<< exemplo real, obs: o terminal estava na pasta do arquivo
+mysql -u root -p lava_jato < dump-lava_jato-202308240347.sql <<<<< exemplo real, obs: o terminal estava na pasta do arquivo.
+
+
+3ª baixar as dependencias
+>>>>> yarn
+4ª buscar tabelas do Banco
+>>>> yarn prisma db pull
+>>>> yarn prisma generate
+
+
+5ª iniciar projeto:
+>>>> yarn dev
