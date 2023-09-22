@@ -21,4 +21,7 @@ export class UsuariosRepository {
     });
     return result;
   }
+  async listarUsuariosAll(){
+    return await db.usuarios.findMany();
+  }
 }
