@@ -1,0 +1,16 @@
+PASSOS
+
+BANCO DE DADOS, COMO FAZER DUMP?
+Abrir o mysql terminal 
+
+>>>>>>>>>> mysql -u [user name] –p [target_database_name] < [dumpfilename.sql] <<<<<<<<<<<<<<<<<<
+
+-u [user name]  >>>>>>> é um nome de usuário para conectar-se a um servidor MySQL.
+
+-p    >>>>>é uma senha para o nome de usuário usado para se conectar ao servidor.
+target_database_name    >>>>>> é o nome do banco de dados vazio no qual você deseja carregar dados do arquivo de backup.
+<      >>>>>> é um parâmetro que se refere ao processo de restauração de um banco de dados.
+[dumpfilename.sql] >>>>>>>>>>>        é o caminho para o arquivo de despejo.
+
+
+mysql -u root -p lava_jato < dump-lava_jato-202308240347.sql <<<<< exemplo real, obs: o terminal estava na pasta do arquivo
