@@ -6,6 +6,7 @@ import veiculosRouter from "./veiculos.routes";
 import agendasRouter from "./agendas.routes";
 import servicosRouters from "./servicos.routes";
 import financeiroRoutes from "./financeiro.routes";
+import usuariosRouter from "./usuarios.routes";
 
 
 //ROTAS PARA OS CLIENTES CRUD 
@@ -23,4 +24,6 @@ router.use(servicosRouters)
 //rotas para financeiro
 router.use(financeiroRoutes)
 
+//rotas para usuarios
+router.use(usuariosRouter)
 export { router };

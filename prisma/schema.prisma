@@ -169,6 +169,8 @@ model usuarios {
   nm_usuario         String               @db.VarChar(50)
   dt_cadastro        DateTime             @default(now()) @db.DateTime(0)
   dt_update          DateTime             @default(now()) @db.DateTime(0)
+  senha              String?              @db.VarChar(500)
+  email              String?              @db.VarChar(60)
   clientes           clientes[]
   financeiro         financeiro[]
   servicos_agendados servicos_agendados[]
