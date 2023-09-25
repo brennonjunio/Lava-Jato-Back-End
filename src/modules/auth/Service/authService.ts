@@ -22,7 +22,7 @@ export class AuthService {
           return {
             statusCode: 200,
             status: true,
-            data: result,
+            token: result,
             message: "Login Realizado Com Sucesso",
           };
         }
