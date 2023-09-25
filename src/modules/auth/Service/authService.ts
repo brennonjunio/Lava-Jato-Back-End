@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 export class AuthService {
-   case = new AuthUseCase();
+  case = new AuthUseCase();
 
   async login(params: AuthDTO) {
     try {
@@ -17,24 +17,27 @@ export class AuthService {
           status: "A",
         },
       });
+      if (auth == null || false) {
+        throw "";
+      }
 
-      if (auth) {
-        const senhaOK = await bcrypt.compare(params.pass, auth.senha);
-        if (senhaOK) {
-          const result = await jwt.sign(auth.nm_usuario, process.env.SECRET);
-          return {
-            statusCode: 200,
-            status: true,
-            token: result,
-            message: "Login Realizado Com Sucesso",
-          };
-        }
+      const senhaOK = await bcrypt.compare(params.pass, auth.senha);
+      if (senhaOK) {
+        const result = await jwt.sign(auth.nm_usuario, process.env.SECRET);
+        return {
+          statusCode: 200,
+          status: true,
+          token: result,
+          message: "Login Realizado Com Sucesso",
+        };
+      } else {
+        throw ``;
       }
     } catch (error) {
-      throw `Login ou senha incorretos: ${error}`;
+      throw `Login ou senha incorretos`;
     }
   }
-   validaToken(token: any) {
+  validaToken(token: any) {
     return this.case.validaToken(token);
   }
 }
