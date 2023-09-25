@@ -1,5 +1,6 @@
 import express from "express";
 import { router as routes } from "../src/routes/routes";
+import { AuthMiddleware } from "./middlewares/authMiddleware";
 const morgan = require("morgan");
 require("dotenv").config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use(morgan("dev"));
 
+// app.use(AuthMiddleware.varify)
 app.use(routes);
 
 app.listen(PORT, () => {

@@ -16,4 +16,28 @@ export class AuthController {
       });
     }
   }
+  async loadSession(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization;
+
+      if (token === undefined) {
+        throw new Error("Token de autorização não encontrado nos cabeçalhos.");
+      }
+
+      const result = await auth.validaToken(token.trim());
+
+      if (!result.isValidToken) {
+        throw new Error("Sua sessão é inválida ou está expirada");
+      }
+
+      return res.status(200).send({
+        token,
+        user: result.data,
+      });
+    } catch (error) {
+      res.status(500).json({
+        data: { error },
+      });
+    }
+  }
 }

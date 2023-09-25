@@ -1,11 +1,14 @@
 import { log } from "console";
 import db from "../../../database/database";
 import { AuthDTO } from "../DTO/authDTO";
+import { AuthUseCase } from "../useCase/authUseCase";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 export class AuthService {
+   case = new AuthUseCase();
+
   async login(params: AuthDTO) {
     try {
       const auth = await db.usuarios.findFirst({
@@ -18,7 +21,7 @@ export class AuthService {
       if (auth) {
         const senhaOK = await bcrypt.compare(params.pass, auth.senha);
         if (senhaOK) {
-          const result = await jwt.sign(auth.cd_usuario, process.env.SECRET);
+          const result = await jwt.sign(auth.nm_usuario, process.env.SECRET);
           return {
             statusCode: 200,
             status: true,
@@ -30,5 +33,8 @@ export class AuthService {
     } catch (error) {
       throw `Login ou senha incorretos: ${error}`;
     }
+  }
+   validaToken(token: any) {
+    return this.case.validaToken(token);
   }
 }
