@@ -6,17 +6,20 @@ export class UsuariosService {
   private case: UseCaseUsuarios = new UseCaseUsuarios();
   async criarUsuarios(params: CriarUsuarioDTO) {
     try {
-      if (await this.case.usuarioJaCriado(params.email)) {
+      const email = await this.case.emailEmUso(params.email);
+      const user = await this.case.userEmUso(params.nm_usuario);
+
+      if (email || user) {
         return {
           statusCode: 500,
-          message: `Email Já cadastrado`,
+          message: `Usuario ou Email em uso ou invalido!`,
         };
       }
       const result = await this.repoUsuarios.criarUsuarios(params);
       return {
         statusCode: 200,
         status: true,
-        data: result,
+        data: [],
         message: "Sucesso ao Salvar Usuario!",
       };
     } catch (error) {
@@ -25,13 +28,17 @@ export class UsuariosService {
   }
   async editarUsuario(cd_usuario: any, params: EditarUsuarioDTO) {
     try {
+
       const email = params.email
-        ? await this.case.usuarioJaCriado(params.email)
+        ? await this.case.emailEmUso(params.email)
         : false;
-      if (email) {
+      const user = params.nm_usuario
+        ? await this.case.userEmUso(params.nm_usuario)
+        : false;
+      if (email || user) {
         return {
           statusCode: 500,
-          message: `Email invalido ou em uso : ${params.email}`,
+          message: `Usuario ou e-mail invalido`,
         };
       }
       const result = await this.repoUsuarios.editarUsuario(cd_usuario, params);
