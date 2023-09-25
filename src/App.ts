@@ -2,6 +2,7 @@ import express from "express";
 import { router as routes } from "../src/routes/routes";
 import { AuthMiddleware } from "./middlewares/authMiddleware";
 const morgan = require("morgan");
+import cors from "cors"
 require("dotenv").config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use(morgan("dev"));
 
+app.use(cors());
 // app.use(AuthMiddleware.varify)
 app.use(routes);
 
