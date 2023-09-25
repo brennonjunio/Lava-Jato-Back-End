@@ -21,13 +21,14 @@ export class AuthService {
         throw "";
       }
 
-      const senhaOK = await bcrypt.compare(params.pass, auth.senha);
+      const senhaOK = await bcrypt.compare(params.senha, auth.senha);
       if (senhaOK) {
         const result = await jwt.sign(auth.nm_usuario, process.env.SECRET);
         return {
           statusCode: 200,
           status: true,
           token: result,
+          user:auth.nm_usuario,
           message: "Login Realizado Com Sucesso",
         };
       } else {

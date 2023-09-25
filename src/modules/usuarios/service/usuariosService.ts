@@ -9,7 +9,7 @@ export class UsuariosService {
       if (await this.case.usuarioJaCriado(params.email)) {
         return {
           statusCode: 500,
-          message: `Email Já cadastrado : ${params.email}`,
+          message: `Email Já cadastrado`,
         };
       }
       const result = await this.repoUsuarios.criarUsuarios(params);
