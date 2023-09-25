@@ -25,6 +25,15 @@ export class UsuariosService {
   }
   async editarUsuario(cd_usuario: any, params: EditarUsuarioDTO) {
     try {
+      const email = params.email
+        ? await this.case.usuarioJaCriado(params.email)
+        : false;
+      if (email) {
+        return {
+          statusCode: 500,
+          message: `Email invalido ou em uso : ${params.email}`,
+        };
+      }
       const result = await this.repoUsuarios.editarUsuario(cd_usuario, params);
       return {
         statusCode: 200,
