@@ -28,3 +28,23 @@ mysql -u root -p lava_jato < dump-lava_jato-202308240347.sql <<<<< exemplo real,
 
 5ª iniciar projeto:
 >>>> yarn dev
+
+
+
+agendar varios serviços:
+
+criar nova tabela com os serviços a fazer,
+
+vai mudar no pagamento do serviço e agendamento de serviços
+
+
+nova tabela:
+
+serviços_agendados = atendimentos
+
+retirando o campo cd_servico das tabelas: agenda, atendimentos
+
+
+a fazer no back:
+ajustar a função agendar_servico
+
