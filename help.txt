@@ -24,7 +24,7 @@ mysql -u root -p lava_jato < dump-lava_jato-202308240347.sql <<<<< exemplo real,
 4ª buscar tabelas do Banco
 >>>> yarn prisma db pull
 >>>> yarn prisma generate
->>>> yarn prisma migrate
+>>>> yarn prisma migrate dev
 
 5ª iniciar projeto:
 >>>> yarn dev
