@@ -19,12 +19,10 @@ export class agendamentoServicosRepository {
     return result;
   }
   async listarServicosAgendados() {
-    const result = await db.servicos_agendados.findMany({
+    const result = await db.atendimentos.findMany({
       include: {
         clientes: { select: { nm_cliente: true } },
-        veiculos_agenda: {
-          select: { modelo: true, placa: true },
-        },
+        
       },
       where: {
         status_servico: "A"
@@ -35,7 +33,7 @@ export class agendamentoServicosRepository {
   }
   async finalizarServico(nr_sequencia: number) {
     const result = await db.$executeRawUnsafe(
-      `update servicos_agendados set dh_fim = current_timestamp(), status_servico = 'F' where nr_sequencia= ?`,
+      `update atendimentos set dh_fim = current_timestamp(), status_servico = 'F' where nr_sequencia= ?`,
       nr_sequencia
     );
 
@@ -47,7 +45,7 @@ export class agendamentoServicosRepository {
   }
 
   async listarServicosFinalizados() {
-    const result = await db.servicos_agendados.findMany({
+    const result = await db.atendimentos.findMany({
       where:{status_servico:"F"},
       include: { clientes: { select: { nm_cliente: true } } },
     });
