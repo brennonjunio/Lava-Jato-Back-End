@@ -127,7 +127,7 @@ model servicos_atendimento {
   placa              String            @db.VarChar(10)
   dh_inicio          DateTime          @default(now()) @db.DateTime(0)
   dh_fim             DateTime?         @db.DateTime(0)
-  tempo_servico      DateTime          @db.Time(0)
+  tempo_servico      DateTime?         @db.Time(0)
   cd_usuario         Int?
   status             String            @default("A") @db.VarChar(1)
   servicos           servicos          @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_servicos_cd_servico_fk")
