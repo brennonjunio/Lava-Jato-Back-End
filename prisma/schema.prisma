@@ -85,7 +85,7 @@ model financeiro {
   cd_nf              Int?
   dh_hr_mov          DateTime          @default(now()) @db.DateTime(0)
   dh_hr_baixa        DateTime?         @db.DateTime(0)
-  vlr_movimento      Float             @db.Float
+  vlr_movimento      Float             @default(0) @db.Float
   vlr_desconto       Float             @default(0) @db.Float
   perc_desconto      Float             @default(0) @db.Float
   vlr_total          Float             @default(0) @db.Float
