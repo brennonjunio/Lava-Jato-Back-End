@@ -7,7 +7,7 @@ export class agendamentoServicosRepository {
   private useCase: useCaseAgendamento = new useCaseAgendamento();
 
   async agendarServico(p: criarAgendamentoServicoDTO) {
-    const result = (await db.$queryRawUnsafe(
+    const agendamento = (await db.$queryRawUnsafe(
       "select agendar_servico(:cd_agenda_p, :cd_cliente_p, :cd_usuario_p) as sequencia",
       p.cd_agenda_p,
       p.cd_cliente_p,
@@ -17,7 +17,7 @@ export class agendamentoServicosRepository {
     for (const cd_servico of p.cd_servico_p) {
       await db.$queryRawUnsafe(
         "insert into servicos_atendimento (nr_seq_atendimento,cd_servico,cd_veiculo,placa,cd_usuario) values (?,?,?,?,?)",
-        result[0].sequencia,
+        agendamento[0].sequencia,
         cd_servico,
         p.cd_veiculo_p,
         p.placa_p,
@@ -25,6 +25,13 @@ export class agendamentoServicosRepository {
       );
     }
 
+    const gerarMovimentacao = await db.$queryRawUnsafe(
+      "select gerar_movimentacao_servico(?,?,?,?)",
+      p.cd_cliente_p,
+      p.cd_usuario_p,
+      p.cd_agenda_p,
+      agendamento[0].sequencia
+    );
     return true;
   }
   async listarServicosAgendados() {
