@@ -12,7 +12,7 @@ export class AuthController {
       return res.status(200).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -36,7 +36,7 @@ export class AuthController {
       });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
