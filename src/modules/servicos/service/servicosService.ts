@@ -59,11 +59,11 @@ export class servicosService {
     }
   }
   async agendarServico(params: criarAgendamentoServicoDTO) {
+    
+    if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
+      throw `Agenda Já em uso, por favor, usar outra agenda`
+    }
     try {
-      if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
-        throw `Agenda Já em uso, por favor, usar outra agenda`
-      }
-
       const result = await this.repositoryAgendamento.agendarServico(params);
       return {
         statusCode: 200,

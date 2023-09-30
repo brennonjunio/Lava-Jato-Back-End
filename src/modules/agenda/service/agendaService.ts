@@ -6,14 +6,12 @@ export class agendaService {
   private useCase: useCaseAgenda = new useCaseAgenda();
 
   async criarAgenda(param: criarAgendaDTO) {
+    if(await this.useCase.agendaRepetida(String (param.data_ini))){
+      throw 'Já existe Horario Gerado para data Escolhida'
+    }
     try {
 
-      if(await this.useCase.agendaRepetida(String (param.data_ini))){
-        return{
-          statusCode: 500,
-          message: `Já existe Horario Gerado para data Escolhida: ${param.data_ini}`
-        }
-      }
+      
 
       const result = await this.repository.criarAgenda(param);
       return {

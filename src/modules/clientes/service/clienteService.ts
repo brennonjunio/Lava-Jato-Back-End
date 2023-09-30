@@ -4,14 +4,16 @@ import { useCase } from "../repository/useCase/useCaseClientes";
 export class ClienteService {
   private clienteRepository: ClienteRepository = new ClienteRepository();
   private useCaseCliente: useCase = new useCase();
+
+
   async salvar(param: criarClienteDTO) {
+
+    if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
+      throw `Cpf do Cliente Já Cadastrado`;
+    }
     try {
-      if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
-        throw `Cpf do Cliente Já Cadastrado`;
-      }
-
+      
       const result = await this.clienteRepository.criarCliente(param);
-
       return {
         statusCode: 200,
         status: true,
@@ -26,7 +28,6 @@ export class ClienteService {
   async atualizar(param: updateClienteDTO) {
     try {
       const data = await this.clienteRepository.atualizarCliente(param);
-
       return {
         statusCode: 204,
         message: "Sucesso ao Atualizar cadastro do Cliente!",
@@ -50,10 +51,11 @@ export class ClienteService {
     }
   }
   async deletar(cd_cliente: number) {
+    if (await this.useCaseCliente.validaServicoExistente(cd_cliente)) {
+      const errorMessage = "Não é possível deletar Cliente com atendimentos";
+      throw errorMessage
+    }
     try {
-      if (await this.useCaseCliente.validaServicoExistente(cd_cliente)) {
-        throw "Não é possivel deletar Cliente com atendimentos";
-      }
       const result = await this.clienteRepository.deletarCliente(cd_cliente);
       return {
         statusCode: 200,

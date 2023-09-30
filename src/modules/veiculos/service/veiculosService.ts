@@ -59,11 +59,10 @@ export class veiculoService {
     }
   }
   async criarVeiculoCLiente(param: veiculoClienteDTO) {
+    if (await this.useCase.uniquePlaca(param.placa)) {
+      throw `Placa de veiculo Já vinculada`
+     }
     try {
-      if (await this.useCase.uniquePlaca(param.placa)) {
-       throw `Placa de veiculo Já vinculada`
-      }
-
       const result = await this.repositorioVeiculos.veiculoClienteCriar(param);
       return {
         statusCode: 200,
