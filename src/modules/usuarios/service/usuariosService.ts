@@ -10,10 +10,7 @@ export class UsuariosService {
       const user = await this.case.userEmUso(params.nm_usuario);
 
       if (email || user) {
-        return {
-          statusCode: 500,
-          message: `Usuario ou Email em uso ou invalido!`,
-        };
+        throw `Usuario ou Email em uso ou invalido!`
       }
       const result = await this.repoUsuarios.criarUsuarios(params);
       return {
@@ -36,10 +33,7 @@ export class UsuariosService {
         ? await this.case.userEmUso(params.nm_usuario)
         : false;
       if (email || user) {
-        return {
-          statusCode: 500,
-          message: `Usuario ou e-mail invalido`,
-        };
+        throw `Usuario ou e-mail invalido`
       }
       const result = await this.repoUsuarios.editarUsuario(cd_usuario, params);
       return {
