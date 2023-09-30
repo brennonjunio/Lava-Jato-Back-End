@@ -1,21 +1,14 @@
 import { Request, Response } from "express";
-import { criarClienteDTO } from "../dto/clientesDTO";
 import { ClienteService } from "../service/clienteService";
-import { result } from "lodash";
-import { addClienteValidator } from "../../../validator/clientes/adicionarClientesValidator";
-
+import { criarClienteDTO } from "../dto/criarClienteDTO";
 export const clientesrv = new ClienteService();
-
 export class ClienteController {
   async criarCliente(req: Request, res: Response) {
     try {
-      const body = req.body 
-      const data = await addClienteValidator.validate(body);
-      if(!data){
-        return 
-        
-      }
-      const result = await clientesrv.salvar(data);
+      
+      const body = req.body as criarClienteDTO
+
+      const result = await clientesrv.salvar(body);
 
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {

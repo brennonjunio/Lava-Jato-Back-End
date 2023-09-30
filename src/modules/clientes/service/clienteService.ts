@@ -1,4 +1,5 @@
-import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
+import { criarClienteDTO } from "../dto/criarClienteDTO";
+import { updateClienteDTO } from "../dto/updateClienteDTO";
 import { ClienteRepository } from "../repository/clientesRepository";
 import { useCase } from "../repository/useCase/useCaseClientes";
 export class ClienteService {
@@ -6,7 +7,7 @@ export class ClienteService {
   private useCaseCliente: useCase = new useCase();
 
 
-  async salvar(param: criarClienteDTO) {
+  async salvar(param:criarClienteDTO) {
 
     if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
       throw `Cpf do Cliente Já Cadastrado`;
@@ -25,7 +26,7 @@ export class ClienteService {
     }
   }
 
-  async atualizar(param: updateClienteDTO) {
+  async atualizar(param:updateClienteDTO) {
     try {
       const data = await this.clienteRepository.atualizarCliente(param);
       return {

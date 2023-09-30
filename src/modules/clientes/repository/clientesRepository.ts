@@ -1,8 +1,10 @@
-import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import db from "../../../database/database";
+import { criarClienteDTO } from "../dto/criarClienteDTO";
+import { updateClienteDTO } from "../dto/updateClienteDTO";
 
 export class ClienteRepository {
-  async criarCliente(param: criarClienteDTO) {
+  async criarCliente(param:criarClienteDTO) {
+    console.log("🚀 ~ file: clientesRepository.ts:7 ~ ClienteRepository ~ criarCliente ~ param:", param)
     const novoCliente = await db.clientes.create({
       data: param,
     });
