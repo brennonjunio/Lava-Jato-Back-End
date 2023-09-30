@@ -1,12 +1,7 @@
-import {
-  criarClienteDTO,
-  updateClienteDTO,
-} from "../dto/clientesDTO";
+import { criarClienteDTO, updateClienteDTO } from "../dto/clientesDTO";
 import db from "../../../database/database";
 
 export class ClienteRepository {
-
-  
   async criarCliente(param: criarClienteDTO) {
     const novoCliente = await db.clientes.create({
       data: param,
@@ -35,9 +30,10 @@ export class ClienteRepository {
   }
 
   async deletarCliente(cd_cliente: number) {
-    return await db.clientes.delete({
+    const result = await db.clientes.delete({
       where: { cd_cliente: cd_cliente },
     });
+    return result;
   }
   async inativarCliente(cd_cliente: number) {
     const result = await db.clientes.update({

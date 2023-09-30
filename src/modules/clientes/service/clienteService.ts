@@ -6,12 +6,8 @@ export class ClienteService {
   private useCaseCliente: useCase = new useCase();
   async salvar(param: criarClienteDTO) {
     try {
-      
       if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
-        return {
-          statusCode: 500,
-          message: `Cpf do Cliente Já Cadastrado`,
-        };
+        throw `Cpf do Cliente Já Cadastrado`;
       }
 
       const result = await this.clienteRepository.criarCliente(param);
@@ -54,13 +50,10 @@ export class ClienteService {
     }
   }
   async deletar(cd_cliente: number) {
-    if(await this.useCaseCliente.validaServicoExistente(cd_cliente)){
-      return {
-        statusCode: 500,
-        message: `Não é possivel deletar Cliente(s) com atendimentos Registrados`,
-      };
-    }
     try {
+      if (await this.useCaseCliente.validaServicoExistente(cd_cliente)) {
+        throw "Não é possivel deletar Cliente com atendimentos";
+      }
       const result = await this.clienteRepository.deletarCliente(cd_cliente);
       return {
         statusCode: 200,
