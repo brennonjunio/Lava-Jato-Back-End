@@ -1,13 +1,10 @@
-import {
-  criarClienteDTO,
-  updateClienteDTO,
-} from "../dto/clientesDTO";
 import db from "../../../database/database";
+import { CriarClienteDTO } from "../dto/criarClienteDTO";
+import { updateClienteDTO } from "../dto/updateClienteDTO";
 
 export class ClienteRepository {
-
-  
-  async criarCliente(param: criarClienteDTO) {
+  async criarCliente(param:CriarClienteDTO) {
+    console.log("🚀 ~ file: clientesRepository.ts:7 ~ ClienteRepository ~ criarCliente ~ param:", param)
     const novoCliente = await db.clientes.create({
       data: param,
     });
@@ -35,9 +32,10 @@ export class ClienteRepository {
   }
 
   async deletarCliente(cd_cliente: number) {
-    return await db.clientes.delete({
+    const result = await db.clientes.delete({
       where: { cd_cliente: cd_cliente },
     });
+    return result;
   }
   async inativarCliente(cd_cliente: number) {
     const result = await db.clientes.update({
