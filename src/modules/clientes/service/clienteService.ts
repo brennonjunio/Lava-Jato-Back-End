@@ -53,6 +53,12 @@ export class ClienteService {
     }
   }
   async deletar(cd_cliente: number) {
+    if(await this.useCaseCliente.validaServicoExistente(cd_cliente)){
+      return {
+        statusCode: 500,
+        message: `Não é possivel deletar Cliente(s) com atendimentos Registrados`,
+      };
+    }
     try {
       const result = await this.clienteRepository.deletarCliente(cd_cliente);
       return {
