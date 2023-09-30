@@ -11,10 +11,10 @@ export class servicosController {
       const body = req.body as criarServicoDTO;
       const result = await servicos.criarServico(body);
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -22,10 +22,10 @@ export class servicosController {
     try {
       const result = await servicos.listarServicos();
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -34,10 +34,10 @@ export class servicosController {
       const body = req.body as updateServiceDTO;
       const result = await servicos.editarServicos(body);
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -46,10 +46,10 @@ export class servicosController {
       const { cd_servico } = req.body;
       const result = await servicos.deletarServicos(cd_servico);
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -57,11 +57,11 @@ export class servicosController {
     try {
       const body = req.body as criarAgendamentoServicoDTO;
       const result = await servicos.agendarServico(body);
-
-      return res.status(result.statusCode).json({ data: result.message });
+      const { message } = result;
+      return res.status(result.statusCode).json({ message });
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -69,21 +69,21 @@ export class servicosController {
     try {
       const result = await servicos.listarServicosAgendados();
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
-  async finalizarServico(req: Request, res: Response){
+  async finalizarServico(req: Request, res: Response) {
     try {
-     const {nr_sequencia} = req.body
-      const result = await servicos.finalizarServico(nr_sequencia)
-      return res.status(result.statusCode).json({ data: result });
+      const { nr_sequencia } = req.body;
+      const result = await servicos.finalizarServico(nr_sequencia);
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -91,10 +91,10 @@ export class servicosController {
   async listarServicosFinalizados(req: Request, res: Response) {
     try {
       const result = await servicos.listarServicosFinalizados();
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }

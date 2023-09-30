@@ -15,6 +15,7 @@ export class agendaService {
 
       const result = await this.repository.criarAgenda(param);
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao Criar Agenda!",
         data: result,
@@ -29,6 +30,7 @@ export class agendaService {
       const result = await this.repository.listarHorariosDisponiveis();
 
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao Listar Agendas!",
         data: result,
@@ -41,6 +43,7 @@ export class agendaService {
     try {
       const result = await this.repository.deletarHorarioAgenda(cd_agenda);
       return {
+        status: true,
         statusCode: 201,
         message: "Sucesso Ao Excluir Horario da Agenda",
         data: result,

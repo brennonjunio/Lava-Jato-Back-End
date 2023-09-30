@@ -9,7 +9,7 @@ export class financeiroController {
 
       const result = await financeiro.criarTiposPagamentos(body);
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -19,7 +19,7 @@ export class financeiroController {
   async listarTiposPagamentos(req: Request, res: Response) {
     try {
       const result = await financeiro.listarTiposPagamentos();
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -30,7 +30,7 @@ export class financeiroController {
     try {
       const body = req.body;
       const result = await financeiro.editarTiposPagamentos(body);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -41,7 +41,7 @@ export class financeiroController {
     try {
       const cd_pagamento = req.body;
       const result = await financeiro.editarTiposPagamentos(cd_pagamento);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -52,7 +52,7 @@ export class financeiroController {
     try {
       const body = req.body;
       const result = await financeiro.efetuarPagamentoServico(body);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error

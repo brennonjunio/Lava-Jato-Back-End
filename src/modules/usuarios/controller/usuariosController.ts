@@ -8,7 +8,7 @@ export class UsuariosController {
     try {
       const body = req.body as CriarUsuarioDTO;
       const result = await usuarioSrv.criarUsuarios(body);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -21,7 +21,7 @@ export class UsuariosController {
       const { cd_usuario } = req.params;
 
       const result = await usuarioSrv.editarUsuario(Number(cd_usuario), body);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -31,7 +31,7 @@ export class UsuariosController {
   async listarUsuariosAll(req: Request, res: Response) {
     try {
       const result = await usuarioSrv.listarUsuariosAll();
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error

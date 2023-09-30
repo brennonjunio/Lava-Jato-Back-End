@@ -11,6 +11,7 @@ export class financeiroService {
     try {
       const result = await this.repository.criarTiposPagamentos(params);
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao criar Tipo de Pagamento!",
         data: result,
@@ -24,6 +25,7 @@ export class financeiroService {
     try {
       const result = await this.repository.listarTiposPagamentos();
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao listar Tipos de Pagamentos!",
         data: result,
@@ -38,6 +40,7 @@ export class financeiroService {
       const result = await this.repository.editarTiposPagamentos(params);
 
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao Editar Tipo de Pagamento!",
         data: result,
@@ -52,6 +55,7 @@ export class financeiroService {
         const result = await this.repository.deletarTipoPagamento(cd_pagamento);
         
         return {
+          status: true,
             statusCode: 200,
             message: "Sucesso ao Editar Tipo de Pagamento!",
             data: result,
@@ -67,6 +71,7 @@ export class financeiroService {
         param
       );
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao Efetuar Pagamento!",
         data: result,

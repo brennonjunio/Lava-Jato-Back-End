@@ -6,7 +6,7 @@ export class ClienteController {
     try {
       const body = req.body;
       const result = await clientesrv.salvar(body);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error,
@@ -17,7 +17,7 @@ export class ClienteController {
     try {
       const result = await clientesrv.listar();
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error,
@@ -30,7 +30,7 @@ export class ClienteController {
 
       const result = await clientesrv.atualizar(body);
 
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error,
@@ -52,7 +52,7 @@ export class ClienteController {
     try {
       const { cd_cliente } = req.body;
       await clientesrv.inativar(cd_cliente);
-      return res.status(200).json({ data: cd_cliente });
+      return res.status(200).json({ cd_cliente });
     } catch (error) {
       res.status(500).json({
         error,

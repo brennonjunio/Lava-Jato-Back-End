@@ -14,6 +14,7 @@ export class servicosService {
     try {
       const result = await this.repository.criarServico(param);
       return {
+        status: true,
         statusCode: 200,
         message: "Serviço Criado Com Sucesso!",
         data: result,
@@ -26,6 +27,7 @@ export class servicosService {
     try {
       const result = await this.repository.listarServicos();
       return {
+        status: true,
         statusCode: 200,
         message: "Serviços listados Com Sucesso!",
         data: result,
@@ -38,6 +40,7 @@ export class servicosService {
     try {
       const result = await this.repository.editarServicos(params);
       return {
+        status: true,
         statusCode: 200,
         message: "Serviço Editado Com Sucesso!",
         data: result,
@@ -50,6 +53,7 @@ export class servicosService {
     try {
       const result = await this.repository.deletarServicos(cd_servico);
       return {
+        status: true,
         statusCode: 200,
         message: "Serviço Deletado com Sucesso!",
         data: result,
@@ -66,6 +70,7 @@ export class servicosService {
     try {
       const result = await this.repositoryAgendamento.agendarServico(params);
       return {
+        status: true,
         statusCode: 200,
         message: "Serviço Agendado Com Sucesso!",
         data: result,
@@ -79,6 +84,7 @@ export class servicosService {
       const result = await this.repositoryAgendamento.listarServicosAgendados();
 
       return {
+        status: true,
         statusCode: 200,
         message: "Serviços Listados Com Sucesso!",
         data: result,
@@ -93,6 +99,7 @@ export class servicosService {
         nr_sequencia
       );
       return {
+        status: true,
         statusCode: 200,
         message: "Serviço Finalizado Com Sucesso!",
         data: result,
@@ -106,6 +113,7 @@ export class servicosService {
       const result =
         await this.repositoryAgendamento.listarServicosFinalizados();
       return {
+        status: true,
         statusCode: 200,
         message: "Serviços Listados Com sucesso!",
         data: result,

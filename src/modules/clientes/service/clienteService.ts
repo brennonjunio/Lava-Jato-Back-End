@@ -28,6 +28,7 @@ export class ClienteService {
       const data = await this.clienteRepository.atualizarCliente(param);
       return {
         statusCode: 204,
+        status: true,
         message: "Sucesso ao Atualizar cadastro do Cliente!",
         data: [data],
       };

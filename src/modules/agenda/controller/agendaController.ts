@@ -8,7 +8,7 @@ export class agendaController {
     try {
       const body = req.body as criarAgendaDTO;
       const result = await service.criarAgenda(body);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -18,7 +18,7 @@ export class agendaController {
   async listarAgendasDisponiveis(req: Request, res: Response) {
     try {
       const result = await service.listarAgendasDisponiveis();
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error
@@ -29,7 +29,7 @@ export class agendaController {
     try {
       const { cd_agenda } = req.body;
       const result = await service.deletarHorarioAgenda(cd_agenda);
-      return res.status(result.statusCode).json({ data: result });
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error

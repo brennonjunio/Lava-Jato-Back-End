@@ -9,6 +9,7 @@ export class veiculoService {
       const result = await this.repositorioVeiculos.tipoVeiculoCriar(descricao);
 
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao Criar Tipos de veiculos!",
         data: result,
@@ -21,6 +22,7 @@ export class veiculoService {
     try {
       const result = await this.repositorioVeiculos.tipoVeiculoListar();
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao Listar Tipos de veiculos!",
         data: result,
@@ -36,6 +38,7 @@ export class veiculoService {
         descricao
       );
       return {
+        status: true,
         statusCode: 201,
         message: "Sucesso Editar Tipos Veiculos!",
         data: result,
@@ -50,6 +53,7 @@ export class veiculoService {
         cd_tipo_veiculo
       );
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso Editar Tipos Veiculos!",
         data: result,
@@ -65,6 +69,7 @@ export class veiculoService {
     try {
       const result = await this.repositorioVeiculos.veiculoClienteCriar(param);
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao Adicionar Veiculo!",
         data: result,
@@ -77,6 +82,7 @@ export class veiculoService {
     try {
       const result = await this.repositorioVeiculos.listarVeiculosCliente();
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso ao listar veiculos do Cliente!",
         data: result,
@@ -91,6 +97,7 @@ export class veiculoService {
         param
       );
       return {
+        status: true,
         statusCode: 202,
         message: "Sucesso ao editar veiculo do Cliente!",
         data: result,
@@ -105,6 +112,7 @@ export class veiculoService {
         cd_veiculo
       );
       return {
+        status: true,
         statusCode: 200,
         message: "Sucesso Erro ao Deletar Veiculo do Cliente!",
         data: result,

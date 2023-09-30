@@ -9,7 +9,7 @@ export class AuthController {
     try {
       const body = req.body as AuthDTO;
       const result = await auth.login(body);
-      return res.status(200).json({ data: result });
+      return res.status(200).json(result);
     } catch (error) {
       res.status(500).json({
         error
