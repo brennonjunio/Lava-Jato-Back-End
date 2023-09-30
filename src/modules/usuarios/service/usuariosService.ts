@@ -55,7 +55,7 @@ export class UsuariosService {
         message: "Sucesso ao Editar Usuario!",
       };
     } catch (error) {
-      throw `erro ao Editar Usuario: ${error}`;
+      throw `Erro ao Listar Usuarios ${error}`;
     }
   }
 }
