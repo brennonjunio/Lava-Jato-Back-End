@@ -48,3 +48,21 @@ retirando o campo cd_servico das tabelas: agenda, atendimentos
 a fazer no back:
 ajustar a função agendar_servico
 
+
+
+
+
+
+
+
+instalar na IDE PARA LEIGOS
+instalar o MYSQL
+Adicionar User na instalação do Mysql
+Adicionar Mysql Variavel Ambiente
+
+no DBever => criar um bd localhost
+
+Abrir CMD =>  mysql -u root -p nome_banco < arquivo.sql 
+DUMP 
+
+
