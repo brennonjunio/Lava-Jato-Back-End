@@ -22,7 +22,7 @@ export class ClienteService {
         message: "Sucesso ao Salvar Cliente!",
       };
     } catch (e) {
-      throw `erro ao Deletar Clientes: ${e}`;
+      throw `Erro ao Cadastrar Cliente: ${e}`;
     }
   }
 
