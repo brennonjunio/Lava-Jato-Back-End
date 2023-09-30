@@ -6,6 +6,7 @@ export class ClienteService {
   private useCaseCliente: useCase = new useCase();
   async salvar(param: criarClienteDTO) {
     try {
+      
       if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
         return {
           statusCode: 500,
@@ -22,7 +23,7 @@ export class ClienteService {
         message: "Sucesso ao Salvar Cliente!",
       };
     } catch (e) {
-      throw `Erro ao Cadastrar Cliente: ${e}`;
+      throw `Erro ao Cadastrar: ${e}`;
     }
   }
 

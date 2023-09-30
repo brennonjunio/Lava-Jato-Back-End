@@ -11,7 +11,7 @@ export class agendaController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -21,7 +21,7 @@ export class agendaController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -32,7 +32,7 @@ export class agendaController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }

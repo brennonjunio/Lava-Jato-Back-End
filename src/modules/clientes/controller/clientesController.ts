@@ -2,19 +2,25 @@ import { Request, Response } from "express";
 import { criarClienteDTO } from "../dto/clientesDTO";
 import { ClienteService } from "../service/clienteService";
 import { result } from "lodash";
+import { addClienteValidator } from "../../../validator/clientes/adicionarClientesValidator";
 
 export const clientesrv = new ClienteService();
 
 export class ClienteController {
   async criarCliente(req: Request, res: Response) {
     try {
-      const body = req.body as criarClienteDTO;
-      const result = await clientesrv.salvar(body);
+      const body = req.body 
+      const data = await addClienteValidator.validate(body);
+      if(!data){
+        return 
+        
+      }
+      const result = await clientesrv.salvar(data);
 
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -25,7 +31,7 @@ export class ClienteController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -38,7 +44,7 @@ export class ClienteController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -49,7 +55,7 @@ export class ClienteController {
       return res.status(200).json({ message: "Sucesso ao deletar Cadastro!" });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -60,7 +66,7 @@ export class ClienteController {
       return res.status(200).json({ data: cd_cliente });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }

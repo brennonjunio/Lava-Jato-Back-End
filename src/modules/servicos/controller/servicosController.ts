@@ -14,7 +14,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -25,7 +25,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -37,7 +37,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -49,7 +49,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -61,7 +61,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result.message });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -72,7 +72,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -83,7 +83,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
@@ -94,7 +94,7 @@ export class servicosController {
       return res.status(result.statusCode).json({ data: result });
     } catch (error) {
       res.status(500).json({
-        data: { error },
+        error
       });
     }
   }
