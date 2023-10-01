@@ -8,6 +8,7 @@ import servicosRouters from "./servicos.routes";
 import financeiroRoutes from "./financeiro.routes";
 import usuariosRouter from "./usuarios.routes";
 import authRouter from "./auth.routes";
+import atendimentos from "./atendimentos.routes";
 
 //rotas para login
 router.use(authRouter);
@@ -16,7 +17,6 @@ router.use(usuariosRouter);
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ROTA VALIDA TOKEN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 router.use(AuthMiddleware.varify);
-
 
 //ROTAS PARA OS CLIENTES CRUD
 router.use(clientesRoutes);
@@ -32,5 +32,7 @@ router.use(servicosRouters);
 
 //rotas para financeiro
 router.use(financeiroRoutes);
+
+router.use(atendimentos);
 
 export { router };

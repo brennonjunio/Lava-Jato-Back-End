@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { servicosService } from "../service/servicosService";
 import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
-import { criarAgendamentoServicoDTO } from "../dto/agendamentoServicosDTO";
 
 export const servicos = new servicosService();
 
@@ -53,49 +52,5 @@ export class servicosController {
       });
     }
   }
-  async agendarServico(req: Request, res: Response) {
-    try {
-      const body = req.body as criarAgendamentoServicoDTO;
-      const result = await servicos.agendarServico(body);
-      const { message } = result;
-      return res.status(result.statusCode).json({ message });
-    } catch (error) {
-      res.status(500).json({
-        error,
-      });
-    }
-  }
-  async listarServicosAgendados(req: Request, res: Response) {
-    try {
-      const result = await servicos.listarServicosAgendados();
 
-      return res.status(result.statusCode).json(result);
-    } catch (error) {
-      res.status(500).json({
-        error,
-      });
-    }
-  }
-  async finalizarServico(req: Request, res: Response) {
-    try {
-      const { nr_sequencia } = req.body;
-      const result = await servicos.finalizarServico(nr_sequencia);
-      return res.status(result.statusCode).json(result);
-    } catch (error) {
-      res.status(500).json({
-        error,
-      });
-    }
-  }
-
-  async listarServicosFinalizados(req: Request, res: Response) {
-    try {
-      const result = await servicos.listarServicosFinalizados();
-      return res.status(result.statusCode).json(result);
-    } catch (error) {
-      res.status(500).json({
-        error,
-      });
-    }
-  }
 }

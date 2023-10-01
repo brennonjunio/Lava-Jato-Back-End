@@ -1,12 +1,11 @@
-import { includes } from "lodash";
 import db from "../../../database/database";
-import { criarAgendamentoServicoDTO } from "../dto/agendamentoServicosDTO";
-import { useCaseAgendamento } from "./useCase/useCaseAgendamento";
+import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
+import { useCaseAtendimentos } from "./useCase/useCaseAtendimentos";
 
-export class agendamentoServicosRepository {
-  private useCase: useCaseAgendamento = new useCaseAgendamento();
+export class agendamentoAtendimentosRepository {
+  private useCase: useCaseAtendimentos = new useCaseAtendimentos();
 
-  async agendarServico(p: criarAgendamentoServicoDTO) {
+  async agendarAtendimento(p: criarAgendamentoServicoDTO) {
     const agendamento = (await db.$queryRawUnsafe(
       "select agendar_servico(:cd_agenda_p, :cd_cliente_p, :cd_usuario_p) as sequencia",
       p.cd_agenda_p,
@@ -46,10 +45,11 @@ export class agendamentoServicosRepository {
 
     return result;
   }
-  async finalizarServico(nr_sequencia: number) {
+  async finalizarServico(nr_sequencia: number, seq_atendimento: number) {
     const result = await db.$executeRawUnsafe(
-      `update atendimentos set dh_fim = current_timestamp(), status_servico = 'F' where nr_sequencia= ?`,
-      nr_sequencia
+      `update servicos_atendimento set dh_fim = current_timestamp(), status = 'F' where nr_sequencia= ? and nr_seq_atendimento = ?`,
+      nr_sequencia,
+      seq_atendimento
     );
 
     const calculaHorario = await db.$executeRawUnsafe(
@@ -59,7 +59,7 @@ export class agendamentoServicosRepository {
     return result;
   }
 
-  async listarServicosFinalizados() {
+  async listarAtendimentosFinalizados() {
     const result = await db.atendimentos.findMany({
       where: { status_servico: "F" },
       include: { clientes: { select: { nm_cliente: true } } },

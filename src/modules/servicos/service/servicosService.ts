@@ -1,14 +1,8 @@
-import { criarAgendamentoServicoDTO } from "../dto/agendamentoServicosDTO";
 import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
-import { agendamentoServicosRepository } from "../repository/agendamentoServicosRepository";
 import { servicosRepository } from "../repository/servicosRepository";
-import { useCaseAgendamento } from "../repository/useCase/useCaseAgendamento";
 
 export class servicosService {
   private repository: servicosRepository = new servicosRepository();
-  private repositoryAgendamento: agendamentoServicosRepository =
-    new agendamentoServicosRepository();
-  private useCase: useCaseAgendamento = new useCaseAgendamento();
 
   async criarServico(param: criarServicoDTO) {
     try {
@@ -62,65 +56,4 @@ export class servicosService {
       throw `erro ao deletar serviço: ${e}`;
     }
   }
-  async agendarServico(params: criarAgendamentoServicoDTO) {
-    
-    if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
-      throw `Agenda Já em uso, por favor, usar outra agenda`
-    }
-    try {
-      const result = await this.repositoryAgendamento.agendarServico(params);
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Serviço Agendado Com Sucesso!",
-        data: result,
-      };
-    } catch (e) {
-      throw `erro ao Agendar serviço: ${e}`;
-    }
-  }
-  async listarServicosAgendados() {
-    try {
-      const result = await this.repositoryAgendamento.listarServicosAgendados();
-
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Serviços Listados Com Sucesso!",
-        data: result,
-      };
-    } catch (e) {
-      throw `erro ao Agendar serviço: ${e}`;
-    }
-  }
-  async finalizarServico(nr_sequencia: number) {
-    try {
-      const result = await this.repositoryAgendamento.finalizarServico(
-        nr_sequencia
-      );
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Serviço Finalizado Com Sucesso!",
-        data: result,
-      };
-    } catch (e) {
-      throw `erro ao Finalizar serviço: ${e}`;
-    }
-  }
-  async listarServicosFinalizados() {
-    try {
-      const result =
-        await this.repositoryAgendamento.listarServicosFinalizados();
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Serviços Listados Com sucesso!",
-        data: result,
-      };
-    } catch (e) {
-      throw `erro ao Listar serviço: ${e}`;
-    }
-  }
 }
-
