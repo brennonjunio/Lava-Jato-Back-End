@@ -16,9 +16,9 @@ export class AtendimentosController{
           });
         }
       }
-      async listarServicosAgendados(req: Request, res: Response) {
+      async listarServicosAtendimentos(req: Request, res: Response) {
         try {
-          const result = await servicos.listarServicosAgendados();
+          const result = await servicos.listarServicosAtendimentos();
     
           return res.status(result.statusCode).json(result);
         } catch (error) {

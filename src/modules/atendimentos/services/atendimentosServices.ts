@@ -23,9 +23,9 @@ export class AtendimentosService {
       throw `erro ao Agendar serviço: ${e}`;
     }
   }
-  async listarServicosAgendados() {
+  async listarServicosAtendimentos() {
     try {
-      const result = await this.repositoryAgendamento.listarServicosAgendados();
+      const result = await this.repositoryAgendamento.listarServicosAtendimentos();
 
       return {
         status: true,

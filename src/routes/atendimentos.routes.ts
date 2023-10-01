@@ -19,7 +19,7 @@ atendimentos.post(
 );
 atendimentos.get(
   "/atendimentos/agendamento",
-  new AtendimentosController().listarServicosAgendados
+  new AtendimentosController().listarServicosAtendimentos
 );
 
 export default atendimentos;

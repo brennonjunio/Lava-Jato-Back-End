@@ -32,19 +32,20 @@ model agenda {
 }
 
 model atendimentos {
-  nr_sequencia   Int          @id @default(autoincrement())
-  horario        DateTime     @db.DateTime(0)
-  status_servico String       @default("A") @db.VarChar(1)
-  cd_agenda      Int
-  cd_cliente     Int
-  tempo_servico  String?      @db.VarChar(30)
-  dh_inicio      DateTime     @default(now()) @db.DateTime(0)
-  dh_fim         DateTime?    @db.DateTime(0)
-  cd_usuario     Int?
-  agenda         agenda       @relation(fields: [cd_agenda], references: [cd_agenda], onDelete: NoAction, onUpdate: NoAction, map: "atendimentos_agenda_cd_agenda_fk")
-  clientes       clientes     @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "atendimentos_clientes_cd_cliente_fk")
-  usuarios       usuarios?    @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_FK")
-  financeiro     financeiro[]
+  nr_sequencia         Int                    @id @default(autoincrement())
+  horario              DateTime               @db.DateTime(0)
+  status_servico       String                 @default("A") @db.VarChar(1)
+  cd_agenda            Int
+  cd_cliente           Int
+  tempo_servico        String?                @db.VarChar(30)
+  dh_inicio            DateTime               @default(now()) @db.DateTime(0)
+  dh_fim               DateTime?              @db.DateTime(0)
+  cd_usuario           Int?
+  agenda               agenda                 @relation(fields: [cd_agenda], references: [cd_agenda], onDelete: NoAction, onUpdate: NoAction, map: "atendimentos_agenda_cd_agenda_fk")
+  clientes             clientes               @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "atendimentos_clientes_cd_cliente_fk")
+  usuarios             usuarios?              @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_FK")
+  financeiro           financeiro[]
+  servicos_atendimento servicos_atendimento[]
 
   @@index([cd_usuario], map: "servicos_agendados_FK")
   @@index([cd_agenda], map: "servicos_agendados_agenda_cd_agenda_fk")
@@ -63,6 +64,8 @@ model clientes {
   nr_casa           String?             @db.VarChar(20)
   cd_usuario        Int?
   status            String              @default("A") @db.VarChar(1)
+  telefone1         String?             @db.VarChar(14)
+  telefone2         String?             @db.VarChar(12)
   agenda            agenda[]
   atendimentos      atendimentos[]
   usuarios          usuarios?           @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "clientes_FK")
@@ -130,6 +133,7 @@ model servicos_atendimento {
   tempo_servico      DateTime?         @db.Time(0)
   cd_usuario         Int?
   status             String            @default("A") @db.VarChar(1)
+  atendimentos       atendimentos      @relation(fields: [nr_seq_atendimento], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_atendimentos_nr_sequencia_fk")
   servicos           servicos          @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_servicos_cd_servico_fk")
   usuarios           usuarios?         @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_usuarios_cd_usuario_fk")
   veiculos_clientes  veiculos_clientes @relation(fields: [cd_veiculo], references: [cd_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_veiculos_clientes_cd_veiculo_fk")
@@ -137,6 +141,7 @@ model servicos_atendimento {
   @@index([cd_servico], map: "servicos_atendimento_servicos_cd_servico_fka")
   @@index([cd_usuario], map: "servicos_atendimento_usuarios_cd_usuario_fk")
   @@index([cd_veiculo], map: "servicos_atendimento_veiculos_clientes_cd_veiculo_fk")
+  @@index([nr_seq_atendimento], map: "servicos_atendimento_atendimentos_nr_sequencia_fk")
 }
 
 model tipo_movimento {
