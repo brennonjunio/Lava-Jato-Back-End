@@ -34,12 +34,13 @@ export class ClienteService {
     try {
       const data = await this.clienteRepository.atualizarCliente(param);
       return {
-        statusCode: 204,
+        statusCode: 201,
         status: true,
         message: "Sucesso ao Atualizar cadastro do Cliente!",
-        data: [data],
+        data: [param],
       };
     } catch (e) {
+      console.log("🚀 ~ file: clienteService.ts:43 ~ ClienteService ~ atualizar ~ e:", e)
       throw `erro ao Atualizar Cadastro: ${e}`;
     }
   }

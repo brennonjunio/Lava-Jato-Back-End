@@ -91,6 +91,19 @@ export class veiculoService {
       throw `erro ao listar veiculos do cliente ${e}`;
     }
   }
+  async listarVeiculosPorCliente(cd_Cliente: number) {
+    try {
+      const result = await this.repositorioVeiculos.listarVeiculosPorCliente(cd_Cliente);
+      return {
+        status: true,
+        statusCode: 200,
+        message: "Sucesso ao listar veiculos do Cliente!",
+        data: result,
+      };
+    } catch (e) {
+      throw `erro ao listar veiculos do cliente ${e}`;
+    }
+  }
   async atualizarVeiculosCliente(param: updateVeiculoClienteDTO) {
     try {
       const result = await this.repositorioVeiculos.atualizarVeiculosCliente(

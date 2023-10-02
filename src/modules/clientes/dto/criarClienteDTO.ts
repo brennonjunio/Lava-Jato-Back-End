@@ -4,4 +4,6 @@ export class CriarClienteDTO {
   cep: string;
   bairro: string;
   nr_casa: string;
+  telefone1: string;
+  telefone2: string;
 }
