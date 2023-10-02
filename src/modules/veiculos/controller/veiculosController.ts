@@ -75,7 +75,7 @@ export class veiculosController {
   }
   async listarVeiculosporCliente(req: Request, res: Response) {
     try {
-        const {cd_cliente} = req.query
+        const {cd_cliente} = req.params
       const result = await service.listarVeiculosPorCliente(Number(cd_cliente));
       return res.status(result.statusCode).json(result);
     } catch (error) {
