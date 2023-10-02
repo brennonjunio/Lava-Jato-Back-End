@@ -44,6 +44,19 @@ export class veiculosRepository {
     });
     return result;
   }
+  async listarVeiculosPorCliente(cd_cliente_p: number) {
+    const result = await db.veiculos_clientes.findMany({
+      where:{cd_cliente: cd_cliente_p},
+      include: {
+        tipo_veiculos: {
+          select: {
+            descricao: true,
+          },
+        },
+      },
+    });
+    return result;
+  }
 
   async atualizarVeiculosCliente(param: updateVeiculoClienteDTO) {
     const result = await db.veiculos_clientes.update({

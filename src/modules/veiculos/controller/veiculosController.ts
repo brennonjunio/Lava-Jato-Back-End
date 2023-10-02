@@ -73,6 +73,17 @@ export class veiculosController {
       });
     }
   }
+  async listarVeiculosporCliente(req: Request, res: Response) {
+    try {
+        const {cd_cliente} = req.query
+      const result = await service.listarVeiculosPorCliente(Number(cd_cliente));
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error
+      });
+    }
+  }
   async editarVeiculosCliente(req: Request, res: Response) {
     try {
       const body = req.body;
