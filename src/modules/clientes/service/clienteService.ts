@@ -24,6 +24,13 @@ export class ClienteService {
   }
 
   async atualizar(param: updateClienteDTO) {
+    
+    if (param.cpf_cnpj) {
+      if (await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)) {
+        throw `Cpf do Cliente Já Cadastrado`;
+      }
+    }
+
     try {
       const data = await this.clienteRepository.atualizarCliente(param);
       return {
