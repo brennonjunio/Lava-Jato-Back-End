@@ -40,8 +40,9 @@ export class ClienteController {
   async deletar(req: Request, res: Response) {
     try {
       const { cd_cliente } = req.params;
-      await clientesrv.deletar(Number(cd_cliente));
-      return res.status(200).json({ message: "Sucesso ao deletar Cadastro!" });
+      console.log("🚀 ~ file: clientesController.ts:43 ~ ClienteController ~ deletar ~ cd_cliente:", cd_cliente)
+      const result = await clientesrv.deletar(Number(cd_cliente));
+      return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
         error,

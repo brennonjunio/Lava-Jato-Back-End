@@ -1,26 +1,21 @@
 import { CriarUsuarioDTO, EditarUsuarioDTO } from "../dto/usuariosDTO";
 import { UsuariosRepository } from "../repository/usuariosRepository";
 import { UseCaseUsuarios } from "../repository/useCase";
+import AppStatus from "../../../shared/AppStatus";
 export class UsuariosService {
   private repoUsuarios: UsuariosRepository = new UsuariosRepository();
   private case: UseCaseUsuarios = new UseCaseUsuarios();
   async criarUsuarios(params: CriarUsuarioDTO) {
-    
     const email = await this.case.emailEmUso(params.email);
     const user = await this.case.userEmUso(params.nm_usuario);
     if (email || user) {
-      throw `Usuario ou Email em uso ou invalido!`;
+      return AppStatus.updateFalse("Usuario ou email em uso/invalido", 0);
     }
     try {
       const result = await this.repoUsuarios.criarUsuarios(params);
-      return {
-        statusCode: 200,
-        status: true,
-        data: [],
-        message: "Sucesso ao Salvar Usuario!",
-      };
+      return AppStatus.appSucess("Usuario Criado Com sucesso", params.email);
     } catch (error) {
-      throw `erro ao Criar Usuario: ${error}`;
+      return AppStatus.appError("Erro ao cadastrar Usuario", 0);
     }
   }
   async editarUsuario(cd_usuario: any, params: EditarUsuarioDTO) {
@@ -31,29 +26,19 @@ export class UsuariosService {
       ? await this.case.userEmUso(params.nm_usuario)
       : false;
     if (email || user) {
-      throw `Usuario ou e-mail invalido`;
+      return AppStatus.updateFalse("Usuario ou email em uso/invalido", 0);
     }
     try {
       const result = await this.repoUsuarios.editarUsuario(cd_usuario, params);
-      return {
-        statusCode: 200,
-        status: true,
-        data: [],
-        message: "Sucesso ao Editar Usuario!",
-      };
+      return AppStatus.updateSucess("Usuario Editado Com sucesso", 1);
     } catch (error) {
-      throw `erro ao Editar Usuario: ${error}`;
+      return AppStatus.appError("Erro ao Editar Usuario", 0);
     }
   }
   async listarUsuariosAll() {
     try {
       const result = await this.repoUsuarios.listarUsuariosAll();
-      return {
-        statusCode: 200,
-        status: true,
-        data: result,
-        message: "Sucesso ao Editar Usuario!",
-      };
+      return AppStatus.appSucess("Usuario Criado Com sucesso", result);
     } catch (error) {
       throw `Erro ao Listar Usuarios ${error}`;
     }
