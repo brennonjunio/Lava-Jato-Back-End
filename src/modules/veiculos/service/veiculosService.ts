@@ -127,7 +127,7 @@ export class veiculoService {
       return {
         status: true,
         statusCode: 200,
-        message: "Sucesso Erro ao Deletar Veiculo do Cliente!",
+        message: "Sucesso ao Deletar Veiculo do Cliente!",
         data: result,
       };
     } catch (e) {
