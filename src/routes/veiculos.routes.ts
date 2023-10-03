@@ -11,7 +11,7 @@ veiculosRouter.get("/veiculo/tipo", new veiculosController().listarTipoVeiculo);
 veiculosRouter.put("/veiculo/tipo", new veiculosController().editarTipoVeiculo);
 
 veiculosRouter.delete(
-  "/veiculo/tipo",
+  "/veiculo/tipo/:cd_veiculo",
   new veiculosController().deletarTipoVeiculo
 );
 
@@ -34,7 +34,7 @@ veiculosRouter.put(
   new veiculosController().editarVeiculosCliente
 );
 veiculosRouter.delete(
-  "/veiculo/cliente",
+  "/veiculo/cliente/:cd_veiculo",
   new veiculosController().deletarVeiculosCliente
 );
 

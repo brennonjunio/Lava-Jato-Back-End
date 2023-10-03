@@ -27,8 +27,8 @@ export class agendaController {
   }
   async deletarHorarioAgenda(req: Request, res: Response) {
     try {
-      const { cd_agenda } = req.body;
-      const result = await service.deletarHorarioAgenda(cd_agenda);
+      const { cd_agenda } = req.params;
+      const result = await service.deletarHorarioAgenda(Number(cd_agenda));
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({

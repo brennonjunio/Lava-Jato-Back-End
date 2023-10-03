@@ -42,8 +42,8 @@ export class servicosController {
   }
   async deletarServicos(req: Request, res: Response) {
     try {
-      const { cd_servico } = req.body;
-      const result = await servicos.deletarServicos(cd_servico);
+      const { cd_servico } = req.params;
+      const result = await servicos.deletarServicos(Number(cd_servico));
 
       return res.status(result.statusCode).json(result);
     } catch (error) {

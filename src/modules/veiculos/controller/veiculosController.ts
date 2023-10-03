@@ -41,8 +41,8 @@ export class veiculosController {
   }
   async deletarTipoVeiculo(req: Request, res: Response) {
     try {
-      const { cd_tipo_veiculo } = req.body;
-      const result = await service.deletarTipoVeiculo(cd_tipo_veiculo);
+      const { cd_tipo_veiculo } = req.params;
+      const result = await service.deletarTipoVeiculo(Number(cd_tipo_veiculo));
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
@@ -97,8 +97,8 @@ export class veiculosController {
   }
   async deletarVeiculosCliente(req: Request, res: Response) {
     try {
-      const { cd_veiculo } = req.body;
-      const result = await service.deletarVeiculosCliente(cd_veiculo);
+      const { cd_veiculo } = req.params;
+      const result = await service.deletarVeiculosCliente(Number(cd_veiculo));
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
