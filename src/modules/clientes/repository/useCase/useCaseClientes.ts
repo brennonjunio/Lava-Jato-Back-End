@@ -20,11 +20,11 @@ export class useCase {
       p2
     );
 
-    if(isEmpty(a)){
-     const b = await this.validaClienteExistente(p1)
-     if(!isEmpty(b)){
-      return false;
-     }
+    if (isEmpty(a)) {
+      const b = await this.validaClienteExistente(p1);
+      if (!isEmpty(b)) {
+        return false;
+      }
     }
     return true;
   }

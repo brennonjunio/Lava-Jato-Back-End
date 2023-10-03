@@ -34,7 +34,7 @@ export class ClienteService {
       if (!valid) {
         return AppStatus.updateFalse("Cpf invalido ou Já cadastrado", 0);
       }
-      // const data = await this.clienteRepository.atualizarCliente(param);
+      const data = await this.clienteRepository.atualizarCliente(param);
       return AppStatus.updateSucess("Dados Atualizados Com Sucesso!", 1);
     } catch (e) {
       return AppStatus.appError("Erro ao Editar Cadastro", 0);
