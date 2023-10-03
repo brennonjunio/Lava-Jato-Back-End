@@ -1,9 +1,10 @@
 import db from "../../../../database/database";
 
-export class UseCaseService{
-    async validaServicoUsado(cd_servico_p:number){
-        await db.servicos_atendimento.findFirst({
-            where:{cd_servico:cd_servico_p}
-        })
-    }
+export class UseCaseService {
+  async validaServicoUsado(params: number) {
+    return await db.servicos_atendimento.findFirst({
+      where: { cd_servico: params },
+      select: { cd_servico: true },
+    });
+  }
 }

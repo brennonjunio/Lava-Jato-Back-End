@@ -3,6 +3,7 @@ import AppStatus from "../../../shared/AppStatus";
 import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
 import { servicosRepository } from "../repository/servicosRepository";
 import { UseCaseService } from "../repository/useCase/useCaseService";
+import { error } from "console";
 
 export class servicosService {
   private repository: servicosRepository = new servicosRepository();
@@ -31,15 +32,19 @@ export class servicosService {
       return AppStatus.appError("Erro ao Editar Serviço", 0);
     }
   }
-  async deletarServicos(cd_servico: number) {
+  async deletarServicos(cd_servico: number): Promise<any> {
     try {
-      if(!isNull(await this.case.validaServicoUsado(cd_servico))){
-return AppStatus.updateFalse("Serviço Ja foi usado, não pode ser excluido",0)
+      if (!isNull(await this.case.validaServicoUsado(cd_servico))) {
+        return AppStatus.updateFalse(
+          "Serviço Já usado, não pode ser excluido",
+          0
+        );
       }
+
       const result = await this.repository.deletarServicos(cd_servico);
       return AppStatus.deletadoSucess;
     } catch (e) {
-      return AppStatus.appError("Erro ao Deletar Serviço", 0);
+      return AppStatus.appError("erro ao Deletar Serviço", 0);
     }
   }
 }
