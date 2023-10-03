@@ -1,3 +1,5 @@
+import { isNull } from "lodash";
+import AppStatus from "../../../shared/AppStatus";
 import { criarAgendaDTO } from "../dto/criarAgendaDTO";
 import { agendaRepository } from "../repository/agendaRepository";
 import { useCaseAgenda } from "../repository/useCase/useCaseAgenda";
@@ -6,50 +8,41 @@ export class agendaService {
   private useCase: useCaseAgenda = new useCaseAgenda();
 
   async criarAgenda(param: criarAgendaDTO) {
-    if(await this.useCase.agendaRepetida(String (param.data_ini))){
-      throw 'Já existe Horario Gerado para data Escolhida'
+    if (await this.useCase.agendaRepetida(String(param.data_ini))) {
+      return AppStatus.updateFalse(
+        "Já existe Horario Gerado para data Escolhida",
+        0
+      );
     }
     try {
-
-      
-
       const result = await this.repository.criarAgenda(param);
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sucesso ao Criar Agenda!",
-        data: result,
-      };
+      return AppStatus.appSucess("Sucesso ao criar Horario", result);
     } catch (e) {
-
-      throw(`erro na Criação da Agenda: ${e}`);
-  }
+      return AppStatus.appError("Erro Ao criar Horario", 0);
+    }
   }
   async listarAgendasDisponiveis() {
     try {
       const result = await this.repository.listarHorariosDisponiveis();
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sucesso ao Listar Agendas!",
-        data: result,
-      };
+      return AppStatus.appSucess("Sucesso ao Listar Horarios", result);
     } catch (e) {
-      throw(`erro ao Listar Agendas: ${e}`);
+      return AppStatus.appError("Erro Ao Listar Horarios", 0);
+    }
   }
-  }
-  async deletarHorarioAgenda(cd_agenda:number){
+  async deletarHorarioAgenda(cd_agenda: number) {
     try {
+      if (!isNull(await this.useCase.agendaJaUsada(cd_agenda))) {
+        return AppStatus.updateFalse(
+          "Agenda Usada, Não pode ser excluida",
+          cd_agenda
+        );
+      }
       const result = await this.repository.deletarHorarioAgenda(cd_agenda);
-      return {
-        status: true,
-        statusCode: 201,
-        message: "Sucesso Ao Excluir Horario da Agenda",
-        data: result,
-      };
+
+      return AppStatus.updateSucess("Sucesso ao deletar", 1);
     } catch (e) {
-      throw(`erro ao Excluir Agendas: ${e}`);
-  }
+      return AppStatus.appError("Erro ao deletar Agenda", 0);
+    }
   }
 }
