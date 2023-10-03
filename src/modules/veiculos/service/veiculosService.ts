@@ -83,8 +83,12 @@ export class veiculoService {
   }
   async atualizarVeiculosCliente(param: updateVeiculoClienteDTO) {
     try {
-      if (!isNull(await this.useCase.uniquePlaca(param.placa))) {
-        return AppStatus.updateFalse("Placa de veiculo Já usada", 0);
+      const valid = await this.useCase.validaPlacaUpdate(
+        String(param.placa),
+        param.cd_cliente
+      );
+      if (!valid) {
+        return AppStatus.updateFalse("Placa de veiculo Já vinculada", 0);
       }
       const result = await this.repositorioVeiculos.atualizarVeiculosCliente(
         param
