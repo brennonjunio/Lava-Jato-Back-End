@@ -7,4 +7,11 @@ export class useCaseVeiculos {
     });
     return result;
   }
+  async usado(param: number) {
+    const result = await db.servicos_atendimento.findFirst({
+      select:{nr_sequencia:true},
+      where: { cd_veiculo: param },
+    });
+    return result;
+  }
 }

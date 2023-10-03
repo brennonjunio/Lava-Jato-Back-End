@@ -40,7 +40,7 @@ export class UsuariosService {
       const result = await this.repoUsuarios.listarUsuariosAll();
       return AppStatus.appSucess("Usuario Criado Com sucesso", result);
     } catch (error) {
-      throw `Erro ao Listar Usuarios ${error}`;
+      return AppStatus.appError("Erro ao Listar Usuarios", 0);
     }
   }
 }

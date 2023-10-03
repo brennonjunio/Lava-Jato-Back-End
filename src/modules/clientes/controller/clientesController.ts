@@ -40,7 +40,6 @@ export class ClienteController {
   async deletar(req: Request, res: Response) {
     try {
       const { cd_cliente } = req.params;
-      console.log("🚀 ~ file: clientesController.ts:43 ~ ClienteController ~ deletar ~ cd_cliente:", cd_cliente)
       const result = await clientesrv.deletar(Number(cd_cliente));
       return res.status(result.statusCode).json(result);
     } catch (error) {

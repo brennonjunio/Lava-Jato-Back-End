@@ -64,7 +64,6 @@ export class ClienteService {
       const result = await this.clienteRepository.deletarCliente(cd_cliente);
       return AppStatus.deletadoSucess;
     } catch (e) {
-      console.log("🚀 ~ file: clienteService.ts:67 ~ ClienteService ~ deletar ~ e:", e)
       return AppStatus.appError("Erro ao Deletar Cliente", 0);
     }
   }
