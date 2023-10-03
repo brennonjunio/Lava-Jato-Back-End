@@ -8,7 +8,7 @@ async function appSucess(message: string, dados: any) {
   return {
     status: true,
     statusCode: 200,
-    error: message,
+    message: message,
     data: dados,
   };
 }

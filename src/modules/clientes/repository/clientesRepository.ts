@@ -35,6 +35,7 @@ export class ClienteRepository {
     const result = await db.clientes.delete({
       where: { cd_cliente: cd_cliente },
     });
+    console.log("🚀 ~ file: clientesRepository.ts:38 ~ ClienteRepository ~ deletarCliente ~ result:", result)
     return result;
   }
   async inativarCliente(cd_cliente: number) {

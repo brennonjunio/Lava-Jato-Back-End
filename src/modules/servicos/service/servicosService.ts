@@ -1,9 +1,12 @@
+import { isNull } from "lodash";
 import AppStatus from "../../../shared/AppStatus";
 import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
 import { servicosRepository } from "../repository/servicosRepository";
+import { UseCaseService } from "../repository/useCase/useCaseService";
 
 export class servicosService {
   private repository: servicosRepository = new servicosRepository();
+  private case: UseCaseService = new UseCaseService();
 
   async criarServico(param: criarServicoDTO) {
     try {
@@ -30,8 +33,11 @@ export class servicosService {
   }
   async deletarServicos(cd_servico: number) {
     try {
+      if(!isNull(await this.case.validaServicoUsado(cd_servico))){
+return AppStatus.updateFalse("Serviço Ja foi usado, não pode ser excluido",0)
+      }
       const result = await this.repository.deletarServicos(cd_servico);
-      return AppStatus.appSucess("Sucesso Ao Deletar Serviço", 1);
+      return AppStatus.deletadoSucess;
     } catch (e) {
       return AppStatus.appError("Erro ao Deletar Serviço", 0);
     }

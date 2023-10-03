@@ -62,7 +62,7 @@ export class ClienteService {
         );
       }
       const result = await this.clienteRepository.deletarCliente(cd_cliente);
-      return AppStatus.appSucess("Cliente deletado Com Sucesso!", 1);
+      return AppStatus.deletadoSucess;
     } catch (e) {
       return AppStatus.appError("Erro ao Deletar Cliente", 0);
     }
