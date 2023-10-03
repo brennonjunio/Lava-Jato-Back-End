@@ -27,6 +27,18 @@ export class AtendimentosController{
           });
         }
       }
+      async listarServicosAtendimentosPorCliente(req: Request, res: Response) {
+        try {
+         const  {cd_cliente} = req.params
+          const result = await servicos.listarServicosAtendimentosPorCliente(Number(cd_cliente));
+    
+          return res.status(result.statusCode).json(result);
+        } catch (error) {
+          res.status(500).json({
+            error,
+          });
+        }
+      }
       async finalizarServico(req: Request, res: Response) {
         try {
           const { nr_servico_p,nr_atendimento_p } = req.body;

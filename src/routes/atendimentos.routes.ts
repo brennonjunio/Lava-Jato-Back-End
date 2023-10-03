@@ -21,5 +21,9 @@ atendimentos.get(
   "/atendimentos/agendamento",
   new AtendimentosController().listarServicosAtendimentos
 );
+atendimentos.get(
+  "/atendimentos/agendamento/:cd_cliente",
+  new AtendimentosController().listarServicosAtendimentosPorCliente
+);
 
 export default atendimentos;

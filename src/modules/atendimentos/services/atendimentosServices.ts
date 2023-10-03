@@ -34,7 +34,20 @@ export class AtendimentosService {
         data: result,
       };
     } catch (e) {
-      throw `erro ao Agendar serviço: ${e}`;
+      throw `Erro Ao Listar Serviços: ${e}`;
+    }
+  }
+  async listarServicosAtendimentosPorCliente(cd_cliente_p:number) {
+    try {
+      const result = await this.repositoryAgendamento.listarServicosAtendimentosPorCliente(cd_cliente_p);
+      return {
+        status: true,
+        statusCode: 200,
+        message: "Serviços Listados Com Sucesso!",
+        data: result,
+      };
+    } catch (e) {
+      throw `Erro Ao Listar Serviços: ${e}`;
     }
   }
   async finalizarServico(nr_sequencia: number, seq_atendimento: number) {

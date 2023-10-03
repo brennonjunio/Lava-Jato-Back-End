@@ -2,9 +2,11 @@ import _ from "lodash";
 import db from "../../../database/database";
 import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
 import { useCaseAtendimentos } from "./useCase/useCaseAtendimentos";
+import { MapeamentoServicos } from "./useCase/mapeamentoServicos";
 
 export class agendamentoAtendimentosRepository {
   private useCase: useCaseAtendimentos = new useCaseAtendimentos();
+  private mapeamento: MapeamentoServicos = new MapeamentoServicos();
 
   async agendarAtendimento(p: criarAgendamentoServicoDTO) {
     const agendamento = (await db.$queryRawUnsafe(
@@ -34,81 +36,22 @@ export class agendamentoAtendimentosRepository {
     );
     return true;
   }
-  async listarServicosAtendimentos(): Promise<any[]> {
-    const result = (await db.$queryRawUnsafe(
+  async listarServicosAtendimentos() {
+    const query = (await db.$queryRawUnsafe(
       "select * from vw_listar_atendimentos"
     )) as any;
-
-    const groupedData = _.groupBy(result, (row) => row.nr_atendimento);
-
-    const atendimentosMapeados = _.map(groupedData, (group) => {
-      const {
-        nr_atendimento,
-        dh_inicio_atendimento,
-        valor_total,
-        qtd_servicos_atendimento,
-        dh_fim_atendimento,
-        status_atendimento,
-      } = group[0];
-
-      const dadosCLiente = _.uniqBy(group, "cd_cliente").map((row) => {
-        const { cliente, cd_cliente, contato } = row;
-
-        return {
-          cliente,
-          cd_cliente,
-          contato,
-        };
-      });
-
-      const dadosServico = _.map(group, (row) => {
-        const {
-          nr_servico_atendimento,
-          cd_veiculo,
-          placa,
-          cd_servico,
-          tipo_veiculo,
-          modelo_veiculo,
-          valor,
-          servico,
-          status_servico,
-          dh_inicio_servico,
-          dh_fim_servico,
-        } = row;
-
-        return {
-          nr_servico_atendimento,
-          cd_veiculo,
-          placa,
-          cd_servico,
-          tipo_veiculo,
-          modelo_veiculo,
-          valor,
-          servico,
-          status_servico,
-          dh_inicio_servico,
-          dh_fim_servico,
-        };
-      });
-
-      const atendimentoData = {
-        nr_atendimento,
-        dh_inicio_atendimento,
-        valor_total,
-        qtd_servicos_atendimento,
-        dh_fim_atendimento,
-        status_atendimento,
-        dadosCLiente: dadosCLiente,
-        dadosServico,
-      };
-
-      return {
-        dadosAtendimento: atendimentoData,
-      };
-    });
-
-    return atendimentosMapeados;
+    const result = await this.mapeamento.mapearServicos(query);
+    return result;
   }
+  async listarServicosAtendimentosPorCliente(cd_cliente_p:number) {
+    const query = (await db.$queryRawUnsafe(
+      `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p}`
+
+    )) as any;
+    const result = await this.mapeamento.mapearServicos(query);
+    return result;
+  }
+
   async finalizarServico(nr_sequencia: number, seq_atendimento: number) {
     const result = await db.$executeRawUnsafe(
       `update servicos_atendimento set dh_fim = current_timestamp(), status = 'F' where nr_sequencia= ? and nr_seq_atendimento = ?`,

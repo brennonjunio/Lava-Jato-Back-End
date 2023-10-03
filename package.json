@@ -1,7 +1,7 @@
 {
   "name": "lava_jato",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sistema de Lava Jato para gerenciamento",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
     "dev": "nodemon  src/App.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Brennon Junio",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.17",
