@@ -34,7 +34,8 @@ export class agendamentoAtendimentosRepository {
       p.cd_agenda_p,
       agendamento[0].sequencia
     );
-    return true;
+    return agendamento[0].sequencia != 0 ? true : false;
+    
   }
   async listarServicosAtendimentos() {
     const query = (await db.$queryRawUnsafe(
@@ -68,10 +69,7 @@ export class agendamentoAtendimentosRepository {
   }
 
   async listarAtendimentosFinalizados() {
-    const result = await db.atendimentos.findMany({
-      where: { status_servico: "F" },
-      include: { clientes: { select: { nm_cliente: true } } },
-    });
+    const result = await db.$queryRawUnsafe("select * from vw_listar_servicos where status_servico = 'F'")
     return result;
   }
 }

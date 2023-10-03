@@ -8,8 +8,7 @@ export class AtendimentosController{
         try {
           const body = req.body as criarAgendamentoServicoDTO;
           const result = await servicos.agendarServico(body);
-          const { message } = result;
-          return res.status(result.statusCode).json({ message });
+          return res.status(result.statusCode).json( result );
         } catch (error) {
           res.status(500).json({
             error,
