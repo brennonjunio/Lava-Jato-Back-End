@@ -1,4 +1,4 @@
-import { isNull } from "lodash";
+import { isEmpty, isNull } from "lodash";
 import { CriarClienteDTO } from "../dto/criarClienteDTO";
 import { updateClienteDTO } from "../dto/updateClienteDTO";
 import { ClienteRepository } from "../repository/clientesRepository";
@@ -26,19 +26,21 @@ export class ClienteService {
 
   async atualizar(param: updateClienteDTO) {
     try {
+      //se valid for false, quer dizer que o update pode ser o mesmo cpf
+
       if (param.cpf_cnpj) {
-        if (
-          !isNull(
-            await this.useCaseCliente.validaClienteExistente(param.cpf_cnpj)
-          )
-        ) {
+        const valid = await this.useCaseCliente.validaClienteUpdate(
+          String(param.cpf_cnpj),
+          param.cd_cliente
+        );
+        if (isEmpty(valid)) {
           return AppStatus.updateFalse("Cpf invalido ou Já cadastrado", 0);
         }
       }
 
       const data = await this.clienteRepository.atualizarCliente(param);
 
-      return AppStatus.appSucess("Dados Atualizados Com Sucesso!", param);
+      return AppStatus.appSucess("Dados Atualizados Com Sucesso!", 1);
     } catch (e) {
       return AppStatus.appError("Erro ao Editar Cadastro", 0);
     }
