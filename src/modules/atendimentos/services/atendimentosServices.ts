@@ -17,7 +17,7 @@ export class AtendimentosService {
         params
       );
 
-      if (result == false) {
+      if (!result) {
         return AppStatus.updateFalse("Atendimento Não foi criado!", 0);
       }
 

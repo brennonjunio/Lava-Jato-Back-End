@@ -1,4 +1,3 @@
-import db from "../../../database/database";
 import { veiculoService } from "../service/veiculosService";
 import { Request, Response } from "express";
 export const service = new veiculoService();
