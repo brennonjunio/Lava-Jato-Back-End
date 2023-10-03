@@ -15,6 +15,7 @@ export class ClienteRepository {
       where: { cd_cliente: param.cd_cliente },
       data: param,
     });
+    console.log("🚀 ~ file: clientesRepository.ts:18 ~ ClienteRepository ~ atualizarCliente ~ result:", result)
     return result;
   }
   async listarClientes() {

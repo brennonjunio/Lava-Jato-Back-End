@@ -24,7 +24,7 @@ async function updateFalse(message: string, dados: number) {
   return {
     status: false,
     statusCode: 400,
-    message: message,
+    error: message,
     data: dados,
   };
 }
