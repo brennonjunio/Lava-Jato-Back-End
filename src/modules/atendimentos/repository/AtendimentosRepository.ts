@@ -1,11 +1,9 @@
 import _ from "lodash";
 import db from "../../../database/database";
 import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
-import { useCaseAtendimentos } from "./useCase/useCaseAtendimentos";
 import { MapeamentoServicos } from "./useCase/mapeamentoServicos";
 
 export class agendamentoAtendimentosRepository {
-  private useCase: useCaseAtendimentos = new useCaseAtendimentos();
   private mapeamento: MapeamentoServicos = new MapeamentoServicos();
 
   async agendarAtendimento(p: criarAgendamentoServicoDTO) {
