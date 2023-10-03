@@ -1,4 +1,4 @@
-import { isNull } from "lodash";
+import { isEmpty, isNull } from "lodash";
 import db from "../../../../database/database";
 
 export class useCase {
@@ -13,12 +13,19 @@ export class useCase {
       where: { cd_cliente: cd_cliente_p },
     });
   }
-  async validaClienteUpdate(p1:string,p2:number){
-    const result = await db.$queryRawUnsafe("select * from clientes where cpf_cnpj =? and cd_cliente = ?",p1,p2)
-    if(isNull(result)){
-     const a1 =  await this.validaClienteExistente(p1)
-     return a1
+  async validaClienteUpdate(p1: string, p2: number) {
+    const a = await db.$queryRawUnsafe(
+      "select * from clientes where cpf_cnpj =? and cd_cliente = ?",
+      p1,
+      p2
+    );
+
+    if(isEmpty(a)){
+     const b = await this.validaClienteExistente(p1)
+     if(!isEmpty(b)){
+      return false;
+     }
     }
-    return result;
+    return true;
   }
 }

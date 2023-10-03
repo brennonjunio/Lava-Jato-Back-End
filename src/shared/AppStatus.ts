@@ -15,7 +15,7 @@ async function appSucess(message: string, dados: any) {
 async function updateSucess(message: string, dados: number) {
   return {
     status: true,
-    statusCode: 201,
+    statusCode: 202,
     message: message,
     data: dados,
   };
