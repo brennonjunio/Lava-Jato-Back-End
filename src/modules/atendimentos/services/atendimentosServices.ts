@@ -1,6 +1,8 @@
+import { isArray, isEmpty, isNull, isNumber, isObject } from "lodash";
 import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
 import { agendamentoAtendimentosRepository } from "../repository/AtendimentosRepository";
 import { useCaseAtendimentos } from "../repository/useCase/useCaseAtendimentos";
+import AppStatus from "../../../shared/AppStatus";
 export class AtendimentosService {
   private useCase: useCaseAtendimentos = new useCaseAtendimentos();
   private repositoryAgendamento: agendamentoAtendimentosRepository =
@@ -25,7 +27,8 @@ export class AtendimentosService {
   }
   async listarServicosAtendimentos() {
     try {
-      const result = await this.repositoryAgendamento.listarServicosAtendimentos();
+      const result =
+        await this.repositoryAgendamento.listarServicosAtendimentos();
 
       return {
         status: true,
@@ -37,15 +40,19 @@ export class AtendimentosService {
       throw `Erro Ao Listar Serviços: ${e}`;
     }
   }
-  async listarServicosAtendimentosPorCliente(cd_cliente_p:number) {
+  async listarServicosAtendimentosPorCliente(
+    cd_cliente_p: number
+  ): Promise<any> {
     try {
-      const result = await this.repositoryAgendamento.listarServicosAtendimentosPorCliente(cd_cliente_p);
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Serviços Listados Com Sucesso!",
-        data: result,
-      };
+      const result =
+        await this.repositoryAgendamento.listarServicosAtendimentosPorCliente(
+          cd_cliente_p
+        );
+
+      if (isEmpty(result)) {
+        return AppStatus.arrayVazio;
+      }
+      return AppStatus.appSucess("Listados Com sucess", result);
     } catch (e) {
       throw `Erro Ao Listar Serviços: ${e}`;
     }
