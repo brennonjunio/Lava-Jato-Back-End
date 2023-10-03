@@ -19,6 +19,7 @@ export class ClienteRepository {
   }
   async listarClientes() {
     return await db.clientes.findMany({
+      orderBy:{cd_cliente: 'desc'},
       include: {
         veiculos_clientes: {
           select: {
