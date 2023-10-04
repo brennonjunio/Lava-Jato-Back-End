@@ -9,6 +9,5 @@ clientesRoutes.post("/cliente",validate(cadastrarClientes), new ClienteControlle
 clientesRoutes.get("/cliente", new ClienteController().listar);
 clientesRoutes.put("/cliente", new ClienteController().atualizar);
 clientesRoutes.delete("/cliente/:cd_cliente", new ClienteController().deletar);
-clientesRoutes.patch("/cliente", new ClienteController().inativar);
 
 export default clientesRoutes ;

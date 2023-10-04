@@ -48,15 +48,5 @@ export class ClienteController {
       });
     }
   }
-  async inativar(req: Request, res: Response) {
-    try {
-      const { cd_cliente } = req.body;
-      await clientesrv.inativar(cd_cliente);
-      return res.status(200).json({ cd_cliente });
-    } catch (error) {
-      res.status(500).json({
-        error,
-      });
-    }
-  }
+
 }

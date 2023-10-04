@@ -37,11 +37,5 @@ export class ClienteRepository {
     });
     return result;
   }
-  async inativarCliente(cd_cliente: number) {
-    const result = await db.clientes.update({
-      where: { cd_cliente: cd_cliente },
-      data: { status: "I" },
-    });
-    return result;
-  }
+
 }

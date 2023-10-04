@@ -64,12 +64,5 @@ export class ClienteService {
       return AppStatus.appError("Erro ao Deletar Cliente", 0);
     }
   }
-  async inativar(cd_cliente: number) {
-    try {
-      const result = await this.clienteRepository.inativarCliente(cd_cliente);
-      return AppStatus.appSucess("Cliente Inativado Com Sucesso!", 1);
-    } catch (e) {
-      return AppStatus.appError("Erro ao Inativar Cliente", 0);
-    }
-  }
+ 
 }
