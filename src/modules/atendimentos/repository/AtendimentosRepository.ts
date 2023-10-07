@@ -33,7 +33,6 @@ export class agendamentoAtendimentosRepository {
       agendamento[0].sequencia
     );
     return agendamento[0].sequencia != 0 ? true : false;
-    
   }
   async listarServicosAtendimentos() {
     const query = (await db.$queryRawUnsafe(
@@ -42,10 +41,9 @@ export class agendamentoAtendimentosRepository {
     const result = await this.mapeamento.mapearServicos(query);
     return result;
   }
-  async listarServicosAtendimentosPorCliente(cd_cliente_p:number) {
+  async listarServicosAtendimentosPorCliente(cd_cliente_p: number) {
     const query = (await db.$queryRawUnsafe(
       `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p}`
-
     )) as any;
     const result = await this.mapeamento.mapearServicos(query);
     return result;
@@ -67,7 +65,18 @@ export class agendamentoAtendimentosRepository {
   }
 
   async listarAtendimentosFinalizados() {
-    const result = await db.$queryRawUnsafe("select * from vw_listar_servicos where status_servico = 'F'")
+    const result = await db.$queryRawUnsafe(
+      "select * from vw_listar_servicos where status_servico = 'F'"
+    );
+    return result;
+  }
+
+  async finalizarAtendimento(param: number) {
+    const query = (await db.$queryRawUnsafe(
+      "select finalizarAtendimento(?) as atendimento",
+      param
+    )) as any;
+    const result = query[0].atendimento;
     return result;
   }
 }

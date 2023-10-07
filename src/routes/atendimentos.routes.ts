@@ -26,4 +26,9 @@ atendimentos.get(
   new AtendimentosController().listarServicosAtendimentosPorCliente
 );
 
+atendimentos.post(
+  "/atendimentos/finalizarAtendimento/:nr_atendimento_p",
+  new AtendimentosController().finalizarAtendimento
+);
+
 export default atendimentos;
