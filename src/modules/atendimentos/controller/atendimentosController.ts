@@ -41,7 +41,7 @@ export class AtendimentosController{
       }
       async finalizarServico(req: Request, res: Response) {
         try {
-          const { nr_servico_p,nr_atendimento_p} = req.body as FinalizarServico
+          const { nr_servico_p,nr_atendimento_p } = req.body;
           const result = await servicos.finalizarServico(nr_servico_p,nr_atendimento_p);
           return res.status(result.statusCode).json(result);
         } catch (error) {
@@ -61,4 +61,17 @@ export class AtendimentosController{
           });
         }
       } 
+      async finalizarAtendimento(req: Request, res: Response) {
+        try {
+          const nr_atendimento_p = req.params;
+          const result = await servicos.finalizarAtendimento(
+            Number(nr_atendimento_p)
+          );
+          return res.status(result.statusCode).json(result);
+        } catch (error) {
+          res.status(500).json({
+            error,
+          });
+        }
+ }
 }

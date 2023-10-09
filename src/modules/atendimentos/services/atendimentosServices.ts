@@ -81,4 +81,17 @@ export class AtendimentosService {
       return AppStatus.appError("Erro Ao Listar Serviços", 0);
     }
   }
+  async finalizarAtendimento(param: number) {
+    try {
+      const result = await this.repositoryAgendamento.finalizarAtendimento(
+        param
+      );
+      if (result.status == false) {
+        return AppStatus.updateFalse(result.message, result.status);
+      }
+      return AppStatus.appSucess(result.message, result.status);
+    } catch (e) {
+      return AppStatus.appError("Erro ao Finalizar Serviço", 0);
+    }
+  }
 }
