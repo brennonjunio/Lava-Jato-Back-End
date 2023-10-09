@@ -1,6 +1,7 @@
 import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
 import { Request, Response } from "express";
 import { AtendimentosService } from "../services/atendimentosServices";
+import { FinalizarServico } from "../DTO/atendimentosDTO";
 export const servicos = new AtendimentosService();
 
 export class AtendimentosController{
@@ -40,7 +41,7 @@ export class AtendimentosController{
       }
       async finalizarServico(req: Request, res: Response) {
         try {
-          const { nr_servico_p,nr_atendimento_p } = req.body;
+          const { nr_servico_p,nr_atendimento_p} = req.body as FinalizarServico
           const result = await servicos.finalizarServico(nr_servico_p,nr_atendimento_p);
           return res.status(result.statusCode).json(result);
         } catch (error) {
