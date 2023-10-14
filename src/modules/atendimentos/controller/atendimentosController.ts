@@ -4,10 +4,10 @@ import { AtendimentosService } from "../services/atendimentosServices";
 export const servicos = new AtendimentosService();
 
 export class AtendimentosController {
-  async agendarServico(req: Request, res: Response) {
+  async realizar_atendimento(req: Request, res: Response) {
     try {
       const body = req.body as criarAgendamentoServicoDTO;
-      const result = await servicos.agendarServico(body);
+      const result = await servicos.realizar_atendimento(body);
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({

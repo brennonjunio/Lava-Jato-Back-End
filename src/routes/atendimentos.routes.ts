@@ -15,7 +15,7 @@ atendimentos.get(
 
 atendimentos.post(
   "/atendimentos/agendamento",
-  new AtendimentosController().agendarServico
+  new AtendimentosController().realizar_atendimento
 );
 atendimentos.get(
   "/atendimentos/agendamento",

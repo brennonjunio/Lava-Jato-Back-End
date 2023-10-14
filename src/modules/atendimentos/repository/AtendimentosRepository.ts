@@ -6,13 +6,14 @@ import { MapeamentoServicos } from "./useCase/mapeamentoServicos";
 export class agendamentoAtendimentosRepository {
   private mapeamento: MapeamentoServicos = new MapeamentoServicos();
 
-  async agendarAtendimento(p: criarAgendamentoServicoDTO) {
+  async realizar_atendimento(p: criarAgendamentoServicoDTO) {
     const agendamento = (await db.$queryRawUnsafe(
-      "select agendar_servico(:cd_agenda_p, :cd_cliente_p, :cd_usuario_p) as sequencia",
-      p.cd_agenda_p,
+      "select realizar_atendimento(:horario_p, :cd_cliente_p, :cd_usuario_p) as sequencia",
+      p.horario_p,
       p.cd_cliente_p,
       p.cd_usuario_p
     )) as { sequencia: number }[];
+    console.log("🚀 ~ file: AtendimentosRepository.ts:16 ~ agendamentoAtendimentosRepository ~ realizar_atendimento ~ agendamento:", agendamento)
 
     for (const cd_servico of p.cd_servico_p) {
       await db.$queryRawUnsafe(
@@ -26,10 +27,9 @@ export class agendamentoAtendimentosRepository {
     }
 
     const gerarMovimentacao = await db.$queryRawUnsafe(
-      "select gerar_movimentacao_servico(?,?,?,?)",
+      "select gerar_movimentacao_servico(?,?,?)",
       p.cd_cliente_p,
       p.cd_usuario_p,
-      p.cd_agenda_p,
       agendamento[0].sequencia
     );
     return agendamento[0].sequencia != 0 ? true : false;

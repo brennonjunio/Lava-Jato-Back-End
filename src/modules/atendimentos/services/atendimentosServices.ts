@@ -8,12 +8,12 @@ export class AtendimentosService {
   private repositoryAgendamento: agendamentoAtendimentosRepository =
     new agendamentoAtendimentosRepository();
 
-  async agendarServico(params: criarAgendamentoServicoDTO) {
+  async realizar_atendimento(params: criarAgendamentoServicoDTO) {
     try {
-      if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
-        return AppStatus.appError("Agenda Já em uso", 0);
-      }
-      const result = await this.repositoryAgendamento.agendarAtendimento(
+      // if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
+      //   return AppStatus.appError("Agenda Já em uso", 0);
+      // }
+      const result = await this.repositoryAgendamento.realizar_atendimento(
         params
       );
 
@@ -23,6 +23,7 @@ export class AtendimentosService {
 
       return AppStatus.appSucess("Atendimento Criado Com sucesso!", result);
     } catch (e) {
+      console.log("🚀 ~ file: atendimentosServices.ts:26 ~ AtendimentosService ~ realizar_atendimento ~ e:", e)
       return AppStatus.appError("Erro Ao gerar Atendimento", 0);
     }
   }
