@@ -15,9 +15,9 @@ export class AtendimentosController {
       });
     }
   }
-  async listarServicosAtendimentos(req: Request, res: Response) {
+  async listarAtendimentos(req: Request, res: Response) {
     try {
-      const result = await servicos.listarServicosAtendimentos();
+      const result = await servicos.listarAtendimentos();
 
       return res.status(result.statusCode).json(result);
     } catch (error) {
@@ -26,10 +26,10 @@ export class AtendimentosController {
       });
     }
   }
-  async listarServicosAtendimentosPorCliente(req: Request, res: Response) {
+  async listarAtendimentosPorCliente(req: Request, res: Response) {
     try {
       const { cd_cliente } = req.params;
-      const result = await servicos.listarServicosAtendimentosPorCliente(
+      const result = await servicos.listarAtendimentosPorCliente(
         Number(cd_cliente)
       );
 
@@ -55,7 +55,7 @@ export class AtendimentosController {
     }
   }
 
-  async listarAtendimentosFinalizados(req: Request, res: Response) {
+  async listarServicosFinalizados(req: Request, res: Response) {
     try {
       const result = await servicos.listarServicosFinalizados();
       return res.status(result.statusCode).json(result);

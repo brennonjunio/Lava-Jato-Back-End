@@ -33,14 +33,14 @@ export class agendamentoAtendimentosRepository {
     );
     return agendamento[0].sequencia != 0 ? true : false;
   }
-  async listarServicosAtendimentos() {
+  async listarAtendimentos() {
     const query = (await db.$queryRawUnsafe(
       "select * from vw_listar_atendimentos"
     )) as any;
     const result = await this.mapeamento.mapearServicos(query);
     return result;
   }
-  async listarServicosAtendimentosPorCliente(cd_cliente_p: number) {
+  async listarAtendimentosPorCliente(cd_cliente_p: number) {
     const query = (await db.$queryRawUnsafe(
       `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p}`
     )) as any;
@@ -63,7 +63,7 @@ export class agendamentoAtendimentosRepository {
     return result;
   }
 
-  async listarAtendimentosFinalizados() {
+  async listarServicosFinalizados() {
     const result = await db.$queryRawUnsafe(
       "select * from vw_listar_servicos where status_servico = 'F'"
     );

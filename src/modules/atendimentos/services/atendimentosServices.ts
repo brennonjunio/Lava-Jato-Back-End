@@ -26,10 +26,10 @@ export class AtendimentosService {
       return AppStatus.appError("Erro Ao gerar Atendimento", 0);
     }
   }
-  async listarServicosAtendimentos(): Promise<any> {
+  async listarAtendimentos(): Promise<any> {
     try {
       const result =
-        await this.repositoryAgendamento.listarServicosAtendimentos();
+        await this.repositoryAgendamento.listarAtendimentos();
       if (isEmpty(result)) {
         return AppStatus.arrayVazio;
       }
@@ -38,12 +38,12 @@ export class AtendimentosService {
       return AppStatus.appError("Erro Ao Listar Serviços", 0);
     }
   }
-  async listarServicosAtendimentosPorCliente(
+  async listarAtendimentosPorCliente(
     cd_cliente_p: number
   ): Promise<any> {
     try {
       const result =
-        await this.repositoryAgendamento.listarServicosAtendimentosPorCliente(
+        await this.repositoryAgendamento.listarAtendimentosPorCliente(
           cd_cliente_p
         );
 
@@ -72,7 +72,7 @@ export class AtendimentosService {
   async listarServicosFinalizados() {
     try {
       const result =
-        await this.repositoryAgendamento.listarAtendimentosFinalizados();
+        await this.repositoryAgendamento.listarServicosFinalizados();
       if (isEmpty(result)) {
         return AppStatus.arrayVazio;
       }

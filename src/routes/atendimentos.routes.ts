@@ -12,7 +12,7 @@ atendimentos.post(
 );
 atendimentos.get(
   "/atendimentos/servicosFinalizados",
-  new AtendimentosController().listarAtendimentosFinalizados
+  new AtendimentosController().listarServicosFinalizados
 );
 
 atendimentos.post(
@@ -21,11 +21,11 @@ atendimentos.post(
 );
 atendimentos.get(
   "/atendimentos/agendamento",
-  new AtendimentosController().listarServicosAtendimentos
+  new AtendimentosController().listarAtendimentos
 );
 atendimentos.get(
   "/atendimentos/agendamento/:cd_cliente",
-  new AtendimentosController().listarServicosAtendimentosPorCliente
+  new AtendimentosController().listarAtendimentosPorCliente
 );
 
 atendimentos.post(
