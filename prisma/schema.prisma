@@ -41,6 +41,7 @@ model atendimentos {
   dh_inicio            DateTime               @default(now()) @db.DateTime(0)
   dh_fim               DateTime?              @db.DateTime(0)
   cd_usuario           Int?
+  dh_update            DateTime               @default(now()) @db.DateTime(0)
   agenda               agenda                 @relation(fields: [cd_agenda], references: [cd_agenda], onDelete: NoAction, onUpdate: NoAction, map: "atendimentos_agenda_cd_agenda_fk")
   clientes             clientes               @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "atendimentos_clientes_cd_cliente_fk")
   usuarios             usuarios?              @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_agendados_FK")
@@ -97,18 +98,18 @@ model financeiro {
   vlr_juros          Int?              @default(0)
   cd_tipo_pagamento  Int?
   cd_usuario         Int
-  cd_agenda          Int?
   nr_seq_atendimento Int
   cd_tipo_movimento  Int?
-  quantidade         Float             @default(0) @db.Float
+  quantidade         Int               @default(0)
+  dh_update          DateTime          @default(now()) @db.DateTime(0)
   clientes           clientes          @relation(fields: [cd_cliente], references: [cd_cliente], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_clientes_cd_cliente_fk")
   atendimentos       atendimentos      @relation(fields: [nr_seq_atendimento], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_servicos_agendados_nr_sequencia_fk")
   tipo_movimento     tipo_movimento?   @relation(fields: [cd_tipo_movimento], references: [cd_movimento], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_tipo_movimento_cd_movimento_fk")
   tipos_pagamentos   tipos_pagamentos? @relation(fields: [cd_tipo_pagamento], references: [cd_pagamento], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_tipos_pagamentos_cd_pagamento_fk")
   usuarios           usuarios          @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "financeiro_usuarios_cd_usuario_fk")
+  transacoes         transacoes[]
 
   @@index([cd_cliente], map: "financeiro_clientes_cd_cliente_fk")
-  @@index([cd_agenda], map: "financeiro_servicos_agendados_cd_agenda_fk")
   @@index([nr_seq_atendimento], map: "financeiro_servicos_agendados_nr_sequencia_fk")
   @@index([cd_tipo_movimento], map: "financeiro_tipo_movimento_cd_movimento_fk")
   @@index([cd_tipo_pagamento], map: "financeiro_tipos_pagamentos_cd_pagamento_fk")
@@ -133,6 +134,7 @@ model servicos_atendimento {
   tempo_servico      DateTime?         @db.Time(0)
   cd_usuario         Int?
   status             String            @default("A") @db.VarChar(1)
+  dh_update          DateTime          @default(now()) @db.DateTime(0)
   atendimentos       atendimentos      @relation(fields: [nr_seq_atendimento], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_atendimentos_nr_sequencia_fk")
   servicos           servicos          @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_servicos_cd_servico_fk")
   usuarios           usuarios?         @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_usuarios_cd_usuario_fk")
@@ -145,10 +147,10 @@ model servicos_atendimento {
 }
 
 model tipo_movimento {
-  cd_movimento     Int                @id @default(autoincrement())
-  descricao        String             @db.VarChar(30)
-  financeiro       financeiro[]
-  tipos_pagamentos tipos_pagamentos[]
+  cd_movimento Int          @id @default(autoincrement())
+  descricao    String       @db.VarChar(30)
+  financeiro   financeiro[]
+  transacoes   transacoes[]
 }
 
 model tipo_veiculos {
@@ -158,14 +160,11 @@ model tipo_veiculos {
 }
 
 model tipos_pagamentos {
-  cd_pagamento      Int            @id @default(autoincrement())
-  descricao         String         @db.VarChar(50)
-  qtd_parcelas      Int            @default(1)
-  cd_tipo_movimento Int
-  financeiro        financeiro[]
-  tipo_movimento    tipo_movimento @relation(fields: [cd_tipo_movimento], references: [cd_movimento], onDelete: NoAction, onUpdate: NoAction, map: "tipos_pagamentos_tipo_movimento_cd_movimento_fk")
-
-  @@index([cd_tipo_movimento], map: "tipos_pagamentos_tipo_movimento_cd_movimento_fk")
+  cd_pagamento Int          @id @default(autoincrement())
+  descricao    String       @db.VarChar(50)
+  qtd_parcelas Int          @default(1)
+  financeiro   financeiro[]
+  transacoes   transacoes[]
 }
 
 model usuarios {
@@ -180,6 +179,7 @@ model usuarios {
   clientes             clientes[]
   financeiro           financeiro[]
   servicos_atendimento servicos_atendimento[]
+  transacoes           transacoes[]
 }
 
 model veiculos_clientes {
@@ -195,4 +195,25 @@ model veiculos_clientes {
   @@index([cd_cliente], map: "veiculos_clientes_FK")
   @@index([cd_tipo_veiculo], map: "veiculos_clientes_FK_1")
   @@index([cd_veiculo, cd_cliente], map: "veiculos_clientes_pk")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model transacoes {
+  nr_sequencia      Int              @id @default(autoincrement())
+  nr_seq_financeiro Int
+  cd_tipo_pagamento Int
+  valor             Float            @default(0) @db.Float
+  dh_baixa          DateTime         @default(now()) @db.DateTime(0)
+  cd_tipo_movimento Int
+  dh_update         DateTime         @default(now()) @db.DateTime(0)
+  cd_usuario        Int
+  financeiro        financeiro       @relation(fields: [nr_seq_financeiro], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_financeiro_nr_sequencia_fk")
+  tipo_movimento    tipo_movimento   @relation(fields: [cd_tipo_movimento], references: [cd_movimento], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_tipo_movimento_cd_movimento_fk")
+  tipos_pagamentos  tipos_pagamentos @relation(fields: [cd_tipo_pagamento], references: [cd_pagamento], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_tipos_pagamentos_cd_pagamento_fk")
+  usuarios          usuarios         @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_usuarios_cd_usuario_fk")
+
+  @@index([nr_seq_financeiro], map: "transacoes_financeiro_nr_sequencia_fk")
+  @@index([cd_tipo_movimento], map: "transacoes_tipo_movimento_cd_movimento_fk")
+  @@index([cd_tipo_pagamento], map: "transacoes_tipos_pagamentos_cd_pagamento_fk")
+  @@index([cd_usuario], map: "transacoes_usuarios_cd_usuario_fk")
 }

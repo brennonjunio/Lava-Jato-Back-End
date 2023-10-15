@@ -9,9 +9,7 @@ export class financeiroRepository {
     return result;
   }
   async listarTiposPagamentos() {
-    const result = await db.tipos_pagamentos.findMany({
-      include: { tipo_movimento: { select: { descricao: true } } },
-    });
+    const result = await db.tipos_pagamentos.findMany({});
     return result;
   }
   async editarTiposPagamentos(params: editarTipoPagamentosDTO) {
