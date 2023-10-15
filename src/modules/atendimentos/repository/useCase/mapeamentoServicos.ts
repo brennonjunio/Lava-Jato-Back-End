@@ -12,6 +12,7 @@ export class MapeamentoServicos {
         qtd_servicos_atendimento,
         dh_fim_atendimento,
         status_atendimento,
+        status_pagamento
       } = group[0];
 
       const dadosCLiente = _.uniqBy(group, "cd_cliente").map((row) => {
@@ -61,6 +62,7 @@ export class MapeamentoServicos {
         qtd_servicos_atendimento,
         dh_fim_atendimento,
         status_atendimento,
+        status_pagamento,
         dadosCLiente: dadosCLiente,
         dadosServico,
       };
