@@ -48,10 +48,10 @@ export class financeiroController {
       });
     }
   }
-  async efetuarPagamentoServico(req: Request, res: Response) {
+  async efetuarPagamentoAtendimento(req: Request, res: Response) {
     try {
       const body = req.body;
-      const result = await financeiro.efetuarPagamentoServico(body);
+      const result = await financeiro.efetuarPagamentoAtendimento(body);
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({

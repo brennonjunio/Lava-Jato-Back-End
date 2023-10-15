@@ -1,7 +1,6 @@
 import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
 import { Request, Response } from "express";
 import { AtendimentosService } from "../services/atendimentosServices";
-import { FinalizarServico } from "../DTO/atendimentosDTO";
 export const servicos = new AtendimentosService();
 
 export class AtendimentosController {

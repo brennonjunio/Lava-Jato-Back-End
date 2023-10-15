@@ -28,7 +28,7 @@ async function updateFalse(message: string, dados: number) {
     data: dados,
   };
 }
-async function appError(message: string, dados: number) {
+async function appError(message: string, dados: any) {
   return {
     status: false,
     statusCode: 500,

@@ -1,83 +1,64 @@
-import { criarTipoPagamentosDTO, editarTipoPagamentosDTO } from "../dto/financeiroDTO";
-import { efetuarPagamentoServico } from "../dto/movimentacaoFinanceiraDTO";
+import AppStatus from "../../../shared/AppStatus";
+import {
+  criarTipoPagamentosDTO,
+  editarTipoPagamentosDTO,
+} from "../dto/financeiroDTO";
+import { efetuarPagamentoAtendimento } from "../dto/movimentacaoFinanceiraDTO";
 import { financeiroRepository } from "../repository/financeiroRepository";
 import { movimentacaoFinanceiraRepository } from "../repository/movimentacaoFinanceiraRepository";
 
 export class financeiroService {
   private repository: financeiroRepository = new financeiroRepository();
-  private repositoryMovimentacao: movimentacaoFinanceiraRepository = new movimentacaoFinanceiraRepository();
+  private repositoryMovimentacao: movimentacaoFinanceiraRepository =
+    new movimentacaoFinanceiraRepository();
 
   async criarTiposPagamentos(params: criarTipoPagamentosDTO) {
     try {
       const result = await this.repository.criarTiposPagamentos(params);
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sucesso ao criar Tipo de Pagamento!",
-        data: result,
-      };
-
+      return AppStatus.appSucess("Criado Com Sucesso!", 1);
     } catch (e) {
-      throw `Erro ao Criar Tipo de Pagamento: ${e}`;
+      return AppStatus.appError("Erro ao Criar Tipo de Pagamento", 0);
     }
   }
   async listarTiposPagamentos() {
     try {
       const result = await this.repository.listarTiposPagamentos();
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sucesso ao listar Tipos de Pagamentos!",
-        data: result,
-      };
-
+      return AppStatus.appSucess(
+        "Sucesso ao Listar Tipos de Pagamentos!",
+        result
+      );
     } catch (e) {
-      throw `Erro ao Listar Tipos de Pagamentos: ${e}`;
+      return AppStatus.appError("Erro ao Listar Tipos de Pagamentos", 0);
     }
   }
   async editarTiposPagamentos(params: editarTipoPagamentosDTO) {
     try {
       const result = await this.repository.editarTiposPagamentos(params);
 
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sucesso ao Editar Tipo de Pagamento!",
-        data: result,
-      };
-
-    } catch (e) {
-      throw `Erro ao Editar Tipo de Pagamento: ${e}`;
-    }
-  }
-  async deletarTipoPagamento(cd_pagamento: number){
-    try {
-        const result = await this.repository.deletarTipoPagamento(cd_pagamento);
-        
-        return {
-          status: true,
-            statusCode: 200,
-            message: "Sucesso ao Editar Tipo de Pagamento!",
-            data: result,
-          };
-    
-        } catch (e) {
-          throw `Erro ao Editar Tipo de Pagamento: ${e}`;
-        }
-  }
-  async efetuarPagamentoServico(param:efetuarPagamentoServico){
-    try {
-      const result = await this.repositoryMovimentacao.efetuarPagamentoServico(
-        param
+      return AppStatus.appSucess(
+        "Sucesso ao Editar Tipos de Pagamentos!",
+        params
       );
-      return {
-        status: true,
-        statusCode: 200,
-        message: "Sucesso ao Efetuar Pagamento!",
-        data: result,
-      };
     } catch (e) {
-      throw `Erro ao efetuar Pagamento: ${e}`;
+      return AppStatus.appError("Erro ao Editar Tipos de Pagamentos!", 0);
     }
-}
+  }
+  async deletarTipoPagamento(cd_pagamento: number) {
+    try {
+      const result = await this.repository.deletarTipoPagamento(cd_pagamento);
+
+      return AppStatus.deletadoSucess;
+    } catch (e) {
+      return AppStatus.appError("Erro ao Deletar Tipo de Pagamento!", 0);
+    }
+  }
+  async efetuarPagamentoAtendimento(param: efetuarPagamentoAtendimento) {
+    try {
+      const result =
+        await this.repositoryMovimentacao.efetuarPagamentoAtendimento(param);
+      return AppStatus.appSucess("Sucesso ao Efetuar Pagamento", 1);
+    } catch (e) {
+      return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
+    }
+  }
 }

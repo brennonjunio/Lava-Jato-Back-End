@@ -13,7 +13,6 @@ export class agendamentoAtendimentosRepository {
       p.cd_cliente_p,
       p.cd_usuario_p
     )) as { sequencia: number }[];
-    console.log("🚀 ~ file: AtendimentosRepository.ts:16 ~ agendamentoAtendimentosRepository ~ realizar_atendimento ~ agendamento:", agendamento)
 
     for (const cd_servico of p.cd_servico_p) {
       await db.$queryRawUnsafe(

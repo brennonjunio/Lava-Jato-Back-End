@@ -23,7 +23,6 @@ export class AtendimentosService {
 
       return AppStatus.appSucess("Atendimento Criado Com sucesso!", result);
     } catch (e) {
-      console.log("🚀 ~ file: atendimentosServices.ts:26 ~ AtendimentosService ~ realizar_atendimento ~ e:", e)
       return AppStatus.appError("Erro Ao gerar Atendimento", 0);
     }
   }
