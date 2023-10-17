@@ -23,11 +23,18 @@ export class AuthService {
 
       const senhaOK = await bcrypt.compare(params.senha, auth.senha);
       if (senhaOK) {
-        const result = await jwt.sign(auth.nm_usuario, process.env.SECRET);
+        const token = jwt.sign(
+          {
+            user: auth.nm_usuario,
+            userId: auth.cd_usuario,
+          },
+          process.env.SECRET,
+          { expiresIn: '1h' }
+        );
         return {
           statusCode: 200,
           status: true,
-          token: result,
+          token: token,
           user:auth.nm_usuario,
           cd_usuario: auth.cd_usuario,
           message: "Login Realizado Com Sucesso",

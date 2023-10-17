@@ -8,7 +8,7 @@ export class AuthUseCase{
         let result;
         try{
           const secret = process.env.SECRET;
-          const decoded = jwt.verify(token, String(secret));
+          const decoded = jwt.verify(token, String(secret), { ignoreExpiration: false });
     
           result = {isValidToken:true , data: decoded}
         }catch(err){
