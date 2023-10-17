@@ -29,6 +29,7 @@ export class AuthService {
           status: true,
           token: result,
           user:auth.nm_usuario,
+          cd_usuario: auth.cd_usuario,
           message: "Login Realizado Com Sucesso",
         };
       } else {
