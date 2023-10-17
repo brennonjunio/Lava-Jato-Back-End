@@ -10,9 +10,7 @@ export class AtendimentosService {
 
   async realizar_atendimento(params: criarAgendamentoServicoDTO) {
     try {
-      // if (await this.useCase.verificaAgendaOcupada(params.cd_agenda_p)) {
-      //   return AppStatus.appError("Agenda Já em uso", 0);
-      // }
+     
       const result = await this.repositoryAgendamento.realizar_atendimento(
         params
       );
