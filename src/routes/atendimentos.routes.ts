@@ -3,7 +3,7 @@ import { AtendimentosController } from "../modules/atendimentos/controller/atend
 const atendimentos = Router();
 import { finalizarServicoSchema } from "../validator/servicos_atendimento/validatorServicos_atendimento";
 import validate from "../middlewares/validateRequest";
-import { criarAtendimentoSchema } from "../validator/atendimentos/validatorAtendimentos";
+import { criarAtendimentoSchema, finalizarAtendimentoSchema } from "../validator/atendimentos/validatorAtendimentos";
 
 
 atendimentos.post(
@@ -29,7 +29,7 @@ atendimentos.get(
 );
 
 atendimentos.post(
-  "/atendimentos/finalizarAtendimento/:nr_atendimento_p",
+  "/atendimentos/finalizarAtendimento/:nr_atendimento_p",validate(finalizarAtendimentoSchema),
   new AtendimentosController().finalizarAtendimento
 );
 

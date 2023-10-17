@@ -22,3 +22,8 @@ export const criarAtendimentoSchema = object({
     cd_usuario_p: string().required("Informar Usuario"),
   }),
 });
+export const finalizarAtendimentoSchema = object({
+  params: object({
+    nr_atendimento_p: number().required("Informar Nr Atendimento"),
+  }),
+});
