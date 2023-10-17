@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { AtendimentosController } from "../modules/atendimentos/controller/atendimentosController";
 const atendimentos = Router();
-import { finalizarServicoSchema,agendarServicoSchema } from "../validator/servicos_atendimento/validatorServicos_atendimento";
+import { finalizarServicoSchema } from "../validator/servicos_atendimento/validatorServicos_atendimento";
 import validate from "../middlewares/validateRequest";
+import { criarAtendimentoSchema } from "../validator/atendimentos/validatorAtendimentos";
 
-//crud de serviços
 
 atendimentos.post(
   "/atendimentos/finalizarServico",validate(finalizarServicoSchema),
@@ -16,7 +16,7 @@ atendimentos.get(
 );
 
 atendimentos.post(
-  "/atendimentos/agendamento",
+  "/atendimentos/agendamento",validate(criarAtendimentoSchema),
   new AtendimentosController().realizar_atendimento
 );
 atendimentos.get(

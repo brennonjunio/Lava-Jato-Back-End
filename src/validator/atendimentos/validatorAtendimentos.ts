@@ -12,3 +12,13 @@ export const efetuarPagamentoSchema = object({
     dh_vencimento_p: string().required("A data de vencimento é obrigatoria"),
   }),
 });
+export const criarAtendimentoSchema = object({
+  body: object({
+    cd_servico_p: array().required("Serviços São Obrigatorios"),
+    horario_p: string().required("O horario é obrigatorio"),
+    cd_cliente_p: string().required("Informar Cliente"),
+    cd_veiculo_p: string().required("Informar Veiculo"),
+    placa_p: string().required("Informar Placa Veiculo"),
+    cd_usuario_p: string().required("Informar Usuario"),
+  }),
+});
