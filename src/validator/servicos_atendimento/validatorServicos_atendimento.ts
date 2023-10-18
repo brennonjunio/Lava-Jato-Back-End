@@ -6,3 +6,10 @@ export const finalizarServicoSchema = object({
         nr_atendimento_p: string().required("A Sequencia do Atendimento é obrigatorio")
     }),
   });
+
+  export const criarServicoSchema = object({
+    body: object({
+        desc_servico: string().required("Informar Descrição do Serviço"),
+        vlr_servico: string().required("Informar Valor do serviço")
+    }),
+  });
