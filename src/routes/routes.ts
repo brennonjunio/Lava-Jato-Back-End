@@ -1,6 +1,5 @@
 import { Router } from "express";
 const router: Router = Router();
-import { AuthMiddleware } from "../middlewares/authMiddleware";
 import clientesRoutes from "./clientes.routes";
 import veiculosRouter from "./veiculos.routes";
 import agendasRouter from "./agendas.routes";
@@ -9,6 +8,7 @@ import financeiroRoutes from "./financeiro.routes";
 import usuariosRouter from "./usuarios.routes";
 import authRouter from "./auth.routes";
 import atendimentos from "./atendimentos.routes";
+import { AuthMiddleware } from "../middlewares/authMiddleware";
 
 //rotas para login
 router.use(authRouter);
@@ -16,7 +16,7 @@ router.use(authRouter);
 router.use(usuariosRouter);
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>ROTA VALIDA TOKEN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-router.use(AuthMiddleware.varify);
+router.use(AuthMiddleware);
 
 //ROTAS PARA OS CLIENTES CRUD
 router.use(clientesRoutes);
