@@ -1,4 +1,6 @@
 import { Router } from "express";
+import validate from "../middlewares/validateRequest";
+import { vincularVeiculoSchema } from "../validator/veiculos/validatorVeiculos";
 
 const veiculosRouter = Router();
 import { veiculosController } from "../modules/veiculos/controller/veiculosController";
@@ -18,6 +20,7 @@ veiculosRouter.delete(
 //rotas para vinculo de veiculos
 veiculosRouter.post(
   "/veiculo/cliente",
+  validate(vincularVeiculoSchema),
   new veiculosController().veiculoClienteCriar
 );
 veiculosRouter.get(
