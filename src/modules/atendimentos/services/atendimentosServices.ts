@@ -28,6 +28,7 @@ export class AtendimentosService {
     try {
       const result =
         await this.repositoryAgendamento.listarAtendimentos();
+
       if (isEmpty(result)) {
         return AppStatus.arrayVazio;
       }
