@@ -41,6 +41,7 @@ export class AtendimentosController {
     }
   }
   async finalizarServico(req: Request, res: Response) {
+
     try {
       const { nr_servico_p, nr_atendimento_p } = req.body;
       const result = await servicos.finalizarServico(

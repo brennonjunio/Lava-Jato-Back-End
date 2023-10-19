@@ -35,31 +35,32 @@ export class agendamentoAtendimentosRepository {
   }
   async listarAtendimentos() {
     const query = (await db.$queryRawUnsafe(
-      "select * from vw_listar_atendimentos"
+      "select * from vw_listar_atendimentos order by nr_atendimento desc"
     )) as any;
     const result = await this.mapeamento.mapearServicos(query);
     return result;
   }
   async listarAtendimentosPorCliente(cd_cliente_p: number) {
     const query = (await db.$queryRawUnsafe(
-      `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p}`
+      `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p} order by nr_atendimento desc`
     )) as any;
     const result = await this.mapeamento.mapearServicos(query);
     return result;
   }
 
-  async finalizarServico(nr_sequencia: number, seq_atendimento: number) {
+  async finalizarServico(nr_sequencia: number[], seq_atendimento: number) {
+    const servicos = nr_sequencia.toString();
     const result = await db.$executeRawUnsafe(
-      `update servicos_atendimento set dh_fim = current_timestamp(), status = 'F' where nr_sequencia= ? and nr_seq_atendimento = ?`,
-      nr_sequencia,
-      seq_atendimento
+      `update servicos_atendimento set dh_fim = current_timestamp(), status = 'F' where nr_sequencia in (${servicos}) and nr_seq_atendimento = ${seq_atendimento}`
     );
+    for (const i of nr_sequencia) {
+      const calculaHorario = await db.$executeRawUnsafe(
+        `select atualizar_tempo_servico(?,?)`,
+        i,
+        seq_atendimento
+      );
+    }
 
-    const calculaHorario = await db.$executeRawUnsafe(
-      `select atualizar_tempo_servico(?,?)`,
-      nr_sequencia,
-      seq_atendimento
-    );
     return result;
   }
 

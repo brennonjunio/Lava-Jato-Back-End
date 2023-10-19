@@ -53,7 +53,7 @@ export class AtendimentosService {
       return AppStatus.appError("Erro Ao Listar Serviços", 0);
     }
   }
-  async finalizarServico(nr_sequencia: number, seq_atendimento: number) {
+  async finalizarServico(nr_sequencia:number [], seq_atendimento: number) {
     try {
       const result = await this.repositoryAgendamento.finalizarServico(
         nr_sequencia,
@@ -64,6 +64,7 @@ export class AtendimentosService {
       }
       return AppStatus.updateSucess("Serviço Finalizado Com Sucesso", result);
     } catch (e) {
+      console.log("🚀 ~ file: atendimentosServices.ts:67 ~ AtendimentosService ~ finalizarServico ~ e:", e)
       return AppStatus.appError("Erro Ao Finalizar Serviço", 0);
     }
   }
