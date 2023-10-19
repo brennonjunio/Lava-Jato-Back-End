@@ -42,7 +42,7 @@ export class agendamentoAtendimentosRepository {
   }
   async listarAtendimentosPorCliente(cd_cliente_p: number) {
     const query = (await db.$queryRawUnsafe(
-      `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p} order by nr_atendimento desc`
+      `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p}`
     )) as any;
     const result = await this.mapeamento.mapearServicos(query);
     return result;
