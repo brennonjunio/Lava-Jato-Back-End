@@ -3,7 +3,6 @@ import _ from "lodash";
 export class MapeamentoServicos {
   async mapearServicos(result: any) {
     const groupedData = _.groupBy(result, (row) => row.nr_atendimento);
-
     const atendimentosMapeados = _.map(groupedData, (group) => {
       const {
         nr_atendimento,
@@ -12,7 +11,7 @@ export class MapeamentoServicos {
         qtd_servicos_atendimento,
         dh_fim_atendimento,
         status_atendimento,
-        status_pagamento
+        status_pagamento,
       } = group[0];
 
       const dadosCLiente = _.uniqBy(group, "cd_cliente").map((row) => {
@@ -71,6 +70,13 @@ export class MapeamentoServicos {
         dadosAtendimento: atendimentoData,
       };
     });
-    return atendimentosMapeados;
+
+    const sortedAtendimentos = _.orderBy(
+      atendimentosMapeados,
+      ["dadosAtendimento.nr_atendimento"],
+      ["desc"]
+    );
+
+    return sortedAtendimentos;
   }
 }
