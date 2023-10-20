@@ -66,27 +66,6 @@ export class AtendimentosController {
       });
     }
   }
-  async listarSericosEmAndamento(req: Request, res: Response) {
-    try {
-      const result = await servicos.listarSericosEmAndamento();
-      return res.status(result.statusCode).json(result);
-    } catch (error) {
-      res.status(500).json({
-        error,
-      });
-    }
-  }
-  async listarSericosEmAndamentoAtend(req: Request, res: Response) {
-    try {
-      const {nr_atendimento} = req.params
-      const result = await servicos.listarSericosEmAndamentoAtendimento(Number(nr_atendimento));
-      return res.status(result.statusCode).json(result);
-    } catch (error) {
-      res.status(500).json({
-        error,
-      });
-    }
-  }
   async finalizarAtendimento(req: Request, res: Response) {
     try {
       const {nr_atendimento_p} = req.params;

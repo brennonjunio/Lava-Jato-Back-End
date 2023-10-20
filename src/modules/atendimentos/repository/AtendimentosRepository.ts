@@ -70,19 +70,6 @@ export class agendamentoAtendimentosRepository {
     );
     return result;
   }
-  
-  async listarSericosEmAndamento() {
-    const result = await db.$queryRawUnsafe(
-      "select * from vw_listar_servicos where status_servico = 'A' order by nr_seq_servico desc"
-    );
-    return result;
-  }
-  async listarSericosEmAndamentoAtendimento(nr_atendimento: number) {
-    const result = await db.$queryRawUnsafe(
-      "select * from vw_listar_servicos where status_servico = 'A' and nr_atendimento = ? order by nr_seq_servico desc",nr_atendimento
-    );
-    return result;
-  }
 
   async finalizarAtendimento(param: number) {
     const query = (await db.$queryRawUnsafe(
