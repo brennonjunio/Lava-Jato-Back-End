@@ -1,11 +1,6 @@
-import { isEmpty, isNull } from "lodash";
+import { isNull } from "lodash";
 import AppStatus from "../../../shared/AppStatus";
-import {
-  criarServicoDTO,
-  updateServiceDTO,
-  vinculoVeiculoServico,
-  vinculoVeiculoServicoEditar,
-} from "../dto/servicosDTO";
+import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
 import { servicosRepository } from "../repository/servicosRepository";
 import { UseCaseService } from "../repository/useCase/useCaseService";
 import { error } from "console";
@@ -50,40 +45,6 @@ export class servicosService {
       return AppStatus.deletadoSucess;
     } catch (e) {
       return AppStatus.appError("erro ao Deletar Serviço", 0);
-    }
-  }
-  async criarVeiculoServico(params: vinculoVeiculoServico) {
-    try {
-      const valida = await this.case.validaTipoVeiculoServico(params);
-      if (!isEmpty(valida)) {
-        return AppStatus.appError(
-          "Serviço já vinculado ao tipo de veiculo",
-          valida
-        );
-      }
-      const result = await this.repository.criarVeiculoServico(params);
-      return AppStatus.appSucess("Sucesso ao Vincular", result);
-    } catch (e) {
-      return AppStatus.appError("Erro ao vincular", e);
-    }
-  }
-  async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
-    try {
-
-      const valida = await this.case.validaTipoVeiculoServico(params);
-      if (!isEmpty(valida)) {
-        return AppStatus.appError(
-          "Serviço já vinculado ao tipo de veiculo",
-          valida
-        );
-      }
-
-      const result = await this.repository.editarVeiculoServico(params);
-      console.log("🚀 ~ file: servicosService.ts:82 ~ servicosService ~ editarVeiculoServico ~ result:", result)
-
-      return AppStatus.appSucess("Sucesso ao Editar", result);
-    } catch (e) {
-      return AppStatus.appError("Erro ao Editar", e);
     }
   }
 }

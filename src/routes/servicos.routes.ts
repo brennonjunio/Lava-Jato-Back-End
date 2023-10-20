@@ -15,8 +15,5 @@ servicosRouters.delete(
   "/servicos/:cd_servico",
   new servicosController().deletarServicos
 );
-//Rotas para vincular tipos de veiculos ao serviço
-servicosRouters.post("/servicos/veiculos", new servicosController().criarVeiculoServico)
-servicosRouters.put("/servicos/veiculos", new servicosController().editarVeiculoServico)
 
 export default servicosRouters;
