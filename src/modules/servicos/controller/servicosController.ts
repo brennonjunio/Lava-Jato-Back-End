@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 import { servicosService } from "../service/servicosService";
-import { criarServicoDTO, updateServiceDTO } from "../dto/servicosDTO";
+import {
+  criarServicoDTO,
+  updateServiceDTO,
+  vinculoVeiculoServico,
+  vinculoVeiculoServicoEditar,
+} from "../dto/servicosDTO";
 
 export const servicos = new servicosService();
 
@@ -47,11 +52,33 @@ export class servicosController {
 
       return res.status(result.statusCode).json(result);
     } catch (error) {
-
       res.status(500).json({
         error,
       });
     }
   }
+  async criarVeiculoServico(req: Request, res: Response) {
+    try {
+      const params = req.body as vinculoVeiculoServico;
+      const result = await servicos.criarVeiculoServico(params);
 
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
+      });
+    }
+  }
+  async editarVeiculoServico(req: Request, res: Response) {
+    try {
+      const params = req.body as vinculoVeiculoServicoEditar;
+      const result = await servicos.editarVeiculoServico(params);
+
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
+      });
+    }
+  }
 }
