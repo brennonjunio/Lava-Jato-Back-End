@@ -81,6 +81,30 @@ export class AtendimentosService {
       return AppStatus.appError("Erro Ao Listar Serviços", 0);
     }
   }
+  async listarSericosEmAndamento() {
+    try {
+      const result =
+        await this.repositoryAgendamento.listarSericosEmAndamento();
+      if (isEmpty(result)) {
+        return AppStatus.arrayVazio;
+      }
+      return AppStatus.appSucess("Serviços Listados Com Sucesso!", result);
+    } catch (e) {
+      return AppStatus.appError("Erro Ao Listar Serviços", 0);
+    }
+  }
+  async listarSericosEmAndamentoAtendimento(nr_atendimento: number) {
+    try {
+      const result =
+        await this.repositoryAgendamento.listarSericosEmAndamentoAtendimento(nr_atendimento);
+      if (isEmpty(result)) {
+        return AppStatus.arrayVazio;
+      }
+      return AppStatus.appSucess("Serviços Listados Com Sucesso!", result);
+    } catch (e) {
+      return AppStatus.appError("Erro Ao Listar Serviços", 0);
+    }
+  }
   async finalizarAtendimento(param: number) {
     try {
       const result = await this.repositoryAgendamento.finalizarAtendimento(

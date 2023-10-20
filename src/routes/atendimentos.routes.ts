@@ -24,6 +24,14 @@ atendimentos.get(
   new AtendimentosController().listarAtendimentos
 );
 atendimentos.get(
+  "/atendimentos/servicosAndamento",
+  new AtendimentosController().listarSericosEmAndamento
+);
+atendimentos.get(
+  "/atendimentos/servicosAndamento/:nr_atendimento",
+  new AtendimentosController().listarSericosEmAndamentoAtend
+);
+atendimentos.get(
   "/atendimentos/agendamento/:cd_cliente",
   new AtendimentosController().listarAtendimentosPorCliente
 );
