@@ -79,7 +79,7 @@ export class agendamentoAtendimentosRepository {
   }
   async listarSericosEmAndamentoAtendimento(nr_atendimento: number) {
     const result = await db.$queryRawUnsafe(
-      "select * from vw_listar_servicos nr_atendimento = ? order by nr_seq_servico desc",nr_atendimento
+      "select * from vw_listar_servicos where nr_atendimento = ? order by nr_seq_servico desc",nr_atendimento
     );
     return result;
   }
