@@ -37,15 +37,13 @@ export class agendamentoAtendimentosRepository {
     const query = (await db.$queryRawUnsafe(
       "select * from vw_listar_atendimentos"
     )) as any;
-    const result = await this.mapeamento.mapearServicos(query);
-    return result;
+    return query;
   }
   async listarAtendimentosPorCliente(cd_cliente_p: number) {
     const query = (await db.$queryRawUnsafe(
       `select * from vw_listar_atendimentos where cd_cliente = ${cd_cliente_p}`
     )) as any;
-    const result = await this.mapeamento.mapearServicos(query);
-    return result;
+    return query;
   }
 
   async finalizarServico(nr_sequencia: number[], seq_atendimento: number) {
@@ -73,7 +71,7 @@ export class agendamentoAtendimentosRepository {
   
   async listarSericosEmAndamento() {
     const result = await db.$queryRawUnsafe(
-      "select * from vw_listar_servicos where status_servico = 'A' order by nr_seq_servico desc"
+      "select * from vw_listar_servicos order by nr_seq_servico desc"
     );
     return result;
   }
