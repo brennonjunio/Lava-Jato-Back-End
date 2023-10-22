@@ -6,6 +6,7 @@ import {
   vinculoVeiculoServico,
   vinculoVeiculoServicoEditar,
 } from "../dto/servicosDTO";
+import { number } from "yup";
 
 export const servicos = new servicosService();
 
@@ -25,6 +26,18 @@ export class servicosController {
   async listarServicos(req: Request, res: Response) {
     try {
       const result = await servicos.listarServicos();
+
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
+      });
+    }
+  }
+  async listarServicosPorCliente(req: Request, res: Response) {
+    try {
+      const {cd_veiculo} = req.params
+      const result = await servicos.listarServicosPorVeiculo(Number(cd_veiculo));
 
       return res.status(result.statusCode).json(result);
     } catch (error) {

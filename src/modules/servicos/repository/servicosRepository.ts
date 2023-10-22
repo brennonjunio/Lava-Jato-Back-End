@@ -20,6 +20,16 @@ export class servicosRepository {
     const result = await db.servicos.findMany({});
     return result;
   }
+  async listarServicosPorVeiculo(cd_veiculo: number) {
+    const result = await db.$queryRawUnsafe(
+      `select b.cd_servico,
+        buscar_nome_servico(b.cd_servico)descricao,
+        buscar_valor_servico(b.cd_servico)valor 
+          from veiculos_clientes a join veiculos_servico b 
+            on a.cd_tipo_veiculo = b.cd_tipo_veiculo where cd_veiculo = ?`,cd_veiculo
+    );
+    return result;
+  }
   async editarServicos(params: updateServiceDTO) {
     const result = await db.servicos.update({
       where: { cd_servico: params.cd_servico },

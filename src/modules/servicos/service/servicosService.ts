@@ -19,7 +19,7 @@ export class servicosService {
       const result = await this.repository.criarServico(param);
       return AppStatus.appSucess("Sucesso Ao Criar Serviço", param);
     } catch (e) {
-      return AppStatus.appError("Erro ao Criar Serviço", 0);
+      return AppStatus.appError("Erro ao Criar Serviço", e);
     }
   }
   async listarServicos() {
@@ -27,14 +27,23 @@ export class servicosService {
       const result = await this.repository.listarServicos();
       return AppStatus.appSucess("Sucesso Ao Listar Serviços", result);
     } catch (e) {
-      return AppStatus.appError("Erro ao Listar Serviços", 0);
+      return AppStatus.appError("Erro ao Listar Serviços", e);
     }
   }
+  async listarServicosPorVeiculo(cd_veiculo:number){
+    try {
+      const result = await this.repository.listarServicosPorVeiculo(cd_veiculo)
+      return AppStatus.appSucess("Sucesso Ao Listar Serviços", result);
+    } catch (e) {
+      return AppStatus.appError("Erro ao Listar Serviços", e);
+    }
+  }
+  
   async editarServicos(params: updateServiceDTO) {
     try {
       return AppStatus.appSucess("Sucesso Ao editar Serviço", 1);
     } catch (e) {
-      return AppStatus.appError("Erro ao Editar Serviço", 0);
+      return AppStatus.appError("Erro ao Editar Serviço", e);
     }
   }
   async deletarServicos(cd_servico: number): Promise<any> {
@@ -49,7 +58,7 @@ export class servicosService {
       const result = await this.repository.deletarServicos(cd_servico);
       return AppStatus.deletadoSucess;
     } catch (e) {
-      return AppStatus.appError("erro ao Deletar Serviço", 0);
+      return AppStatus.appError("erro ao Deletar Serviço", e);
     }
   }
   async criarVeiculoServico(params: vinculoVeiculoServico) {
@@ -79,8 +88,6 @@ export class servicosService {
       }
 
       const result = await this.repository.editarVeiculoServico(params);
-      console.log("🚀 ~ file: servicosService.ts:82 ~ servicosService ~ editarVeiculoServico ~ result:", result)
-
       return AppStatus.appSucess("Sucesso ao Editar", result);
     } catch (e) {
       return AppStatus.appError("Erro ao Editar", e);
