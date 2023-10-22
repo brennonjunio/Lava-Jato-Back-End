@@ -6,7 +6,8 @@ import {
   vinculoVeiculoServico,
   vinculoVeiculoServicoEditar,
 } from "../dto/servicosDTO";
-import { number } from "yup";
+import { isEmpty } from "lodash";
+import AppStatus from "../../../shared/AppStatus";
 
 export const servicos = new servicosService();
 
@@ -26,7 +27,9 @@ export class servicosController {
   async listarServicos(req: Request, res: Response) {
     try {
       const result = await servicos.listarServicos();
-
+      if (isEmpty(result)) {
+        return AppStatus.arrayVazio;
+      }
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
@@ -36,8 +39,13 @@ export class servicosController {
   }
   async listarServicosPorCliente(req: Request, res: Response) {
     try {
-      const {cd_veiculo} = req.params
-      const result = await servicos.listarServicosPorVeiculo(Number(cd_veiculo));
+      const { cd_veiculo } = req.params;
+      const result = await servicos.listarServicosPorVeiculo(
+        Number(cd_veiculo)
+      );
+      if (isEmpty(result)) {
+        return AppStatus.arrayVazio;
+      }
 
       return res.status(result.statusCode).json(result);
     } catch (error) {
