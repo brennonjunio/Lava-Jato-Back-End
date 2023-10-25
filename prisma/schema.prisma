@@ -229,6 +229,6 @@ model veiculos_servico {
   servicos        servicos      @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "veiculos_servico_servicos_cd_servico_fk")
   tipo_veiculos   tipo_veiculos @relation(fields: [cd_tipo_veiculo], references: [cd_tipo_veiculo], onDelete: NoAction, onUpdate: NoAction, map: "veiculos_servico_tipo_veiculos_cd_tipo_veiculo_fk")
 
-  @@index([cd_servico], map: "veiculos_servico_servicos_cd_servico_fk")
+  @@unique([cd_servico, cd_tipo_veiculo], map: "cd_servico")
   @@index([cd_tipo_veiculo], map: "veiculos_servico_tipo_veiculos_cd_tipo_veiculo_fk")
 }
