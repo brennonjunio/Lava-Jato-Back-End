@@ -35,7 +35,7 @@ export class agendamentoAtendimentosRepository {
   }
   async listarAtendimentos() {
     const query = (await db.$queryRawUnsafe(
-      "select * from vw_listar_atendimentos"
+      "select * from vw_listar_atendimentos order by nr_atendimento desc"
     )) as any;
     return query;
   }
