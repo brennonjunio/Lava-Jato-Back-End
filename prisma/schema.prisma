@@ -67,6 +67,7 @@ model clientes {
   status            String              @default("A") @db.VarChar(1)
   telefone1         String?             @db.VarChar(14)
   telefone2         String?             @db.VarChar(12)
+  rua               String?             @db.VarChar(100)
   agenda            agenda[]
   atendimentos      atendimentos[]
   usuarios          usuarios?           @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "clientes_FK")
