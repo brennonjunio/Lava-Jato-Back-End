@@ -8,12 +8,22 @@ export class UseCaseService {
       select: { cd_servico: true },
     });
   }
-  async validaTipoVeiculoServico(params: vinculoVeiculoServico) {
-    const result = await db.$queryRawUnsafe(
-      "select * from veiculos_servico where cd_tipo_veiculo = ? and cd_servico =?",
-      params.cd_tipo_veiculo,
-      params.cd_servico
-    );
-    return result;
+  async validaTipoVeiculoServico(params:vinculoVeiculoServico) {
+    const validations = [] as any;
+  
+    for await (let i of params.cd_tipo_veiculo) {
+      const validate = await db.$queryRawUnsafe(
+        "select a.cd_tipo_veiculo, buscar_tipo_veiculo(a.cd_tipo_veiculo) as tipo from veiculos_servico a where cd_tipo_veiculo = ? and cd_servico = ?;",
+        i,
+        params.cd_servico
+      );
+  
+    await validations.push(validate);
+    }
+
+  if(validations.length == params.cd_tipo_veiculo.length){
+    return 'Todos já foram vinculados'
+  }
+    return validations;
   }
 }

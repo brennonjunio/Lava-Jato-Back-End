@@ -65,8 +65,7 @@ export class AtendimentosService {
       }
       return AppStatus.updateSucess("Serviço Finalizado Com Sucesso", result);
     } catch (e) {
-      console.log("🚀 ~ file: atendimentosServices.ts:67 ~ AtendimentosService ~ finalizarServico ~ e:", e)
-      return AppStatus.appError("Erro Ao Finalizar Serviço", 0);
+      return AppStatus.appError("Erro Ao Finalizar Serviço", e);
     }
   }
   async listarServicosFinalizados() {

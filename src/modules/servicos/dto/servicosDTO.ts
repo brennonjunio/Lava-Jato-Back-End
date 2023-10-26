@@ -9,10 +9,10 @@ export class updateServiceDTO {
 }
 export interface vinculoVeiculoServico {
     cd_servico: number;
-    cd_tipo_veiculo: number;
+    cd_tipo_veiculo: number[];
 }
 export interface vinculoVeiculoServicoEditar {
     cd_servico: number;
-    cd_tipo_veiculo: number;
+    cd_tipo_veiculo: number[];
     sequencia: number;
 }

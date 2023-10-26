@@ -63,10 +63,10 @@ export class servicosService {
   }
   async criarVeiculoServico(params: vinculoVeiculoServico) {
     try {
-      const valida = await this.case.validaTipoVeiculoServico(params);
+      const valida = await this.case.validaTipoVeiculoServico(params) as any;
       if (!isEmpty(valida)) {
         return AppStatus.appError(
-          "Serviço já vinculado ao tipo de veiculo",
+          `Tipo já vinculado ao serviço: ${ valida[0].cd_tipo_veiculo}-${valida[0].tipo}`,
           valida
         );
       }

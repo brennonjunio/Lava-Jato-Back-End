@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import { isEmpty, result } from "lodash";
 import db from "../../../database/database";
 import {
   criarServicoDTO,
@@ -26,7 +26,8 @@ export class servicosRepository {
         buscar_nome_servico(b.cd_servico)descricao,
         buscar_valor_servico(b.cd_servico)valor 
           from veiculos_clientes a join veiculos_servico b 
-            on a.cd_tipo_veiculo = b.cd_tipo_veiculo where cd_veiculo = ?`,cd_veiculo
+            on a.cd_tipo_veiculo = b.cd_tipo_veiculo where cd_veiculo = ?`,
+      cd_veiculo
     );
     return result;
   }
@@ -44,18 +45,23 @@ export class servicosRepository {
     return result;
   }
 
-  async criarVeiculoServico(params: vinculoVeiculoServico) {
-    const result = await db.veiculos_servico.create({
-      data: params,
-    });
-    return result;
+  async criarVeiculoServico(p: vinculoVeiculoServico) {
+      for (const veiculo of p.cd_tipo_veiculo) {
+        await db.$queryRawUnsafe(
+          `insert into veiculos_servico (cd_servico,cd_tipo_veiculo) values (?,?)`,
+          p.cd_servico,
+          veiculo
+        );
+
+      }
+   
   }
   async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
     const result = await db.veiculos_servico.updateMany({
       where: { nr_sequencia: params.sequencia },
       data: {
         cd_servico: params.cd_servico,
-        cd_tipo_veiculo: params.cd_tipo_veiculo,
+        // cd_tipo_veiculo: params.cd_tipo_veiculo,
       },
     });
     return result;
