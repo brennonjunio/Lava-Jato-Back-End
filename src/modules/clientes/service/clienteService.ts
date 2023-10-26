@@ -20,7 +20,7 @@ export class ClienteService {
       const result = await this.clienteRepository.criarCliente(param);
       return AppStatus.appSucess("Cliente Cadastrado Com Sucesso!", result);
     } catch (e) {
-      return AppStatus.appError("Erro ao Cadastrar Cliente!", 0);
+      return AppStatus.appError("Erro ao Cadastrar Cliente!", e);
     }
   }
 

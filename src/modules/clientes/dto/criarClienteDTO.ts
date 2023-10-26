@@ -3,6 +3,7 @@ export class CriarClienteDTO {
   cpf_cnpj: string;
   cep: string;
   bairro: string;
+  rua: string;
   nr_casa: string;
   telefone1: string;
   telefone2: string;
