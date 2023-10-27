@@ -43,7 +43,7 @@ export class ClienteService {
   async listar() {
     try {
       const result = await this.clienteRepository.listarClientes();
-      return AppStatus.appSucess("Cliente Cadastrado Com Sucesso!", result);
+      return AppStatus.appSucess("Clientes Listados Com Sucesso!", result);
     } catch (e) {
       return AppStatus.appError("Erro ao Listar Clientes", 0);
     }
