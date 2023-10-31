@@ -41,6 +41,7 @@ export class servicosService {
   
   async editarServicos(params: updateServiceDTO) {
     try {
+      const result = await this.repository.editarServicos(params);
       return AppStatus.appSucess("Sucesso Ao editar Serviço", 1);
     } catch (e) {
       return AppStatus.appError("Erro ao Editar Serviço", e);

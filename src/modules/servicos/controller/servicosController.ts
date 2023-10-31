@@ -58,7 +58,6 @@ export class servicosController {
     try {
       const body = req.body as updateServiceDTO;
       const result = await servicos.editarServicos(body);
-
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
