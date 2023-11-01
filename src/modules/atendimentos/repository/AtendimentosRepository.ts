@@ -14,9 +14,10 @@ export class agendamentoAtendimentosRepository {
       p.cd_usuario_p
     )) as { sequencia: number }[];
 
+
     for (const cd_servico of p.cd_servico_p) {
       await db.$queryRawUnsafe(
-        "insert into servicos_atendimento (nr_seq_atendimento,cd_servico,cd_veiculo,placa,cd_usuario) values (?,?,?,?,?)",
+        "select gerar_servicos_atendimento(?,?,?,?,?)",
         agendamento[0].sequencia,
         cd_servico,
         p.cd_veiculo_p,
@@ -24,7 +25,6 @@ export class agendamentoAtendimentosRepository {
         p.cd_usuario_p
       );
     }
-
     const gerarMovimentacao = await db.$queryRawUnsafe(
       "select gerar_movimentacao_servico(?,?,?)",
       p.cd_cliente_p,

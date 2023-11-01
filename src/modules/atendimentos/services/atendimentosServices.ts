@@ -21,7 +21,7 @@ export class AtendimentosService {
 
       return AppStatus.appSucess("Atendimento Criado Com sucesso!", result);
     } catch (e) {
-      return AppStatus.appError("Erro Ao gerar Atendimento", 0);
+      return AppStatus.appError("Erro Ao gerar Atendimento", e);
     }
   }
   async listarAtendimentos(): Promise<any> {
@@ -32,9 +32,9 @@ export class AtendimentosService {
       if (isEmpty(result)) {
         return AppStatus.arrayVazio;
       }
-      return AppStatus.appSucess("Serviços Listados Com Sucesso!", result);
+      return AppStatus.appSucess("Atendimentos Listados Com Sucesso!", result);
     } catch (e) {
-      return AppStatus.appError("Erro Ao Listar Serviços", 0);
+      return AppStatus.appError("Erro Ao Listar Atendimentos", e);
     }
   }
   async listarAtendimentosPorCliente(

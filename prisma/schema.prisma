@@ -138,6 +138,7 @@ model servicos_atendimento {
   cd_usuario         Int?
   status             String            @default("A") @db.VarChar(1)
   dh_update          DateTime          @default(now()) @db.DateTime(0)
+  vlr_servico        Decimal?          @db.Decimal(10, 2)
   atendimentos       atendimentos      @relation(fields: [nr_seq_atendimento], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_atendimentos_nr_sequencia_fk")
   servicos           servicos          @relation(fields: [cd_servico], references: [cd_servico], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_servicos_cd_servico_fk")
   usuarios           usuarios?         @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "servicos_atendimento_usuarios_cd_usuario_fk")
