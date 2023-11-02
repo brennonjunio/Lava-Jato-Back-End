@@ -90,13 +90,13 @@ model financeiro {
   cd_nf              Int?
   dh_hr_mov          DateTime          @default(now()) @db.DateTime(0)
   dh_hr_baixa        DateTime?         @db.DateTime(0)
-  vlr_movimento      Float             @default(0) @db.Float
-  vlr_desconto       Float             @default(0) @db.Float
-  perc_desconto      Float             @default(0) @db.Float
-  vlr_total          Float             @default(0) @db.Float
+  vlr_movimento      Decimal           @default(0.00) @db.Decimal(10, 2)
+  vlr_desconto       Decimal           @default(0.00) @db.Decimal(10, 2)
+  perc_desconto      Decimal           @default(0.00) @db.Decimal(10, 2)
+  vlr_total          Decimal           @default(0.00) @db.Decimal(10, 2)
   dh_vencimento      DateTime?         @db.DateTime(0)
-  vlr_baixa          Int?
-  vlr_juros          Int?              @default(0)
+  vlr_baixa          Decimal?          @db.Decimal(10, 2)
+  vlr_juros          Decimal?          @default(0.00) @db.Decimal(10, 2)
   cd_tipo_pagamento  Int?
   cd_usuario         Int
   nr_seq_atendimento Int
@@ -120,7 +120,7 @@ model financeiro {
 model servicos {
   cd_servico           Int                    @id @default(autoincrement())
   desc_servico         String                 @db.VarChar(40)
-  vlr_servico          Float                  @db.Float
+  vlr_servico          Decimal                @db.Decimal(10, 2)
   descricao_longa      String?                @db.VarChar(500)
   servicos_atendimento servicos_atendimento[]
   veiculos_servico     veiculos_servico[]
@@ -207,7 +207,7 @@ model transacoes {
   nr_sequencia      Int              @id @default(autoincrement())
   nr_seq_financeiro Int
   cd_tipo_pagamento Int
-  valor             Float            @default(0) @db.Float
+  valor             Decimal          @default(0.00) @db.Decimal(10, 2)
   dh_baixa          DateTime         @default(now()) @db.DateTime(0)
   cd_tipo_movimento Int
   dh_update         DateTime         @default(now()) @db.DateTime(0)
