@@ -41,7 +41,6 @@ export class veiculosController {
   async deletarTipoVeiculo(req: Request, res: Response) {
     try {
       const cd_tipo_veiculo = req.params.cd_veiculo
-      console.log('cd_tipo_veiculo', cd_tipo_veiculo)
       const result = await service.deletarTipoVeiculo(Number(cd_tipo_veiculo));
       return res.status(result.statusCode).json(result);
     } catch (error) {
