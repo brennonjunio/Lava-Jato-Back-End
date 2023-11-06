@@ -39,7 +39,7 @@ export class financeiroController {
   }
   async deletarTipoPagamento(req: Request, res: Response) {
     try {
-      const cd_pagamento = req.params;
+      const cd_pagamento = req.params.cd_pagamento;
       const result = await financeiro.deletarTipoPagamento(Number(cd_pagamento));
       return res.status(result.statusCode).json(result);
     } catch (error) {
