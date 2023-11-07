@@ -1,7 +1,7 @@
 const arrayVazio = {
   status: false,
   statusCode: 400,
-  error: "Sem Resultados",
+  message: "Sem Resultados",
   data: [],
 };
 async function appSucess(message: string, dados: any) {
@@ -24,7 +24,7 @@ async function updateFalse(message: string, dados: number) {
   return {
     status: false,
     statusCode: 400,
-    error: message,
+    message: message,
     data: dados,
   };
 }
@@ -32,7 +32,7 @@ async function appError(message: string, dados: any) {
   return {
     status: false,
     statusCode: 500,
-    error: message,
+    message: message,
     data: dados,
   };
 }
