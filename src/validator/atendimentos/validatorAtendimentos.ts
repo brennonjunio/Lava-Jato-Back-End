@@ -10,6 +10,7 @@ export const efetuarPagamentoSchema = object({
     cd_usuario_p: string().required("O cd usuario é obrigatorio"),
     perc_desc_p: string().required("O percentual de desconto é obrigatorio"),
     dh_vencimento_p: string().required("A data de vencimento é obrigatoria"),
+    troco_p: string().required("Informar Troco do Cliente")
   }),
 });
 export const criarAtendimentoSchema = object({
