@@ -17,7 +17,7 @@ export class servicosRepository {
     return result;
   }
   async listarServicos() {
-    const result = await db.servicos.findMany({});
+    const result = await db.servicos.findMany({orderBy:{cd_servico:'desc'}});
     return result;
   }
   async listarServicosPorVeiculo(cd_veiculo: number) {
