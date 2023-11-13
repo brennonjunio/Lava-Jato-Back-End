@@ -9,7 +9,7 @@ export const finalizarServicoSchema = object({
 
   export const criarServicoSchema = object({
     body: object({
-        desc_servico: string().required("Informar Descrição do Serviço"),
+        desc_servico: string().required("Informar Descrição do Serviço").min(4,'descrição de no minimo 4 caracteres'),
         vlr_servico: string().required("Informar Valor do serviço")
     }),
   });

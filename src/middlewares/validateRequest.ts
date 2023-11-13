@@ -15,9 +15,9 @@ const validate =
       next();
     } catch (error) {
         if (error instanceof Error) { 
-          return res.status(400).json({error:error.message});
+          return res.status(400).json({message:error.message});
         } else {
-          return res.status(500).json({error:'Erro interno do servidor'});
+          return res.status(500).json({message:'Erro interno do servidor'});
         }
       }
     };
