@@ -4,12 +4,13 @@ const arrayVazio = {
   message: "Sem Resultados",
   data: [],
 };
-async function appSucess(message: string, dados: any) {
+async function appSucess(message: string, dados: any,body?:any) {
   return {
     status: true,
     statusCode: 200,
     message: message,
     data: dados,
+    body:body
   };
 }
 async function updateSucess(message: string, dados: number) {
