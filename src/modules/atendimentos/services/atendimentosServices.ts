@@ -19,7 +19,7 @@ export class AtendimentosService {
         return AppStatus.updateFalse("Atendimento Não foi criado!", 0);
       }
 
-      return AppStatus.appSucess("Atendimento Criado Com sucesso!", result);
+      return AppStatus.appSucess("Atendimento Criado Com sucesso!", params);
     } catch (e) {
       return AppStatus.appError("Erro Ao gerar Atendimento", e);
     }
