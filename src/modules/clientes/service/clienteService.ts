@@ -18,7 +18,7 @@ export class ClienteService {
         return AppStatus.updateFalse("Cpf invalido ou Já cadastrado", 0);
       }
       const result = await this.clienteRepository.criarCliente(param);
-      return AppStatus.appSucess("Cliente Cadastrado Com Sucesso!", result);
+      return AppStatus.appSucess("Cliente Cadastrado Com Sucesso!", 1);
     } catch (e) {
       return AppStatus.appError("Erro ao Cadastrar Cliente!", e);
     }
