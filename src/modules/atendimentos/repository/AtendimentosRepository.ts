@@ -30,8 +30,8 @@ export class agendamentoAtendimentosRepository {
     ) as any;
     const vlr_movimentacao = await gerarMovimentacao[0].movimentacao
     const dadosRetorno = {
-      valor: vlr_movimentacao,
-      atendimento: agendamento[0].sequencia
+      valor_total: vlr_movimentacao,
+      nr_atendimento: agendamento[0].sequencia
     }
     return agendamento[0].sequencia != 0 ? dadosRetorno : false;
   }
