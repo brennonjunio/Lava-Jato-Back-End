@@ -1,10 +1,7 @@
 import _ from "lodash";
 import db from "../../../database/database";
 import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
-import { MapeamentoServicos } from "./useCase/mapeamentoServicos";
-
 export class agendamentoAtendimentosRepository {
-  private mapeamento: MapeamentoServicos = new MapeamentoServicos();
 
   async realizar_atendimento(p: criarAgendamentoServicoDTO) {
     const agendamento = (await db.$queryRawUnsafe(
@@ -26,12 +23,17 @@ export class agendamentoAtendimentosRepository {
       );
     }
     const gerarMovimentacao = await db.$queryRawUnsafe(
-      "select gerar_movimentacao_servico(?,?,?)",
+      "select gerar_movimentacao_servico(?,?,?) as movimentacao",
       p.cd_cliente_p,
       p.cd_usuario_p,
       agendamento[0].sequencia
-    );
-    return agendamento[0].sequencia != 0 ? true : false;
+    ) as any;
+    const vlr_movimentacao = await gerarMovimentacao[0].movimentacao
+    const dadosRetorno = {
+      valor_total: vlr_movimentacao,
+      nr_atendimento: agendamento[0].sequencia
+    }
+    return agendamento[0].sequencia != 0 ? dadosRetorno : false;
   }
   async listarAtendimentos() {
     const query = (await db.$queryRawUnsafe(
