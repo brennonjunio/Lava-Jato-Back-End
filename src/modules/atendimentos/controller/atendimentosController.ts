@@ -41,7 +41,6 @@ export class AtendimentosController {
     }
   }
   async finalizarServico(req: Request, res: Response) {
-
     try {
       const { nr_servico_p, nr_atendimento_p } = req.body;
       const result = await servicos.finalizarServico(
@@ -78,8 +77,10 @@ export class AtendimentosController {
   }
   async listarSericosEmAndamentoAtend(req: Request, res: Response) {
     try {
-      const {nr_atendimento} = req.params
-      const result = await servicos.listarSericosEmAndamentoAtendimento(Number(nr_atendimento));
+      const { nr_atendimento } = req.params;
+      const result = await servicos.listarSericosEmAndamentoAtendimento(
+        Number(nr_atendimento)
+      );
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
@@ -89,9 +90,25 @@ export class AtendimentosController {
   }
   async finalizarAtendimento(req: Request, res: Response) {
     try {
-      const {nr_atendimento_p} = req.params;
+      const { nr_atendimento_p } = req.params;
       const result = await servicos.finalizarAtendimento(
         Number(nr_atendimento_p)
+      );
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
+      });
+    }
+  }
+  async cancelarAtendimento(req: Request, res: Response) {
+    try {
+      const { nr_atendimento, cd_usuario } = req.params;
+      console.log(req.params);
+      console.log("caiu aqui");
+      const result = await servicos.cancelarAtendimento(
+        Number(nr_atendimento),
+        Number(cd_usuario)
       );
       return res.status(result.statusCode).json(result);
     } catch (error) {

@@ -3,11 +3,14 @@ import { AtendimentosController } from "../modules/atendimentos/controller/atend
 const atendimentos = Router();
 import { finalizarServicoSchema } from "../validator/servicos_atendimento/validatorServicos_atendimento";
 import validate from "../middlewares/validateRequest";
-import { criarAtendimentoSchema, finalizarAtendimentoSchema } from "../validator/atendimentos/validatorAtendimentos";
-
+import {
+  criarAtendimentoSchema,
+  finalizarAtendimentoSchema,
+} from "../validator/atendimentos/validatorAtendimentos";
 
 atendimentos.post(
-  "/atendimentos/finalizarServico",validate(finalizarServicoSchema),
+  "/atendimentos/finalizarServico",
+  validate(finalizarServicoSchema),
   new AtendimentosController().finalizarServico
 );
 atendimentos.get(
@@ -16,7 +19,8 @@ atendimentos.get(
 );
 
 atendimentos.post(
-  "/atendimentos/agendamento",validate(criarAtendimentoSchema),
+  "/atendimentos/agendamento",
+  validate(criarAtendimentoSchema),
   new AtendimentosController().realizar_atendimento
 );
 atendimentos.get(
@@ -37,8 +41,12 @@ atendimentos.get(
 );
 
 atendimentos.post(
-  "/atendimentos/finalizarAtendimento/:nr_atendimento_p",validate(finalizarAtendimentoSchema),
+  "/atendimentos/finalizarAtendimento/:nr_atendimento_p",
+  validate(finalizarAtendimentoSchema),
   new AtendimentosController().finalizarAtendimento
 );
+
+atendimentos.post("/atendimentos/cancelar/:nr_atendimento/:cd_usuario",
+  new AtendimentosController().cancelarAtendimento);
 
 export default atendimentos;

@@ -90,4 +90,9 @@ export class agendamentoAtendimentosRepository {
     const result = query[0].atendimento;
     return result;
   }
+   async cancelarAtendimento(nr_atendimento: Number, cd_usuario:Number){
+    const query = (await db.$queryRawUnsafe('select cancelarAtendimento(?,?) as cancelamento',nr_atendimento,cd_usuario)) as any;
+    const result = query[0].cancelamento;
+    return result;
+   }
 }

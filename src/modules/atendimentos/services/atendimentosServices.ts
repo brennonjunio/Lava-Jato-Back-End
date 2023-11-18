@@ -1,4 +1,4 @@
-import {  isEmpty } from "lodash";
+import {  isEmpty, result } from "lodash";
 import { criarAgendamentoServicoDTO } from "../../servicos/dto/agendamentoServicosDTO";
 import { agendamentoAtendimentosRepository } from "../repository/AtendimentosRepository";
 import { useCaseAtendimentos } from "../repository/useCase/useCaseAtendimentos";
@@ -114,7 +114,18 @@ export class AtendimentosService {
       }
       return AppStatus.appSucess(result.message, result.status);
     } catch (e) {
-      return AppStatus.appError("Erro ao Finalizar Serviço", 0);
+      return AppStatus.appError("Erro ao Finalizar Serviço", e);
+    }
+  }
+  async cancelarAtendimento(nr_atendimento:Number,cd_usuario:Number){
+    try {
+      const result = await this.repositoryAgendamento.cancelarAtendimento(nr_atendimento,cd_usuario)
+      if (result.status == false) {
+        return AppStatus.updateFalse(result.message, result.status);
+      }
+      return AppStatus.appSucess(result.message, result.status);
+    } catch (e) {
+      return AppStatus.appError("Erro ao cancelar Atendimento", e);
     }
   }
 }
