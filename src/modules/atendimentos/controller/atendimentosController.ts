@@ -104,8 +104,6 @@ export class AtendimentosController {
   async cancelarAtendimento(req: Request, res: Response) {
     try {
       const { nr_atendimento, cd_usuario } = req.params;
-      console.log(req.params);
-      console.log("caiu aqui");
       const result = await servicos.cancelarAtendimento(
         Number(nr_atendimento),
         Number(cd_usuario)
