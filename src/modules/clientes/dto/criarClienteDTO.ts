@@ -7,4 +7,5 @@ export class CriarClienteDTO {
   nr_casa: string;
   telefone1: string;
   telefone2: string;
+  cd_usuario: number;
 }

@@ -1,4 +1,4 @@
-import { object, string } from "yup";
+import { number, object, string } from "yup";
 
 export default object({
   body: object({
@@ -27,8 +27,7 @@ export default object({
       .required("Ao menos um telefone é Obrigatorio")
       .min(8, "Digite os 8 digitos de seu telefone")
       .max(14, "Número de telefone invalido"),
-    telefone2: string()
-      .min(8, "Digite os 8 digitos de seu telefone")
-      .max(14, "Número de telefone invalido"),
+    telefone2: string(),
+    cd_usuario: number()
   }),
 });

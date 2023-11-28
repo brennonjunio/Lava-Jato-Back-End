@@ -23,6 +23,7 @@ export class ClienteRepository {
       include: {
         veiculos_clientes: {
           select: {
+            cd_veiculo: true,
             placa: true,
             modelo: true,
           },
