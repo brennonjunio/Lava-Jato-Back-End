@@ -17,4 +17,15 @@ export class movimentacaoFinanceiraRepository {
     );
     return result;
   }
+
+  async listarTransacoesFinanceiro() {
+    return await db.$queryRawUnsafe(
+      "select * from vw_financeiro_transacoes;"
+    );
+  }
+  async listarMovimentacoesFinanceiro() {
+    return await db.$queryRawUnsafe(
+      "select * from vw_financeiro_movimentacoes;"
+    );
+  }
 }

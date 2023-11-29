@@ -205,14 +205,15 @@ model veiculos_clientes {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model transacoes {
   nr_sequencia      Int              @id @default(autoincrement())
-  nr_seq_financeiro Int
+  nr_seq_financeiro Int?
   cd_tipo_pagamento Int
   valor             Decimal          @default(0.00) @db.Decimal(10, 2)
   dh_baixa          DateTime         @default(now()) @db.DateTime(0)
   cd_tipo_movimento Int
   dh_update         DateTime         @default(now()) @db.DateTime(0)
   cd_usuario        Int
-  financeiro        financeiro       @relation(fields: [nr_seq_financeiro], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_financeiro_nr_sequencia_fk")
+  observacao        String?          @db.VarChar(500)
+  financeiro        financeiro?      @relation(fields: [nr_seq_financeiro], references: [nr_sequencia], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_financeiro_nr_sequencia_fk")
   tipo_movimento    tipo_movimento   @relation(fields: [cd_tipo_movimento], references: [cd_movimento], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_tipo_movimento_cd_movimento_fk")
   tipos_pagamentos  tipos_pagamentos @relation(fields: [cd_tipo_pagamento], references: [cd_pagamento], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_tipos_pagamentos_cd_pagamento_fk")
   usuarios          usuarios         @relation(fields: [cd_usuario], references: [cd_usuario], onDelete: NoAction, onUpdate: NoAction, map: "transacoes_usuarios_cd_usuario_fk")

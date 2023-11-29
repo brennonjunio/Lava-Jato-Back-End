@@ -31,4 +31,13 @@ financeiroRoutes.post(
   new financeiroController().efetuarPagamentoAtendimento
 );
 
+//transacoes
+financeiroRoutes.get(
+  "/financeiro/listarTransacoes",
+  new financeiroController().listarTransacoesFinanceiro
+);
+financeiroRoutes.get(
+  "/financeiro/listarMovimentacoes",
+  new financeiroController().listarMovimentacoesFinanceiro
+);
 export default financeiroRoutes;

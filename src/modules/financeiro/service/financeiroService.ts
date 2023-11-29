@@ -61,4 +61,21 @@ export class financeiroService {
       return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
     }
   }
+async listarTransacoesFinanceiro(){
+  try {
+    const result = await this.repositoryMovimentacao.listarTransacoesFinanceiro();
+    return AppStatus.appSucess("Sucesso ao Listar Transações", result);
+  } catch (e) {
+    return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
+  }
+}
+async listarMovimentacoesFinanceiro(){
+  try {
+    const result = await this.repositoryMovimentacao.listarMovimentacoesFinanceiro();
+    return AppStatus.appSucess("Sucesso ao Listar Movimentações", result);
+  } catch (e) {
+    return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
+  }
+}
+
 }

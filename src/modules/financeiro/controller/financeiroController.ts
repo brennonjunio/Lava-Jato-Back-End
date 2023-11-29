@@ -12,7 +12,7 @@ export class financeiroController {
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -22,7 +22,7 @@ export class financeiroController {
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -33,18 +33,20 @@ export class financeiroController {
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
   async deletarTipoPagamento(req: Request, res: Response) {
     try {
       const cd_pagamento = req.params.cd_pagamento;
-      const result = await financeiro.deletarTipoPagamento(Number(cd_pagamento));
+      const result = await financeiro.deletarTipoPagamento(
+        Number(cd_pagamento)
+      );
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
       });
     }
   }
@@ -55,7 +57,27 @@ export class financeiroController {
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
-        error
+        error,
+      });
+    }
+  }
+  async listarTransacoesFinanceiro(req: Request, res: Response) {
+    try {
+      const result = await financeiro.listarTransacoesFinanceiro();
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
+      });
+    }
+  }
+  async listarMovimentacoesFinanceiro(req: Request, res: Response) {
+    try {
+      const result = await financeiro.listarMovimentacoesFinanceiro();
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
       });
     }
   }
