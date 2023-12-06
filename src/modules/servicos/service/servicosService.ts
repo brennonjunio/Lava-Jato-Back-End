@@ -67,7 +67,7 @@ export class servicosService {
       const valida = await this.case.validaTipoVeiculoServico(params) as any;
       if (!isEmpty(valida)) {
         return AppStatus.appError(
-          `Tipo já vinculado ao serviço: ${ valida[0].cd_tipo_veiculo}-${valida[0].tipo}`,
+          `Tipo já vinculado ao serviço`,
           valida
         );
       }
@@ -77,21 +77,21 @@ export class servicosService {
       return AppStatus.appError("Erro ao vincular", e);
     }
   }
-  async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
-    try {
+  // async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
+  //   try {
 
-      const valida = await this.case.validaTipoVeiculoServico(params);
-      if (!isEmpty(valida)) {
-        return AppStatus.appError(
-          "Serviço já vinculado ao tipo de veiculo",
-          valida
-        );
-      }
+  //     const valida = await this.case.validaTipoVeiculoServico(params) as any;
+  //     if (!isEmpty(valida)) {
+  //       return AppStatus.appError(
+  //         "Serviço já vinculado ao tipo de veiculo",
+  //         valida
+  //       );
+  //     }
 
-      const result = await this.repository.editarVeiculoServico(params);
-      return AppStatus.appSucess("Sucesso ao Editar", result);
-    } catch (e) {
-      return AppStatus.appError("Erro ao Editar", e);
-    }
-  }
+  //     const result = await this.repository.editarVeiculoServico(params);
+  //     return AppStatus.appSucess("Sucesso ao Editar", result);
+  //   } catch (e) {
+  //     return AppStatus.appError("Erro ao Editar", e);
+  //   }
+  // }
 }

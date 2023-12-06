@@ -11,17 +11,17 @@ export class UseCaseService {
   async validaTipoVeiculoServico(params:vinculoVeiculoServico) {
     const validations = [] as any;
   
-    for await (let i of params.cd_tipo_veiculo) {
+    for await (let i of params.cd_servico) {
       const validate = await db.$queryRawUnsafe(
         "select a.cd_tipo_veiculo, buscar_tipo_veiculo(a.cd_tipo_veiculo) as tipo from veiculos_servico a where cd_tipo_veiculo = ? and cd_servico = ?;",
-        i,
-        params.cd_servico
+        params.cd_tipo_veiculo,
+        i
       );
   
     await validations.push(validate);
     }
 
-  if(validations.length == params.cd_tipo_veiculo.length){
+  if(validations.length == params.cd_servico.length){
     return 'Todos já foram vinculados'
   }
     return validations;

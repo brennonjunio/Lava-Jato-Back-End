@@ -46,24 +46,26 @@ export class servicosRepository {
   }
 
   async criarVeiculoServico(p: vinculoVeiculoServico) {
-      for (const veiculo of p.cd_tipo_veiculo) {
+      for (const service of p.cd_servico) {
+        console.log("🚀 ~ file: servicosRepository.ts:50 ~ servicosRepository ~ criarVeiculoServico ~ service:", service)
+        
         await db.$queryRawUnsafe(
           `insert into veiculos_servico (cd_servico,cd_tipo_veiculo) values (?,?)`,
-          p.cd_servico,
-          veiculo
+          service,
+          p.cd_tipo_veiculo
         );
 
       }
    
   }
-  async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
-    const result = await db.veiculos_servico.updateMany({
-      where: { nr_sequencia: params.sequencia },
-      data: {
-        cd_servico: params.cd_servico,
-        // cd_tipo_veiculo: params.cd_tipo_veiculo,
-      },
-    });
-    return result;
-  }
+  // async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
+  //   const result = await db.veiculos_servico.updateMany({
+  //     where: { nr_sequencia: params.sequencia },
+  //     data: {
+  //       cd_servico: params.cd_servico,
+  //       // cd_tipo_veiculo: params.cd_tipo_veiculo,
+  //     },
+  //   });
+  //   return result;
+  // }
 }
