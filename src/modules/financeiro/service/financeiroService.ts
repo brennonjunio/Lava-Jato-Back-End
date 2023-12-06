@@ -3,7 +3,7 @@ import {
   criarTipoPagamentosDTO,
   editarTipoPagamentosDTO,
 } from "../dto/financeiroDTO";
-import { adicionarMovimentacao, efetuarPagamentoAtendimento } from "../dto/movimentacaoFinanceiraDTO";
+import { adicionarMovimentacao, efetuarPagamentoAtendimento, filtrosTransacoes } from "../dto/movimentacaoFinanceiraDTO";
 import { financeiroRepository } from "../repository/financeiroRepository";
 import { movimentacaoFinanceiraRepository } from "../repository/movimentacaoFinanceiraRepository";
 
@@ -61,9 +61,9 @@ export class financeiroService {
       return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
     }
   }
-async listarTransacoesFinanceiro(){
+async listarTransacoesFinanceiro(params: filtrosTransacoes){
   try {
-    const result = await this.repositoryMovimentacao.listarTransacoesFinanceiro();
+    const result = await this.repositoryMovimentacao.listarTransacoesFinanceiro(params);
     return AppStatus.appSucess("Sucesso ao Listar Transações", result);
   } catch (e) {
     return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
@@ -80,9 +80,9 @@ async listarMovimentacoesFinanceiro(){
 async adicionarMovimentacao(params: adicionarMovimentacao){
   try {
     const result = await this.repositoryMovimentacao.adicionarMovimentacao(params);
-    return AppStatus.appSucess('Sucesso ao adicionar',1)
+    return AppStatus.appSucess('Sucesso ao adicionar transação',1)
   } catch (e) {
-    return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
+    return AppStatus.appError("Erro ao adicionar transação!", e);
   }
 }
 

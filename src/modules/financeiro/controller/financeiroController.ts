@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { financeiroService } from "../service/financeiroService";
-import { adicionarMovimentacao } from "../dto/movimentacaoFinanceiraDTO";
+import { adicionarMovimentacao, filtrosTransacoes } from "../dto/movimentacaoFinanceiraDTO";
 
 export const financeiro: financeiroService = new financeiroService();
 export class financeiroController {
@@ -64,7 +64,8 @@ export class financeiroController {
   }
   async listarTransacoesFinanceiro(req: Request, res: Response) {
     try {
-      const result = await financeiro.listarTransacoesFinanceiro();
+      const params = req.query 
+      const result = await financeiro.listarTransacoesFinanceiro(params);
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
