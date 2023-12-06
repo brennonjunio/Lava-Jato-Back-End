@@ -1,5 +1,8 @@
 import db from "../../../database/database";
-import { efetuarPagamentoAtendimento } from "../dto/movimentacaoFinanceiraDTO";
+import {
+  adicionarMovimentacao,
+  efetuarPagamentoAtendimento,
+} from "../dto/movimentacaoFinanceiraDTO";
 
 export class movimentacaoFinanceiraRepository {
   async efetuarPagamentoAtendimento(param: efetuarPagamentoAtendimento) {
@@ -19,13 +22,22 @@ export class movimentacaoFinanceiraRepository {
   }
 
   async listarTransacoesFinanceiro() {
-    return await db.$queryRawUnsafe(
-      "select * from vw_financeiro_transacoes;"
-    );
+    return await db.$queryRawUnsafe("select * from vw_financeiro_transacoes;");
   }
   async listarMovimentacoesFinanceiro() {
     return await db.$queryRawUnsafe(
       "select * from vw_financeiro_movimentacoes;"
+    );
+  }
+  async adicionarMovimentacao(params: adicionarMovimentacao) {
+    return await db.$executeRawUnsafe(
+      "SELECT lava_jato.adicionarMovimentacao(:nr_seq_fincaneiro_p, :cd_tipo_pagamento_p, :valor_p, :cd_usuario_p, :direcao_movimento_p, :observacao_p)",
+      params.nr_seq_financeiro_p == 0 ? null: params.nr_seq_financeiro_p,
+      params.cd_tipo_pagamento_p,
+      params.valor,
+      params.cd_usuario_p,
+      params.direcao,
+      params.observacao
     );
   }
 }

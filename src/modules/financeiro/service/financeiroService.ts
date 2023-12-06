@@ -3,7 +3,7 @@ import {
   criarTipoPagamentosDTO,
   editarTipoPagamentosDTO,
 } from "../dto/financeiroDTO";
-import { efetuarPagamentoAtendimento } from "../dto/movimentacaoFinanceiraDTO";
+import { adicionarMovimentacao, efetuarPagamentoAtendimento } from "../dto/movimentacaoFinanceiraDTO";
 import { financeiroRepository } from "../repository/financeiroRepository";
 import { movimentacaoFinanceiraRepository } from "../repository/movimentacaoFinanceiraRepository";
 
@@ -73,6 +73,14 @@ async listarMovimentacoesFinanceiro(){
   try {
     const result = await this.repositoryMovimentacao.listarMovimentacoesFinanceiro();
     return AppStatus.appSucess("Sucesso ao Listar Movimentações", result);
+  } catch (e) {
+    return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
+  }
+}
+async adicionarMovimentacao(params: adicionarMovimentacao){
+  try {
+    const result = await this.repositoryMovimentacao.adicionarMovimentacao(params);
+    return AppStatus.appSucess('Sucesso ao adicionar',1)
   } catch (e) {
     return AppStatus.appError("Erro ao Efetuar Pagamento!", e);
   }

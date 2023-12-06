@@ -11,3 +11,12 @@ export class pag{
     cd_tipo_pagamento: number;
     valor: number
 }
+
+export interface adicionarMovimentacao {
+    nr_seq_financeiro_p: number | null;
+    cd_tipo_pagamento_p: number;
+    valor: number;
+    cd_usuario_p: number;
+    direcao: number;
+    observacao: string;
+}

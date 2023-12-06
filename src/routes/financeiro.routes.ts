@@ -4,7 +4,7 @@ import validate from "../middlewares/validateRequest";
 
 const financeiroRoutes = Router();
 import { financeiroController } from "../modules/financeiro/controller/financeiroController";
-import { criarTipoPagamentoSchema } from "../validator/financeiro/validatorFinanceiro";
+import { criarTipoPagamentoSchema,adicionarMovimentacao } from "../validator/financeiro/validatorFinanceiro";
 
 financeiroRoutes.post(
   "/financeiro/tipospagamentos",
@@ -39,5 +39,10 @@ financeiroRoutes.get(
 financeiroRoutes.get(
   "/financeiro/listarMovimentacoes",
   new financeiroController().listarMovimentacoesFinanceiro
+);
+
+financeiroRoutes.post(
+  "/financeiro/adicionarMovimentacao",validate(adicionarMovimentacao),
+  new financeiroController().adicionarMovimentacao
 );
 export default financeiroRoutes;
