@@ -12,7 +12,7 @@ export class veiculoService {
     try {
       const result = await this.repositorioVeiculos.tipoVeiculoCriar(descricao);
 
-      return AppStatus.appSucess("Sucesso Ao criar", descricao);
+      return AppStatus.appSucess("Sucesso Ao criar", result);
     } catch (e) {
       return AppStatus.appError("Erro ao Criar", 0);
     }

@@ -6,7 +6,8 @@ export class veiculosRepository {
     const result = await db.tipo_veiculos.create({
       data: descricao,
     });
-    return result;
+      const cd_tipo_veiculo = await db.$queryRawUnsafe('select cd_tipo_veiculo  from tipo_veiculos tv  order by cd_tipo_veiculo desc  limit 1 ') as any
+    return cd_tipo_veiculo[0].cd_tipo_veiculo;
   }
   async tipoVeiculoListar() {
     return await db.tipo_veiculos.findMany({});

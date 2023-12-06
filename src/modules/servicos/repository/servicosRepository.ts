@@ -47,8 +47,6 @@ export class servicosRepository {
 
   async criarVeiculoServico(p: vinculoVeiculoServico) {
       for (const service of p.cd_servico) {
-        console.log("🚀 ~ file: servicosRepository.ts:50 ~ servicosRepository ~ criarVeiculoServico ~ service:", service)
-        
         await db.$queryRawUnsafe(
           `insert into veiculos_servico (cd_servico,cd_tipo_veiculo) values (?,?)`,
           service,
