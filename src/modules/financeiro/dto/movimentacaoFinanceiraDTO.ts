@@ -20,3 +20,28 @@ export interface adicionarMovimentacao {
     direcao: number;
     observacao: string;
 }
+
+export interface filtrosTransacoes {
+    seq_transacao?: number | null,
+    nr_atendimento?: number | null,
+    cliente?: string | null,
+    nr_seq_financeiro?: number | null,
+    tipo_pagamento?: string | null,
+    valor?: number | null,
+    tipo?: string | null,
+    dt_inicial?: string | null,
+    dt_final?: string | null,
+    observacao?: null | null
+}
+
+export interface filtrosFinanceiros {
+    status?: string | null,
+    nr_atendimento?: number | null,
+    cliente?: string | null,
+    nr_seq_financeiro?: number | null,
+    valor?: number | null,
+    tipo?: string | null,
+    dt_inicial?: string | null,
+    dt_final?: string | null,
+    observacao?: number | null,
+}

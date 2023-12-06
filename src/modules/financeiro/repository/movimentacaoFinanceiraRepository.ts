@@ -2,10 +2,12 @@ import db from "../../../database/database";
 import {
   adicionarMovimentacao,
   efetuarPagamentoAtendimento,
+  filtrosFinanceiros,
   filtrosTransacoes,
 } from "../dto/movimentacaoFinanceiraDTO";
 import { MontarSql } from "../../../shared/montarSql";
 import {
+  filtrosFinanceiroParams,
   filtrosTransacoesParams,
 } from "../querys/queryFiltros";
 export class movimentacaoFinanceiraRepository {
@@ -30,10 +32,10 @@ export class movimentacaoFinanceiraRepository {
     const sql =  `select * from vw_financeiro_transacoes where 1=1 ${filtros}`;
     return await db.$queryRawUnsafe(sql)
   }
-  async listarMovimentacoesFinanceiro() {
-    return await db.$queryRawUnsafe(
-      "select * from vw_financeiro_movimentacoes;"
-    );
+  async listarMovimentacoesFinanceiro(params: filtrosFinanceiros) {
+    const filtros = filtrosFinanceiroParams(params)
+    const sql =  `select * from vw_financeiro_movimentacoes where 1=1 ${filtros}`;
+    return await db.$queryRawUnsafe(sql)
   }
   async adicionarMovimentacao(params: adicionarMovimentacao) {
     return await db.$executeRawUnsafe(

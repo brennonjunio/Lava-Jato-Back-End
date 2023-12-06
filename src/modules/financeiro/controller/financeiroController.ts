@@ -75,7 +75,8 @@ export class financeiroController {
   }
   async listarMovimentacoesFinanceiro(req: Request, res: Response) {
     try {
-      const result = await financeiro.listarMovimentacoesFinanceiro();
+      const params = req.query 
+      const result = await financeiro.listarMovimentacoesFinanceiro(params);
       return res.status(result.statusCode).json(result);
     } catch (error) {
       res.status(500).json({
