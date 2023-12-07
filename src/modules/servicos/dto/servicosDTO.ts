@@ -16,3 +16,8 @@ export interface vinculoVeiculoServicoEditar {
     cd_tipo_veiculo: number;
     sequencia: number;
 }
+
+export interface FiltroListagem {
+    servico?: string;
+    veiculo?: string;
+}

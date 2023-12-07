@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { servicosService } from "../service/servicosService";
 import {
+  FiltroListagem,
   criarServicoDTO,
   updateServiceDTO,
   vinculoVeiculoServico,
@@ -81,6 +82,18 @@ export class servicosController {
     try {
       const params = req.body as vinculoVeiculoServico;
       const result = await servicos.criarVeiculoServico(params);
+
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
+      });
+    }
+  }
+  async listarVeiculoServico(req: Request, res: Response) {
+    try {
+      const params = req.query 
+      const result = await servicos.listarVeiculoServico(params);
 
       return res.status(result.statusCode).json(result);
     } catch (error) {

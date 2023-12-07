@@ -1,12 +1,14 @@
 import { isEmpty, result } from "lodash";
 import db from "../../../database/database";
 import {
+  FiltroListagem,
   criarServicoDTO,
   updateServiceDTO,
   vinculoVeiculoServico,
   vinculoVeiculoServicoEditar,
 } from "../dto/servicosDTO";
 import { UseCaseService } from "./useCase/useCaseService";
+import { listagemFiltros } from "./useCase/query";
 
 export class servicosRepository {
   private case: UseCaseService = new UseCaseService();
@@ -56,6 +58,23 @@ export class servicosRepository {
       }
    
   }
+  async listarVeiculoServico(params: FiltroListagem){
+    const filtro = listagemFiltros(params)
+    console.log("🚀 ~ file: servicosRepository.ts:63 ~ servicosRepository ~ listarVeiculoServico ~ filtro:", filtro)
+    return await db.$queryRawUnsafe(`select
+    a.nr_sequencia ,
+    b.cd_servico ,  
+    b.desc_servico  servico,
+    c.cd_tipo_veiculo,
+    c.descricao veiculo
+  from
+    veiculos_servico a
+  join servicos b on
+    b.cd_servico = a.cd_servico
+  join tipo_veiculos c 
+  on c.cd_tipo_veiculo  = a.cd_tipo_veiculo  where 1=1 ${filtro}`);
+  }
+
   // async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
   //   const result = await db.veiculos_servico.updateMany({
   //     where: { nr_sequencia: params.sequencia },

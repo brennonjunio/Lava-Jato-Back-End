@@ -1,6 +1,7 @@
 import { isEmpty, isNull } from "lodash";
 import AppStatus from "../../../shared/AppStatus";
 import {
+  FiltroListagem,
   criarServicoDTO,
   updateServiceDTO,
   vinculoVeiculoServico,
@@ -75,6 +76,15 @@ export class servicosService {
       return AppStatus.appSucess("Sucesso ao Vincular", result);
     } catch (e) {
       return AppStatus.appError("Erro ao vincular", e);
+    }
+  }
+
+  async listarVeiculoServico(params: FiltroListagem){
+    try {
+      const result = await this.repository.listarVeiculoServico(params);
+     return AppStatus.appSucess("Sucesso ao Listar", result);
+    } catch (e) {
+      return AppStatus.appError("Erro ao Listar", e);
     }
   }
   // async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
