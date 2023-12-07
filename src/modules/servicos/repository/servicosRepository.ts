@@ -60,7 +60,6 @@ export class servicosRepository {
   }
   async listarVeiculoServico(params: FiltroListagem){
     const filtro = listagemFiltros(params)
-    console.log("🚀 ~ file: servicosRepository.ts:63 ~ servicosRepository ~ listarVeiculoServico ~ filtro:", filtro)
     return await db.$queryRawUnsafe(`select
     a.nr_sequencia ,
     b.cd_servico ,  
