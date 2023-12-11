@@ -38,12 +38,15 @@ export class veiculoService {
   }
   async deletarTipoVeiculo(cd_tipo_veiculo: number) {
     try {
+      if (!isNull(await this.useCase.validaTipoUsado(cd_tipo_veiculo))) {
+        return AppStatus.updateFalse("Tipo já usado em cadastro de clientes", 0);
+      }
       const result = await this.repositorioVeiculos.tipoVeiculoDeletar(
         cd_tipo_veiculo
       );
       return AppStatus.deletadoSucess;
     } catch (e) {
-      return AppStatus.appError("Erro ao Deletar", 0);
+      return AppStatus.appError("Erro ao Deletar", e);
     }
   }
   async criarVeiculoCLiente(param: veiculoClienteDTO) {

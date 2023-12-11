@@ -30,4 +30,11 @@ export class useCaseVeiculos {
     }
     return true;
   }
+  async validaTipoUsado(param: number) {
+    return await db.veiculos_clientes.findFirst({
+      where: {
+        cd_tipo_veiculo: param,
+      },
+    });
+  }
 }
