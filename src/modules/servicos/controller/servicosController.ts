@@ -102,16 +102,15 @@ export class servicosController {
       });
     }
   }
-  // async editarVeiculoServico(req: Request, res: Response) {
-  //   try {
-  //     const params = req.body as vinculoVeiculoServicoEditar;
-  //     const result = await servicos.editarVeiculoServico(params);
-
-  //     return res.status(result.statusCode).json(result);
-  //   } catch (error) {
-  //     res.status(500).json({
-  //       error,
-  //     });
-  //   }
-  // }
+  async editarVeiculoServico(req: Request, res: Response) {
+    try {
+      const params = req.body as vinculoVeiculoServicoEditar;
+      const result = await servicos.editarVeiculoServico(params);
+      return res.status(result.statusCode).json(result);
+    } catch (error) {
+      res.status(500).json({
+        error,
+      });
+    }
+  }
 }

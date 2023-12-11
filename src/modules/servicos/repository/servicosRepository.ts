@@ -74,14 +74,20 @@ export class servicosRepository {
   on c.cd_tipo_veiculo  = a.cd_tipo_veiculo  where 1=1 ${filtro}`);
   }
 
-  // async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
-  //   const result = await db.veiculos_servico.updateMany({
-  //     where: { nr_sequencia: params.sequencia },
-  //     data: {
-  //       cd_servico: params.cd_servico,
-  //       // cd_tipo_veiculo: params.cd_tipo_veiculo,
-  //     },
-  //   });
-  //   return result;
-  // }
+  async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
+    const servico = params.cd_servico[0];
+    const result = await db.veiculos_servico.updateMany({
+      where: {
+        nr_sequencia: params.sequencia,
+        cd_tipo_veiculo: params.cd_tipo_veiculo,
+      },
+      data: {
+        cd_servico: servico,
+      },
+    });
+    if (result.count == 0) {
+      return 0;
+    }
+    return result;
+  }
 }
