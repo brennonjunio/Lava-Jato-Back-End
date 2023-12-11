@@ -66,14 +66,14 @@ export class servicosService {
   async criarVeiculoServico(params: vinculoVeiculoServico) {
     try {
       const valida = await this.case.validaTipoVeiculoServico(params) as any;
-      console.log("🚀 ~ file: servicosService.ts:69 ~ servicosService ~ criarVeiculoServico ~ valida:", valida)
       if (!isEmpty(valida)) {
         return AppStatus.appError(
           `Contem serviços já vinculados:`,
           valida
         );
       }
-      return AppStatus.appSucess("Sucesso ao Vincular", 0);
+      const result = await this.repository.criarVeiculoServico(params)
+      return AppStatus.appSucess("Sucesso ao Vincular", result);
     } catch (e) {
       return AppStatus.appError("Erro ao vincular", e);
     }
