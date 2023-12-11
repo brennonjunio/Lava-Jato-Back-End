@@ -9,9 +9,9 @@ export class UseCaseService {
       select: { cd_servico: true },
     });
   }
-  async validaTipoVeiculoServico(params:vinculoVeiculoServico) {
+  async validaTipoVeiculoServico(params: vinculoVeiculoServico) {
     const validations = [] as any;
-  
+
     for await (let i of params.cd_servico) {
       const validate = await db.$queryRawUnsafe(
         `select
@@ -29,13 +29,14 @@ export class UseCaseService {
         params.cd_tipo_veiculo,
         i
       );
-        
-    await validations.push(validate);
+
+      await validations.push(validate);
     }
-    console.log(validations)
-    if(!isEmpty(validations)){
-      console.log('caiu aqui')
-      return validations;
+    const nonEmptyValidations = validations.filter(
+      (validate: any) => validate.length > 0
+    );
+    if (!isEmpty(nonEmptyValidations)) {
+      return nonEmptyValidations;
     }
     return;
   }
