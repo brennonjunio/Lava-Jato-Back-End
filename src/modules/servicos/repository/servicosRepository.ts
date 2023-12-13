@@ -48,6 +48,9 @@ export class servicosRepository {
   }
 
   async criarVeiculoServico(p: vinculoVeiculoServico) {
+    const del = await db.veiculos_servico.deleteMany({
+      where:{cd_tipo_veiculo:p.cd_tipo_veiculo}
+    })
       for (const service of p.cd_servico) {
         await db.$queryRawUnsafe(
           `insert into veiculos_servico (cd_servico,cd_tipo_veiculo) values (?,?)`,
@@ -74,20 +77,4 @@ export class servicosRepository {
   on c.cd_tipo_veiculo  = a.cd_tipo_veiculo  where 1=1 ${filtro}`);
   }
 
-  async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
-    const servico = params.cd_servico[0];
-    const result = await db.veiculos_servico.updateMany({
-      where: {
-        nr_sequencia: params.sequencia,
-        cd_tipo_veiculo: params.cd_tipo_veiculo,
-      },
-      data: {
-        cd_servico: servico,
-      },
-    });
-    if (result.count == 0) {
-      return 0;
-    }
-    return result;
-  }
 }
