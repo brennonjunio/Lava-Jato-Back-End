@@ -5,7 +5,6 @@ import {
   filtrosFinanceiros,
   filtrosTransacoes,
 } from "../dto/movimentacaoFinanceiraDTO";
-import { MontarSql } from "../../../shared/montarSql";
 import {
   filtrosFinanceiroParams,
   filtrosTransacoesParams,
