@@ -29,7 +29,7 @@ export class ClienteService {
       //se valid for false, quer dizer que o update pode ser o mesmo cpf
       const valid = await this.useCaseCliente.validaClienteUpdate(
         String(param.cpf_cnpj),
-        param.cd_cliente
+        Number(param.cd_cliente)
       );
       if (!valid) {
         return AppStatus.updateFalse("Cpf invalido ou Já cadastrado", 0);

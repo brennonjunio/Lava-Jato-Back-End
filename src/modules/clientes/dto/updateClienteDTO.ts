@@ -1,4 +1,4 @@
-export class updateClienteDTO {
+export interface updateClienteDTO {
     nm_cliente?: string;
     cpf_cnpj?: string;
     cep?: string;

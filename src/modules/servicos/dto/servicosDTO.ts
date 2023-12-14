@@ -1,8 +1,8 @@
-export class criarServicoDTO {
+export interface criarServicoDTO {
     desc_servico: string;
     vlr_servico: number;
 }
-export class updateServiceDTO {
+export interface updateServiceDTO {
     cd_servico: number;
     desc_servico: string;
     vlr_servico: number;
