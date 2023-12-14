@@ -4,7 +4,7 @@ export class updateClienteDTO {
     cep?: string;
     bairro?: string;
     nr_casa?: string;
-    cd_cliente: number;
+    cd_cliente?: number;
     rua?:string;
     status?: string;
     telefone1?: string;

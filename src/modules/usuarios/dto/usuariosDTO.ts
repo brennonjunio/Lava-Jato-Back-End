@@ -1,9 +1,9 @@
-export class CriarUsuarioDTO {
+export interface CriarUsuarioDTO {
   nm_usuario: string;
   senha: string;
   email: string;
 }
-export class EditarUsuarioDTO{
+export interface EditarUsuarioDTO{
   nm_usuario?: string;
   senha?: string;
   email?:string;
