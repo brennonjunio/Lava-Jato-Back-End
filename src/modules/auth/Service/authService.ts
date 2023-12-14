@@ -29,7 +29,7 @@ export class AuthService {
             userId: auth.cd_usuario,
           },
           process.env.SECRET,
-          { expiresIn: '1h' }
+          { expiresIn: '8h' }
         );
         return {
           statusCode: 200,

@@ -13,6 +13,6 @@ usuariosRouter.put(
   "/usuario/:cd_usuario",
   new UsuariosController().editarUsuario
 );
-usuariosRouter.get("/usuario", new UsuariosController().listarUsuariosAll);
+// usuariosRouter.get("/usuario", new UsuariosController().listarUsuariosAll);
 
 export default usuariosRouter;

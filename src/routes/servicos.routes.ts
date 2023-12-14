@@ -18,7 +18,6 @@ servicosRouters.delete(
 );
 //Rotas para vincular tipos de veiculos ao serviço
 servicosRouters.post("/servicos/veiculos", new servicosController().criarVeiculoServico)
-servicosRouters.put("/servicos/veiculos", new servicosController().editarVeiculoServico)
 servicosRouters.get("/servicos/veiculos/:cd_veiculo", new servicosController().listarServicosPorCliente);
 servicosRouters.get("/servicos/veiculosListagem", new servicosController().listarVeiculoServico);
 

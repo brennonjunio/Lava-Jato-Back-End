@@ -65,13 +65,6 @@ export class servicosService {
   }
   async criarVeiculoServico(params: vinculoVeiculoServico) {
     try {
-      const valida = await this.case.validaTipoVeiculoServico(params) as any;
-      if (!isEmpty(valida)) {
-        return AppStatus.appError(
-          `Contem serviços já vinculados:`,
-          valida
-        );
-      }
       const result = await this.repository.criarVeiculoServico(params)
       return AppStatus.appSucess("Sucesso ao Vincular", result);
     } catch (e) {
@@ -87,26 +80,5 @@ export class servicosService {
       return AppStatus.appError("Erro ao Listar", e);
     }
   }
-  async editarVeiculoServico(params: vinculoVeiculoServicoEditar) {
-    try {
-      const valida = (await this.case.validaTipoVeiculoServico(params)) as any;
-      if (!isEmpty(valida)) {
-        return AppStatus.appError(
-          "Serviço já vinculado ao tipo de veiculo",
-          valida
-        );
-      }
 
-      const result = await this.repository.editarVeiculoServico(params);
-      if (result == 0) {
-        return AppStatus.appError(
-          "Nenhum valor foi alterado, verifique seus parametros",
-          valida
-        );
-      }
-      return AppStatus.appSucess("Sucesso ao Editar", result);
-    } catch (e) {
-      return AppStatus.appError("Erro ao Editar", e);
-    }
-  }
 }
