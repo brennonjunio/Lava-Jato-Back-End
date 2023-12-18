@@ -9,6 +9,7 @@ import usuariosRouter from "./usuarios.routes";
 import authRouter from "./auth.routes";
 import atendimentos from "./atendimentos.routes";
 import { AuthMiddleware } from "../middlewares/authMiddleware";
+import uploads from "./upload.routes";
 
 //rotas para login
 router.use(authRouter);
@@ -34,5 +35,8 @@ router.use(servicosRouters);
 router.use(financeiroRoutes);
 
 router.use(atendimentos);
+
+//PERFIL
+router.use(uploads);
 
 export { router };
