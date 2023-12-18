@@ -1,16 +1,11 @@
 import { Router } from "express";
-import { upload } from "../modules/perfil/service/uploadService";
+import { UploadController } from "../modules/perfil/service/uploadController";
 
 const uploads = Router();
 
-uploads.post('/uploads', upload.single('file'),  (req, res) => {
-console.log('a')
-})
-
+uploads.post(
+  "/upload/image",
+  new UploadController().uploadImage
+);
 
 export default uploads;
-
-
-
-
-

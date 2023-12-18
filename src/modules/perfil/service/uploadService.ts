@@ -1,17 +1,46 @@
-import multer from 'multer';
-import path from 'path';
+import path from "path";
+import multer, { Multer } from "multer";
+import { Request } from "express";
+import AppStatus from "../../../shared/AppStatus";
 
-const uploadsFolder = path.resolve(__dirname, 'uploads');
+export class UploadService {
+  private multer: Multer;
 
-const configMulter = multer.diskStorage({
-    destination:uploadsFolder,
-    filename:(request:any, file:any, callback:any) => {
-        const filename = file.filename;
+  constructor() {
+    const uploadsFolder = path.resolve(__dirname, "uploads");
 
-        return callback(null, filename)
+    this.multer = multer({
+      dest: uploadsFolder,
+      storage: multer.diskStorage({
+        destination: uploadsFolder,
+        filename: (request, file, callback) => {
+          const filename = file.originalname; // Personalize a geração do nome do arquivo conforme necessário
+          callback(null, filename);
+        },
+      }),
+    });
+  }
+
+  async processUploadedFile(file: any): Promise<string> {
+    const processedFileName = file.filename;
+    return processedFileName;
+  }
+
+  async uploadImage(req: Request): Promise<any> {
+    try {
+      await new Promise<void>((resolve, reject) => {
+        this.multer.single("file")(req, undefined as any, (err: any) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
+      const processedFileName = await this.processUploadedFile(req.file);
+      return AppStatus.appSucess("Upload Efetuado com Sucesso!", processedFileName);
+    } catch (error) {
+      throw error;
     }
-})
-
-const upload = multer({storage:configMulter});
-
-export { upload }
+  }
+}
